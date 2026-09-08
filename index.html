@@ -418,11 +418,12 @@
       <div class="revealed" id="pm_wrap">
         <div class="grid c2">
           <div class="f">
-            <label for="pm_termval">ระยะเวลาผ่อน</label>
-            <div style="display:flex;gap:8px">
-              <input type="number" id="pm_termval" name="general.installmentTermValue" min="0" placeholder="เช่น 36" style="flex:1">
-              <select id="pm_termunit" name="general.installmentTermUnit" style="width:auto;min-width:88px;flex:none"><option>เดือน</option><option>ปี</option></select>
-            </div>
+            <label for="pm_term">ระยะเวลาผ่อนทั้งหมด</label>
+            <input type="text" id="pm_term" name="general.installmentTerm" placeholder="เช่น 36 เดือน / 3 ปี">
+          </div>
+          <div class="f">
+            <label for="pm_sched">รูปแบบการผ่อนชำระ (งวด)</label>
+            <select id="pm_sched" name="general.paymentSchedule"><option value="">— เลือก —</option><option>รายเดือน</option><option>ราย 3 เดือน</option><option>ราย 6 เดือน</option><option>รายปี</option><option>อื่นๆ</option></select>
           </div>
           <div class="f">
             <label for="pm_fin">บริษัทที่ขอสินเชื่อ</label>
