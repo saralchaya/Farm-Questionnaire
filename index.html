@@ -576,12 +576,12 @@
       </div>
 
       <div class="f full" style="margin-top:12px">
-        <label>5. ลักษณะการต่อพ่วงเครื่องยนต์ ZT Plus กับ พัดลม EVAP (เลือกได้หลายข้อ)</label>
+        <label>5. ลักษณะการต่อพ่วงเครื่องยนต์ ZT Plus กับ พัดลม EVAP (เลือก 1 ข้อ)</label>
         <div class="opts" style="margin-top:5px">
-          <label class="chk"><input type="checkbox" id="pw_belt" name="power.coupling" value="ระบบสายพาน"> ระบบสายพาน</label>
-          <label class="chk"><input type="checkbox" name="power.coupling" value="Shaft"> Shaft</label>
-          <label class="chk"><input type="checkbox" name="power.coupling" value="Coupling"> Coupling</label>
-          <label class="chk"><input type="checkbox" name="power.coupling" value="อื่นๆ"> อื่นๆ</label>
+          <label class="chk"><input type="radio" id="pw_belt" name="power.coupling" value="ระบบสายพาน"> ระบบสายพาน</label>
+          <label class="chk"><input type="radio" name="power.coupling" value="Shaft"> Shaft</label>
+          <label class="chk"><input type="radio" name="power.coupling" value="Coupling"> Coupling</label>
+          <label class="chk"><input type="radio" name="power.coupling" value="อื่นๆ"> อื่นๆ</label>
         </div>
         <div class="revealed" id="pw_ratioWrap">
           <div class="f" style="max-width:240px"><label for="pw_ratio">อัตราทด (กรณีระบบสายพาน)</label><input type="text" id="pw_ratio" name="power.gearRatio" placeholder="เช่น 1:1.8"></div>
@@ -1122,9 +1122,11 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   houseOtherChk.addEventListener("change",applyHouseOther);
 
   /* ---------- coupling: ระบบสายพาน -> reveal อัตราทด ---------- */
-  var pwBelt=document.getElementById("pw_belt");
-  function applyBelt(){ document.getElementById("pw_ratioWrap").classList.toggle("on", pwBelt.checked); }
-  pwBelt.addEventListener("change",applyBelt);
+  function applyBelt(){
+    var b=form.querySelector('input[name="power.coupling"]:checked');
+    document.getElementById("pw_ratioWrap").classList.toggle("on", !!(b && b.value==="ระบบสายพาน"));
+  }
+  form.querySelectorAll('input[name="power.coupling"]').forEach(function(r){ r.addEventListener("change",applyBelt); });
 
   /* ---------- conditional: engine fuel -> maintenance lists ---------- */
   var mtFuel=document.getElementById("mt_fuel");
