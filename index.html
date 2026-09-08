@@ -455,7 +455,10 @@
 
       <div class="grid c2" style="margin-top:12px">
         <div class="f"><label for="s_evapco">บริษัทที่รับติดตั้งระบบ EVAP</label><input type="text" id="s_evapco" name="farm.evapInstaller"></div>
-        <div class="f"><label for="s_evapprov">จังหวัดของผู้ติดตั้ง</label><input type="text" id="s_evapprov" name="farm.evapInstallerProvince"></div>
+        <div class="f"><label for="s_evapprov">จังหวัดของผู้ติดตั้ง</label>
+          <input type="text" id="s_evapprov" name="farm.evapInstallerProvince" list="provList" autocomplete="off" placeholder="พิมพ์หรือเลือกจังหวัด">
+          <datalist id="provList"></datalist>
+        </div>
       </div>
 
       <div class="callout beta only-shrimp" data-farm hidden>
@@ -942,6 +945,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     list.forEach(function(v){ var o=document.createElement("option"); o.value=v; o.textContent=v; sel.appendChild(o); });
   }
   optionsFrom(selProv,GEO.map(function(p){return p[0]}),"— เลือกจังหวัด —");
+  (function(){ var dl=document.getElementById("provList"); if(dl) dl.innerHTML=GEO.map(function(p){return '<option value="'+p[0].replace(/"/g,'&quot;')+'">'}).join(""); })();
   function provNode(){ var n=selProv.value; for(var i=0;i<GEO.length;i++) if(GEO[i][0]===n) return GEO[i]; return null; }
   function distNode(){ var p=provNode(); if(!p) return null; for(var i=0;i<p[1].length;i++) if(p[1][i][0]===selDist.value) return p[1][i]; return null; }
   function onProv(){
