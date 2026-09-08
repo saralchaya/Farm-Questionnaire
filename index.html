@@ -108,6 +108,33 @@
   .block.cond{border-left:3px solid var(--field)}
   .block.cond.beta{border-left-color:var(--warn)}
 
+  /* ---------- per-section colour theming ---------- */
+  #p1{--sec:#C9540F;--sec-tint:#F8EAE0}
+  #p2{--sec:#37794A;--sec-tint:#E4EFE8}
+  #p3{--sec:#2E6A9C;--sec-tint:#E2ECF4}
+  #p4{--sec:#8A4FA3;--sec-tint:#EEE6F3}
+  section.part{background:var(--sec-tint);border:1px solid color-mix(in srgb,var(--sec) 18%,transparent);
+    border-radius:14px;padding:12px 13px 16px}
+  .part-head{border-bottom-color:var(--sec)}
+  .part-num{background:var(--sec)}
+  .part-head h2{color:var(--sec)}
+  section.part .block{border-color:color-mix(in srgb,var(--sec) 14%,var(--line))}
+  section.part .block.cond{border-left:3px solid var(--field)}
+  section.part .block.cond.beta{border-left-color:var(--warn)}
+  section.part .colhead{border-bottom-color:var(--sec);color:var(--sec)}
+  section.part .colhead.good{border-bottom-color:var(--good);color:var(--good)}
+  section.part .colhead.bad{border-bottom-color:var(--crit);color:var(--crit)}
+  nav.parts a:nth-of-type(1){--pc:#C9540F}
+  nav.parts a:nth-of-type(2){--pc:#37794A}
+  nav.parts a:nth-of-type(3){--pc:#2E6A9C}
+  nav.parts a:nth-of-type(4){--pc:#8A4FA3}
+  nav.parts a:hover{border-color:var(--pc);color:var(--pc)}
+  nav.parts a.active{background:var(--pc);border-color:var(--pc);color:#fff}
+  #progress{background:linear-gradient(90deg,#C9540F,#37794A 42%,#2E6A9C 74%,#8A4FA3)}
+  #farmTypeOpts .chk:has(input[value="หมู"]:checked){border-color:#C2547F;background:#F7E7EF}
+  #farmTypeOpts .chk:has(input[value="ไก่"]:checked){border-color:#B07B12;background:#F7EFDA}
+  #farmTypeOpts .chk:has(input[value="กุ้ง"]:checked){border-color:#2A8A8A;background:#DEF0F0}
+
   .grid{display:grid;gap:8px 12px}
   @media(min-width:560px){.grid.c2{grid-template-columns:1fr 1fr}.grid.c3{grid-template-columns:1fr 1fr 1fr}}
 
