@@ -533,21 +533,18 @@
       </div>
       <div class="f full" style="margin-top:10px"><label for="pw_oldproblem">ปัญหาที่เจอจากต้นกำลังแบบเดิม</label><textarea id="pw_oldproblem" name="power.oldProblem"></textarea></div>
 
-      <div class="grid c3" style="margin-top:12px">
-        <div class="f"><label for="pw_engperhouse">จำนวนเครื่องยนต์ที่ใช้ต่อเล้า</label><input type="number" id="pw_engperhouse" name="power.enginesPerHouse" min="0"></div>
-        <div class="f"><label for="pw_fanperhouse">จำนวนพัดลมต่อเล้า</label><input type="number" id="pw_fanperhouse" name="power.fansPerHouse" min="0"></div>
+      <span class="subhead" style="margin-top:14px">ระบบพัดลม EVAP และการต่อพ่วง</span>
+      <div class="grid c3" style="margin-top:6px">
+        <div class="f"><label for="pw_engperhouse">1. จำนวนเครื่องยนต์ที่ใช้ต่อเล้า</label><input type="number" id="pw_engperhouse" name="power.enginesPerHouse" min="0"></div>
+        <div class="f"><label for="pw_fanperhouse">2. จำนวนพัดลมต่อเล้า</label><input type="number" id="pw_fanperhouse" name="power.fansPerHouse" min="0"></div>
         <div class="f">
-          <label for="pw_fanpereng">พัดลมต่อเครื่องยนต์ 1 เครื่อง</label>
+          <label for="pw_fanpereng">3. พัดลมต่อเครื่องยนต์ 1 เครื่อง</label>
           <select id="pw_fanpereng" name="power.fansPerEngine"><option value="">— เลือก —</option><option>3 ตัว</option><option>4 ตัว</option><option>5 ตัว</option><option>6 ตัวขึ้นไป</option></select>
         </div>
-        <div class="f">
-          <label for="pw_couple">ลักษณะการต่อพ่วงกับพัดลม EVAP</label>
-          <select id="pw_couple" name="power.coupling"><option value="">— เลือก —</option><option>ระบบสายพาน</option><option>ระบบ Joint (Shaft / Coupling)</option><option>อื่นๆ</option></select>
-        </div>
-        <div class="f"><label for="pw_ratio">อัตราทด (ถ้าทราบ)</label><input type="text" id="pw_ratio" name="power.gearRatio" placeholder="เช่น 1:1.8"></div>
       </div>
 
-      <div class="blade-row">
+      <span class="subhead" style="margin-top:12px">4. ขนาดใบพัด</span>
+      <div class="blade-row" style="margin-top:5px">
         <svg class="blade-svg" viewBox="0 0 120 96" role="img" aria-label="แผนภาพวัดขนาดใบพัด">
           <circle cx="46" cy="48" r="34" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
           <g stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round">
@@ -575,6 +572,19 @@
               <span class="unit">ซม.</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="f full" style="margin-top:12px">
+        <label>5. ลักษณะการต่อพ่วงเครื่องยนต์ ZT Plus กับ พัดลม EVAP (เลือกได้หลายข้อ)</label>
+        <div class="opts" style="margin-top:5px">
+          <label class="chk"><input type="checkbox" id="pw_belt" name="power.coupling" value="ระบบสายพาน"> ระบบสายพาน</label>
+          <label class="chk"><input type="checkbox" name="power.coupling" value="Shaft"> Shaft</label>
+          <label class="chk"><input type="checkbox" name="power.coupling" value="Coupling"> Coupling</label>
+          <label class="chk"><input type="checkbox" name="power.coupling" value="อื่นๆ"> อื่นๆ</label>
+        </div>
+        <div class="revealed" id="pw_ratioWrap">
+          <div class="f" style="max-width:240px"><label for="pw_ratio">อัตราทด (กรณีระบบสายพาน)</label><input type="text" id="pw_ratio" name="power.gearRatio" placeholder="เช่น 1:1.8"></div>
         </div>
       </div>
     </div>
@@ -1111,6 +1121,11 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   function applyHouseOther(){ houseOther.hidden=!houseOtherChk.checked; }
   houseOtherChk.addEventListener("change",applyHouseOther);
 
+  /* ---------- coupling: ระบบสายพาน -> reveal อัตราทด ---------- */
+  var pwBelt=document.getElementById("pw_belt");
+  function applyBelt(){ document.getElementById("pw_ratioWrap").classList.toggle("on", pwBelt.checked); }
+  pwBelt.addEventListener("change",applyBelt);
+
   /* ---------- conditional: engine fuel -> maintenance lists ---------- */
   var mtFuel=document.getElementById("mt_fuel");
   function applyFuel(){
@@ -1258,7 +1273,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       if(Array.isArray(m.photos)&&m.photos.length){ photos=m.photos.slice(); renderPhotos(); }
       if(m.videoBlob){ setVideo(m.videoBlob,m.videoName); }
     }); }
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt();
     fillEngines(o["engine.list"]);
     form.querySelectorAll('[data-reveal]').forEach(function(s){ s.dispatchEvent(new Event("change")); });
   }
@@ -1268,7 +1283,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     photos=[]; renderPhotos(); setVideo(null);
     selProv.value=""; onProv();
     fillEngines(null);
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt();
     form.querySelectorAll('[data-reveal]').forEach(function(s){ var t=document.querySelector(s.getAttribute("data-reveal")); if(t)t.classList.remove("on"); });
     if(!silent){ safeLS(function(){localStorage.removeItem(LS_DRAFT)}); toast("ล้างฟอร์มแล้ว"); }
   }
@@ -1487,7 +1502,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   /* ---------- init ---------- */
   (function initDate(){ var d=document.getElementById("m_date"); if(!d.value) d.value=new Date().toISOString().slice(0,10); })();
   renderPhotos();
-  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); fillEngines(null);
+  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); fillEngines(null);
   var draft=safeLS(function(){return JSON.parse(localStorage.getItem(LS_DRAFT)||"null")});
   if(draft){ try{ restore(draft); }catch(e){} }
   refreshCount();
