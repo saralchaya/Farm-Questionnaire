@@ -102,12 +102,24 @@
   .f .hint{font-size:11px;color:var(--ink-soft)}
   .colhead{display:block;font-family:"IBM Plex Sans Thai",sans-serif;font-weight:700;font-size:13px;color:var(--ink);
     padding-bottom:5px;margin-bottom:7px;border-bottom:2px solid var(--accent)}
+  .colhead.good{color:var(--good);border-bottom-color:var(--good)}
+  .colhead.bad{color:var(--crit);border-bottom-color:var(--crit)}
+  .subhead{display:block;font-family:"IBM Plex Sans Thai",sans-serif;font-weight:700;font-size:12px;color:var(--ink-soft);margin-top:6px}
+  .exp-tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:5px}
+  .exp-a{background:#E6EEF7;color:#2C5A86}
+  .exp-b{background:#E6F1E9;color:#2E6B45}
+  .exp-c{background:#F6EDDD;color:#8A5716}
+  .kubota-word{color:var(--accent);font-weight:700}
+  .rival-word{color:var(--crit);font-weight:700}
   .colstack{display:flex;flex-direction:column;gap:7px}
   .colstack .f input+input{margin-top:4px}
   .cmp2{display:grid;gap:16px}
   @media(min-width:640px){.cmp2.dual{grid-template-columns:1fr 1fr;gap:16px 18px}}
   .cmp2 #otherCol{border-left:3px solid var(--line-strong);padding-left:12px}
   @media(max-width:639px){.cmp2 #otherCol{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:12px}}
+  .dim-other{border-radius:8px;transition:none}
+  .dim-other.is-dim{background:rgba(178,59,46,.07);box-shadow:0 0 0 6px rgba(178,59,46,.07)}
+  .dim-other.is-dim::before{content:"ลูกค้าใช้คูโบต้าอย่างเดียว — ไม่ต้องกรอกฝั่งนี้";display:block;font-size:10.5px;font-weight:700;color:var(--crit);margin-bottom:5px}
   .brand-inline{display:inline-block!important;width:auto!important;max-width:150px;padding:2px 7px!important;font-size:12px;font-weight:400;margin-left:4px}
   .shared-q{margin-top:12px;padding-top:11px;border-top:1px dashed var(--line-strong)}
   .f.full{grid-column:1/-1}
@@ -648,59 +660,68 @@
 
     <div class="block">
       <h3>ประสบการณ์และเหตุผลการซื้อ</h3>
-      <div class="sub">กรอกฝั่งคูโบต้าเสมอ — ถ้าลูกค้าเคยใช้แบรนด์คู่แข่ง ให้เลือก “เคยใช้” เพื่อเปิดช่องเทียบฝั่งขวา</div>
       <div class="f full">
-        <span class="legend">หัวข้อ guide เหตุผลที่เลือกซื้อ (กรณีลูกค้านึกไม่ออก)</span>
-        <div class="opts" style="margin-top:5px">
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="ประสิทธิภาพการทำงาน"> ประสิทธิภาพการทำงาน</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="ความทนทาน/อายุการใช้งาน"> ความทนทาน / อายุการใช้งาน</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="อัตราการประหยัดน้ำมัน"> อัตราการประหยัดน้ำมัน</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="ฟังก์ชันและคุณสมบัติพิเศษ"> ฟังก์ชัน / คุณสมบัติพิเศษ</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="ราคาที่เหมาะสม"> ราคาที่เหมาะสม</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="มีบริการสินเชื่อ/ผ่อนได้"> มีสินเชื่อ / ผ่อนได้</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="อะไหล่หาง่าย"> อะไหล่หาง่าย</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="มีทีมช่างพร้อมบริการดี"> มีทีมช่างบริการดี</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="แบรนด์ที่เชื่อถือได้"> แบรนด์เชื่อถือได้</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="การรับประกัน 3 ปี"> รับประกัน 3 ปี</label>
-          <label class="chk"><input type="checkbox" name="mkt.buyFactors" value="คนรู้จัก/ผู้ใช้จริงแนะนำ"> คนรู้จักแนะนำ</label>
-        </div>
-      </div>
-      <div class="f row full" style="margin-top:10px">
-        <label for="mk_usedOther">เคยใช้เครื่องยนต์แบรนด์อื่นมาก่อนหรือไม่</label>
-        <select id="mk_usedOther" name="mkt.usedOtherBrand"><option value="">— เลือก —</option><option>เคยใช้</option><option>ไม่เคย (ใช้คูโบต้าอย่างเดียว)</option></select>
+        <span class="legend">หัวข้อ guide เหตุผลที่เลือกซื้อ (สำหรับถามลูกค้า — ไม่ต้องติ๊ก)</span>
+        <ul class="guide-list" style="margin-top:4px">
+          <li>ประสิทธิภาพการทำงาน</li>
+          <li>ความทนทาน / อายุการใช้งาน</li>
+          <li>อัตราการประหยัดน้ำมัน</li>
+          <li>ฟังก์ชัน / คุณสมบัติพิเศษ</li>
+          <li>ราคาที่เหมาะสม</li>
+          <li>มีสินเชื่อ / ผ่อนได้</li>
+          <li>อะไหล่หาง่าย</li>
+          <li>มีทีมช่างบริการดี</li>
+          <li>แบรนด์เชื่อถือได้</li>
+          <li>การรับประกัน 3 ปี</li>
+          <li>คนรู้จักแนะนำ</li>
+        </ul>
       </div>
 
-      <div id="cmpGrid" class="cmp2" style="margin-top:12px">
+      <div class="f full" style="margin-top:10px">
+        <span class="legend">เคยใช้เครื่องยนต์แบรนด์อื่นมาก่อนหรือไม่</span>
+        <div class="opts" style="margin-top:5px;grid-template-columns:none;display:flex;gap:8px">
+          <label class="chk" style="border:1px solid var(--line-strong);border-radius:7px;padding:6px 12px"><input type="radio" name="mkt.usedOtherBrand" value="เคยใช้"> เคยใช้แบรนด์อื่น</label>
+          <label class="chk" style="border:1px solid var(--line-strong);border-radius:7px;padding:6px 12px"><input type="radio" name="mkt.usedOtherBrand" value="ไม่เคย"> ไม่เคย (ใช้คูโบต้าอย่างเดียว)</label>
+        </div>
+      </div>
+
+      <div id="cmpGrid" class="cmp2 dual" style="margin-top:12px">
         <div class="colstack">
-          <span class="colhead">คูโบต้า ZT Plus</span>
+          <span class="colhead">KUBOTA ZT Plus</span>
           <div class="f"><label>เหตุผลหลักที่เลือกซื้อ</label><textarea name="mkt.k.buyReason"></textarea></div>
-          <div class="f"><label>ประสบการณ์ — ด้านสินค้า</label><input type="text" name="mkt.k.exp.product"></div>
-          <div class="f"><label>ด้านอะไหล่ / บริการ</label><input type="text" name="mkt.k.exp.service"></div>
-          <div class="f"><label>การดูแลของผู้แทนจำหน่าย</label><input type="text" name="mkt.k.exp.dealer"></div>
-          <div class="f"><label>3 เรื่องที่ชอบที่สุด (จัดอันดับ)</label>
+          <span class="subhead">ประสบการณ์การใช้งาน</span>
+          <div class="f"><label><span class="exp-tag exp-a">ด้านสินค้า</span></label><textarea name="mkt.k.exp.product"></textarea></div>
+          <div class="f"><label><span class="exp-tag exp-b">ด้านอะไหล่ / บริการ</span></label><textarea name="mkt.k.exp.service"></textarea></div>
+          <div class="f"><label><span class="exp-tag exp-c">การดูแลของผู้แทนจำหน่าย</span></label><textarea name="mkt.k.exp.dealer"></textarea></div>
+          <span class="colhead good" style="margin-top:6px">3 เรื่องที่ชอบที่สุด</span>
+          <div class="f rankset">
             <input type="text" name="mkt.k.like.1" placeholder="อันดับ 1">
             <input type="text" name="mkt.k.like.2" placeholder="อันดับ 2">
             <input type="text" name="mkt.k.like.3" placeholder="อันดับ 3">
           </div>
-          <div class="f"><label>3 เรื่องที่ไม่ชอบที่สุด (จัดอันดับ)</label>
+          <span class="colhead bad" style="margin-top:6px">3 เรื่องที่ไม่ชอบที่สุด</span>
+          <div class="f rankset">
             <input type="text" name="mkt.k.dislike.1" placeholder="อันดับ 1">
             <input type="text" name="mkt.k.dislike.2" placeholder="อันดับ 2">
             <input type="text" name="mkt.k.dislike.3" placeholder="อันดับ 3">
           </div>
         </div>
 
-        <div class="colstack" id="otherCol" hidden>
+        <div class="colstack dim-other" id="otherCol">
           <span class="colhead">แบรนด์อื่น: <input type="text" name="mkt.o.brand" class="brand-inline" placeholder="ระบุยี่ห้อ"></span>
           <div class="f"><label>เหตุผลหลักที่เลือกซื้อ (ตอนนั้น)</label><textarea name="mkt.o.buyReason"></textarea></div>
-          <div class="f"><label>ประสบการณ์ — ด้านสินค้า</label><input type="text" name="mkt.o.exp.product"></div>
-          <div class="f"><label>ด้านอะไหล่ / บริการ</label><input type="text" name="mkt.o.exp.service"></div>
-          <div class="f"><label>การดูแลของผู้แทนจำหน่าย</label><input type="text" name="mkt.o.exp.dealer"></div>
-          <div class="f"><label>3 เรื่องที่ชอบที่สุด (จัดอันดับ)</label>
+          <span class="subhead">ประสบการณ์การใช้งาน</span>
+          <div class="f"><label><span class="exp-tag exp-a">ด้านสินค้า</span></label><textarea name="mkt.o.exp.product"></textarea></div>
+          <div class="f"><label><span class="exp-tag exp-b">ด้านอะไหล่ / บริการ</span></label><textarea name="mkt.o.exp.service"></textarea></div>
+          <div class="f"><label><span class="exp-tag exp-c">การดูแลของผู้แทนจำหน่าย</span></label><textarea name="mkt.o.exp.dealer"></textarea></div>
+          <span class="colhead good" style="margin-top:6px">3 เรื่องที่ชอบที่สุด</span>
+          <div class="f rankset">
             <input type="text" name="mkt.o.like.1" placeholder="อันดับ 1">
             <input type="text" name="mkt.o.like.2" placeholder="อันดับ 2">
             <input type="text" name="mkt.o.like.3" placeholder="อันดับ 3">
           </div>
-          <div class="f"><label>3 เรื่องที่ไม่ชอบที่สุด (จัดอันดับ)</label>
+          <span class="colhead bad" style="margin-top:6px">3 เรื่องที่ไม่ชอบที่สุด</span>
+          <div class="f rankset">
             <input type="text" name="mkt.o.dislike.1" placeholder="อันดับ 1">
             <input type="text" name="mkt.o.dislike.2" placeholder="อันดับ 2">
             <input type="text" name="mkt.o.dislike.3" placeholder="อันดับ 3">
@@ -712,30 +733,19 @@
       <div class="shared-q">
         <span class="colhead">ปัญหาที่เจอระหว่างใช้เครื่องยนต์</span>
         <div class="grid c2">
-          <div class="f"><label>ปัญหาที่เจอ — คูโบต้า ZT Plus</label><textarea name="mkt.k.problems"></textarea></div>
-          <div class="f only-other"><label>ปัญหาที่เจอ — แบรนด์อื่น</label><textarea name="mkt.o.problems"></textarea></div>
+          <div class="f">
+            <label>ปัญหาที่เจอ — <span class="kubota-word">KUBOTA ZT Plus</span></label>
+            <textarea name="mkt.k.problems"></textarea>
+            <label style="margin-top:6px">กระทบการทำงาน / รายได้แค่ไหน</label>
+            <select name="mkt.k.problemImpact"><option value="">— เลือก —</option><option>กระทบมาก</option><option>กระทบปานกลาง</option><option>กระทบน้อย</option><option>ไม่กระทบ</option></select>
+          </div>
+          <div class="f dim-other" id="oProblemCol">
+            <label>ปัญหาที่เจอ — แบรนด์อื่น</label>
+            <textarea name="mkt.o.problems"></textarea>
+            <label style="margin-top:6px">กระทบการทำงาน / รายได้แค่ไหน</label>
+            <select name="mkt.o.problemImpact"><option value="">— เลือก —</option><option>กระทบมาก</option><option>กระทบปานกลาง</option><option>กระทบน้อย</option><option>ไม่กระทบ</option></select>
+          </div>
         </div>
-        <div class="f row full" style="margin-top:10px">
-          <label for="ex_impact">ปัญหาเหล่านี้กระทบการทำงาน / รายได้แค่ไหน</label>
-          <select id="ex_impact" name="mkt.problemImpact"><option value="">— เลือก —</option><option>กระทบมาก</option><option>กระทบปานกลาง</option><option>กระทบน้อย</option><option>ไม่กระทบ</option></select>
-        </div>
-      </div>
-    </div>
-
-    <div class="block">
-      <h3>ความพึงพอใจ</h3>
-      <div class="sub">หัวข้อ guide — ให้ลูกค้าเล่าและให้คะแนนแต่ละด้าน (1 = น้อยที่สุด, 5 = มากที่สุด) แล้วสรุปในช่องด้านล่าง</div>
-      <ul class="guide-list">
-        <li>ประสิทธิภาพของเครื่องยนต์ ZT Plus</li>
-        <li>อัตราการใช้น้ำมัน / เชื้อเพลิง</li>
-        <li>การบำรุงรักษา ง่ายและสะดวก</li>
-        <li>บริการหลังการขายของคูโบต้า</li>
-        <li>ความทนทาน ใช้งานได้ยาวนาน</li>
-        <li>การออกแบบและฟังก์ชันการใช้งาน</li>
-      </ul>
-      <div class="f full" style="margin-top:8px">
-        <label for="sat_note">สรุปคะแนน + ความเห็นแต่ละด้าน</label>
-        <textarea id="sat_note" name="mkt.satisfaction" placeholder="เช่น ประสิทธิภาพ 4 / น้ำมัน 5 / บำรุงรักษา 4 / บริการ 3 (รอช่างนาน) / ความทนทาน 5 / ดีไซน์ 4"></textarea>
       </div>
     </div>
 
@@ -778,13 +788,14 @@
 
     <div class="block">
       <h3>Emotional / Brand</h3>
-      <div class="grid c2">
-        <div class="f full"><label for="em_top">นึกถึงคูโบต้า นึกถึงอะไรเป็นอย่างแรก (ขอ 3 คำ)</label><input type="text" id="em_top" name="brand.topOfMind"></div>
-        <div class="f full"><label for="em_better">คูโบต้าเหนือกว่าคู่แข่งเรื่องอะไร</label><textarea id="em_better" name="brand.betterThan"></textarea></div>
-        <div class="f full"><label for="em_worse">คู่แข่งเหนือกว่าคูโบต้าเรื่องอะไร</label><textarea id="em_worse" name="brand.worseThan"></textarea></div>
-        <div class="f full"><label for="em_gone">ถ้าวันหนึ่งเครื่องยนต์คูโบต้าหายไปจากตลาด ลูกค้าจะรู้สึกอย่างไร</label><textarea id="em_gone" name="brand.ifGone"></textarea></div>
-        <div class="f full"><label for="em_future">เหตุผลที่จะกลับมาซื้อคูโบต้าอีกในอนาคต</label><textarea id="em_future" name="brand.futureReason"></textarea></div>
+      <div class="f full"><label for="em_top">นึกถึงคูโบต้า นึกถึงอะไรเป็นอย่างแรก</label><input type="text" id="em_top" name="brand.topOfMind"></div>
+      <div class="f full" style="margin-top:8px"><label for="em_3w">ขอ 3 คำ ให้กับเครื่องยนต์คูโบต้า</label><input type="text" id="em_3w" name="brand.threeWords" placeholder="เช่น จบ ทุก งาน / แกร่ง ทนทาน / แรง ถึก ทน"></div>
+      <div class="grid c2" style="margin-top:8px">
+        <div class="f"><label for="em_better"><span class="kubota-word">คูโบต้า</span> เหนือกว่าคู่แข่งเรื่องอะไร</label><textarea id="em_better" name="brand.betterThan"></textarea></div>
+        <div class="f"><label for="em_worse"><span class="rival-word">คู่แข่ง</span> เหนือกว่าคูโบต้าเรื่องอะไร</label><textarea id="em_worse" name="brand.worseThan"></textarea></div>
       </div>
+      <div class="f full" style="margin-top:8px"><label for="em_gone">ถ้าวันหนึ่งเครื่องยนต์คูโบต้าหายไปจากตลาด ลูกค้าจะรู้สึกอย่างไร</label><textarea id="em_gone" name="brand.ifGone"></textarea></div>
+      <div class="f full" style="margin-top:8px"><label for="em_future">เหตุผลที่จะกลับมาซื้อคูโบต้าอีกในอนาคต</label><textarea id="em_future" name="brand.futureReason"></textarea></div>
     </div>
 
     <div class="block">
@@ -915,7 +926,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
 
   /* ---------- engine list repeater ---------- */
   var engineRows=document.getElementById("engineRows");
-  var EBRANDS=["คูโบต้า","YANMAR","GOLDEN BOW","KAWAMA","I-POWER","อื่นๆ"];
+  var EBRANDS=["KUBOTA","YANMAR","GOLDEN BOW","KAWAMA","I-POWER","อื่นๆ"];
   var EMODELS=["ZT100Plus","ZT110Plus","ZT120Plus","ZT125Plus","ZT140Plus","ZT155Plus","ZT180Plus","ไม่ทราบรุ่น"];
   var ESTART=["มือหมุน (STD)","มอเตอร์สตาร์ท (ES)","สวิตช์กุญแจ (SW)"];
   var EAGES=["< 1 ปี","1–2 ปี","2–5 ปี","6–10 ปี","> 10 ปี"];
@@ -934,7 +945,8 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     row.innerHTML=
       '<button type="button" class="er-x" aria-label="ลบแถว">×</button>'+
       '<div class="er-grid">'+
-        '<div><span class="er-lbl">แบรนด์</span><select class="er-brand">'+opt(EBRANDS,d.brand)+'</select></div>'+
+        '<div><span class="er-lbl">แบรนด์</span><select class="er-brand">'+opt(EBRANDS,d.brand)+'</select>'+
+          '<input class="er-brand-other" type="text" placeholder="ระบุแบรนด์" style="margin-top:4px" hidden></div>'+
         '<div><span class="er-lbl">รุ่นที่ใช้</span><select class="er-model">'+opt(EMODELS,d.model)+'</select></div>'+
         '<div><span class="er-lbl">ระบบสตาร์ท</span><select class="er-start">'+opt(ESTART,d.start)+'</select></div>'+
         '<div><span class="er-lbl">จำนวน (เครื่อง)</span><input class="er-qty" type="number" min="0" placeholder="เช่น 3"></div>'+
@@ -945,6 +957,10 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       '<input class="er-use-other" type="text" placeholder="อื่นๆ โปรดระบุ" style="margin-top:5px;max-width:280px">';
     row.querySelector(".er-qty").value=d.qty||"";
     row.querySelector(".er-use-other").value=d.useOther||"";
+    var bOther=row.querySelector(".er-brand-other"); bOther.value=d.brandOther||"";
+    var bSel=row.querySelector(".er-brand");
+    function brandToggle(){ bOther.hidden = bSel.value!=="อื่นๆ"; }
+    bSel.addEventListener("change",brandToggle); brandToggle();
     fillRowUsage(row, Array.isArray(d.use)?d.use:[]);
     row.querySelector(".er-x").addEventListener("click",function(){ row.remove(); if(!engineRows.children.length) engineRowEl(); saveDraft(); });
     engineRows.appendChild(row);
@@ -961,10 +977,11 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     var out=[];
     engineRows.querySelectorAll(".engine-row").forEach(function(r){
       var use=[]; r.querySelectorAll(".er-use-cb:checked").forEach(function(i){ use.push(i.value); });
-      var o={brand:r.querySelector(".er-brand").value,model:r.querySelector(".er-model").value,
+      var o={brand:r.querySelector(".er-brand").value,brandOther:r.querySelector(".er-brand-other").value,
+        model:r.querySelector(".er-model").value,
         start:r.querySelector(".er-start").value,qty:r.querySelector(".er-qty").value,
         age:r.querySelector(".er-age").value,use:use,useOther:r.querySelector(".er-use-other").value};
-      if(o.brand||o.model||o.start||o.qty||o.age||use.length||o.useOther) out.push(o);
+      if(o.brand||o.brandOther||o.model||o.start||o.qty||o.age||use.length||o.useOther) out.push(o);
     });
     return out;
   }
@@ -1008,14 +1025,12 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   mtFuel.addEventListener("change",applyFuel);
 
   /* ---------- conditional: used other brand -> comparison column ---------- */
-  var mkUsedOther=document.getElementById("mk_usedOther");
   function applyCompare(){
-    var on=mkUsedOther.value==="เคยใช้";
-    document.getElementById("otherCol").hidden=!on;
-    document.getElementById("cmpGrid").classList.toggle("dual",on);
-    document.querySelectorAll(".only-other").forEach(function(el){ el.hidden=!on; });
+    var r=form.querySelector('input[name="mkt.usedOtherBrand"]:checked');
+    var notUsed=!!(r && r.value==="ไม่เคย");
+    document.querySelectorAll(".dim-other").forEach(function(el){ el.classList.toggle("is-dim",notUsed); });
   }
-  mkUsedOther.addEventListener("change",applyCompare);
+  form.querySelectorAll('input[name="mkt.usedOtherBrand"]').forEach(function(i){ i.addEventListener("change",applyCompare); });
 
   /* ---------- generic reveal (select value -> block) ---------- */
   form.querySelectorAll('[data-reveal]').forEach(function(sel){
