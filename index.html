@@ -145,11 +145,13 @@
   .rank span{font-size:12.5px}
   .rank select{padding:4px 6px}
 
-  .engine-row{display:grid;gap:8px;grid-template-columns:1fr 1fr;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px;position:relative}
-  @media(min-width:620px){.engine-row{grid-template-columns:1.1fr 1.1fr .8fr .7fr 1.3fr}}
+  .engine-row{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px 10px 12px;margin-bottom:8px;position:relative}
+  .engine-row .er-grid{display:grid;gap:8px 10px;grid-template-columns:1fr 1fr}
+  @media(min-width:560px){.engine-row .er-grid{grid-template-columns:1fr 1fr 1fr}}
   .engine-row input,.engine-row select{padding:6px 8px;font-size:13px;background:var(--surface)}
-  .engine-row .er-x{position:absolute;top:6px;right:6px;border:0;background:none;color:var(--crit);font-size:16px;line-height:1;cursor:pointer;padding:2px 4px}
-  .engine-row .er-lbl{font-size:10.5px;color:var(--ink-faint);display:block;margin-bottom:2px}
+  .engine-row .er-x{position:absolute;top:5px;right:5px;border:0;background:none;color:var(--crit);font-size:17px;line-height:1;cursor:pointer;padding:2px 5px}
+  .engine-row .er-lbl{font-size:10.5px;color:var(--ink-soft);font-weight:600;display:block;margin-bottom:2px}
+  .engine-row .er-usage{background:transparent}
 
   .guide-list{margin:2px 0 0;padding-left:0;list-style:none;display:grid;gap:3px 14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
   .guide-list li{font-size:13px;color:var(--ink);padding-left:14px;position:relative;line-height:1.4}
@@ -262,6 +264,13 @@
     <div class="part-head"><span class="part-num">ส่วนที่ 1</span><h2>ข้อมูลทั่วไป</h2></div>
 
     <div class="block">
+      <div class="f row full">
+        <label for="m_date">วันที่สัมภาษณ์</label>
+        <input type="date" id="m_date" name="meta.date">
+      </div>
+    </div>
+
+    <div class="block">
       <h3>ปัจจุบันประกอบธุรกิจฟาร์มปศุสัตว์อะไร *</h3>
       <div class="sub">เริ่มจากเลือกประเภทฟาร์มก่อน — คำถามการใช้งานเครื่องยนต์และส่วนที่ 2 จะปรับให้ตรงประเภทฟาร์ม</div>
       <div class="opts" id="farmTypeOpts">
@@ -269,22 +278,23 @@
         <label class="chk has"><input type="radio" name="general.farmType" value="ไก่"> ฟาร์มไก่</label>
         <label class="chk has"><input type="radio" name="general.farmType" value="กุ้ง"> ฟาร์มกุ้ง</label>
       </div>
-      <div class="grid c2" style="margin-top:12px">
-        <div class="f">
-          <label for="c_affil">สังกัดฟาร์ม / รูปแบบธุรกิจ</label>
-          <select id="c_affil" name="general.affiliation">
-            <option value="">— เลือก —</option>
-            <option>อิสระ / รายย่อย</option><option>คอนแทรคฟาร์ม CP (CPF)</option><option>คอนแทรคฟาร์ม Betagro</option>
-            <option>คอนแทรคฟาร์ม เครืออื่น</option><option>ฟาร์มเครือใหญ่ (ลูกจ้างบริษัท)</option><option>อื่นๆ</option>
-          </select>
+      <div class="f full" style="margin-top:12px">
+        <label for="c_affil">สังกัดฟาร์ม / รูปแบบธุรกิจ</label>
+        <select id="c_affil" name="general.affiliation" style="max-width:340px">
+          <option value="">— เลือก —</option>
+          <option>อิสระ / รายย่อย</option><option>คอนแทรคฟาร์ม CP (CPF)</option><option>คอนแทรคฟาร์ม Betagro</option>
+          <option>คอนแทรคฟาร์ม เครืออื่น</option><option>ฟาร์มเครือใหญ่ (ลูกจ้างบริษัท)</option><option>อื่นๆ</option>
+        </select>
+      </div>
+      <div class="f full" style="margin-top:12px">
+        <span class="legend">รูปแบบโรงเรือน (เลือกได้หลายข้อ)</span>
+        <div class="opts" style="margin-top:5px">
+          <label class="chk"><input type="checkbox" name="general.houseType" value="เล้าเปิด (ธรรมชาติ)"> เล้าเปิด (ธรรมชาติ)</label>
+          <label class="chk"><input type="checkbox" name="general.houseType" value="เล้าปิด EVAP (ปรับอากาศ)"> เล้าปิด EVAP (ปรับอากาศ)</label>
+          <label class="chk"><input type="checkbox" name="general.houseType" value="กึ่งเปิด / พัดลมช่วย"> กึ่งเปิด / พัดลมช่วย</label>
+          <label class="chk"><input type="checkbox" id="houseOtherChk" name="general.houseType" value="อื่นๆ"> อื่นๆ</label>
         </div>
-        <div class="f">
-          <label for="c_house">รูปแบบโรงเรือน</label>
-          <select id="c_house" name="general.houseType">
-            <option value="">— เลือก —</option>
-            <option>เล้าเปิด (ธรรมชาติ)</option><option>เล้าปิด EVAP (ปรับอากาศ)</option><option>กึ่งเปิด / พัดลมช่วย</option>
-          </select>
-        </div>
+        <input type="text" id="houseOther" name="general.houseTypeOther" placeholder="ระบุรูปแบบโรงเรือนอื่นๆ" style="margin-top:6px;max-width:340px" hidden>
       </div>
     </div>
 
@@ -303,12 +313,15 @@
           </select>
         </div>
         <div class="f">
-          <label for="c_exp">ทำฟาร์มมากี่ปี</label>
+          <label for="c_exp">ทำฟาร์มมานานเท่าไร</label>
           <select id="c_exp" name="general.yearsFarming">
-            <option value="">— เลือก —</option><option>&lt; 2 ปี</option><option>2–5 ปี</option><option>6–10 ปี</option><option>11–20 ปี</option><option>&gt; 20 ปี</option>
+            <option value="">— เลือก —</option>
+            <option>&lt; 1 ปี</option>
+            <option>1–2 ปี</option>
+            <option>2–5 ปี</option>
+            <option>&gt; 5 ปี</option>
           </select>
         </div>
-        <div class="f"><label for="m_date">วันที่สัมภาษณ์</label><input type="date" id="m_date" name="meta.date"></div>
       </div>
     </div>
 
@@ -328,44 +341,19 @@
 
     <div class="block">
       <h3>เครื่องยนต์ที่ถือครอง</h3>
-      <div class="grid c3">
-        <div class="f"><label for="e_kubota">จำนวนเครื่องยนต์คูโบต้า (เครื่อง)</label><input type="number" id="e_kubota" name="engine.countKubota" min="0"></div>
-        <div class="f"><label for="e_total">จำนวนเครื่องยนต์รวมทุกแบรนด์</label><input type="number" id="e_total" name="engine.countTotal" min="0"></div>
-        <div class="f">
-          <label for="e_brand">แบรนด์เครื่องยนต์หลักที่ใช้</label>
-          <select id="e_brand" name="engine.mainBrand">
-            <option value="">— เลือก —</option>
-            <option>คูโบต้า</option><option>ยันม่าร์</option><option>มิตซูบิชิ</option><option>ไทเกอร์ / จีน</option><option>อื่นๆ</option>
-          </select>
+      <div class="grid c2">
+        <div class="colstack">
+          <span class="colhead">ภาพรวม</span>
+          <div class="f"><label for="e_kubota">จำนวนเครื่องยนต์คูโบต้า (เครื่อง)</label><input type="number" id="e_kubota" name="engine.countKubota" min="0"></div>
+          <div class="f"><label for="e_total">จำนวนเครื่องยนต์รวมทุกแบรนด์ (เครื่อง)</label><input type="number" id="e_total" name="engine.countTotal" min="0"></div>
+          <div class="f"><label for="e_hrs">ชั่วโมงใช้งานเครื่องยนต์ / วัน (เฉลี่ย)</label><input type="number" id="e_hrs" name="engine.hoursPerDay" min="0" max="24" step="0.5"></div>
         </div>
-        <div class="f">
-          <label for="e_model">รุ่นที่ใช้เป็นหลัก</label>
-          <select id="e_model" name="engine.ztModel">
-            <option value="">— เลือก —</option>
-            <option>ZT100Plus</option><option>ZT110Plus</option><option>ZT120Plus</option><option>ZT125Plus</option>
-            <option>ZT140Plus</option><option>ZT155Plus</option><option>ZT180Plus</option><option>ไม่ทราบรุ่น</option>
-          </select>
+        <div class="colstack">
+          <span class="colhead">รายการเครื่องยนต์ (แยกกรอกแต่ละรุ่น / แบรนด์)</span>
+          <div class="hint" style="margin-bottom:2px">เช่น ZT140Plus × 3 เครื่อง + ยันม่าร์ × 1 เครื่อง</div>
+          <div id="engineRows"></div>
+          <button type="button" class="btn ghost" id="addEngine" style="align-self:flex-start;font-size:12.5px;padding:6px 12px">+ เพิ่มเครื่องยนต์</button>
         </div>
-        <div class="f">
-          <label for="e_start">ระบบสตาร์ท</label>
-          <select id="e_start" name="engine.startSystem">
-            <option value="">— เลือก —</option><option>มือหมุน (STD)</option><option>มอเตอร์สตาร์ท (ES)</option><option>สวิตช์กุญแจ (SW)</option>
-          </select>
-        </div>
-        <div class="f"><label for="e_hrs">ชั่วโมงใช้งานเครื่องยนต์ / วัน (เฉลี่ย)</label><input type="number" id="e_hrs" name="engine.hoursPerDay" min="0" max="24" step="0.5"></div>
-      </div>
-
-      <div class="f full" style="margin-top:14px">
-        <span class="legend">นำเครื่องยนต์ไปใช้งานใดในฟาร์ม (เลือกได้หลายข้อ)</span>
-        <div class="opts" id="usageOpts" style="margin-top:6px"><span class="hint">เลือกประเภทฟาร์มด้านบนก่อน</span></div>
-        <input type="text" name="engine.usageOther" placeholder="อื่นๆ โปรดระบุ" style="margin-top:8px;max-width:340px">
-      </div>
-
-      <div class="f full" style="margin-top:16px">
-        <span class="legend">รายการเครื่องยนต์ — แยกกรอกกรณีมีหลายรุ่น / หลายแบรนด์</span>
-        <div class="hint" style="margin-bottom:6px">เช่น “ZT140Plus × 3 เครื่อง (พัดลม EVAP)” + “ยันม่าร์เก่า × 1 เครื่อง (สำรอง)” — ระบุเท่าที่ทราบ</div>
-        <div id="engineRows"></div>
-        <button type="button" class="btn ghost" id="addEngine" style="margin-top:8px;font-size:12.5px;padding:6px 12px">+ เพิ่มเครื่องยนต์</button>
       </div>
     </div>
   </section>
@@ -920,58 +908,65 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     selSub.value=o["general.addr.subdistrict"]||"";
   }
 
-  /* ---------- engine usage : adapts to farm type ---------- */
+  /* ---------- engine usage options : adapt to farm type ---------- */
   var USAGE={
-    "หมู":["พัดลม EVAP","ปั๊มน้ำแรงดันสูง (พ่นหมอก / ล้างเล้า)","ปั๊มน้ำ","ปั่นไฟ (เจนเนอเรเตอร์)","เครื่องให้อาหาร"],
-    "ไก่":["พัดลม EVAP","ปั๊มน้ำแรงดันสูง (พ่นหมอก / ล้างเล้า)","ปั๊มน้ำ","ปั่นไฟ (เจนเนอเรเตอร์)","เครื่องให้อาหาร"],
+    "หมู":["พัดลม EVAP","ปั๊มน้ำแรงดันสูง (พ่นหมอก / ล้างเล้า)"],
+    "ไก่":["พัดลม EVAP","ปั๊มน้ำแรงดันสูง (พ่นหมอก / ล้างเล้า)"],
     "กุ้ง":["เครื่องตีน้ำ / ใบพัดตีน้ำ","ปั๊มน้ำเข้า–ออกบ่อ","ปั่นไฟ (เจนเนอเรเตอร์)"]
   };
-  var usageOpts=document.getElementById("usageOpts");
-  function buildUsage(f,keep){
-    if(!keep){
-      keep=[]; usageOpts.querySelectorAll('input:checked').forEach(function(i){ keep.push(i.value); });
-    }
-    usageOpts.innerHTML="";
-    var list=USAGE[f];
-    if(!list){ usageOpts.innerHTML='<span class="hint">เลือกประเภทฟาร์มด้านบนก่อน</span>'; return; }
-    list.forEach(function(v){
-      var l=document.createElement("label"); l.className="chk";
-      l.innerHTML='<input type="checkbox" name="engine.usage" value="'+v.replace(/"/g,'&quot;')+'"> '+v;
-      if(keep.indexOf(v)>-1) l.querySelector("input").checked=true;
-      usageOpts.appendChild(l);
-    });
-  }
 
   /* ---------- engine list repeater ---------- */
   var engineRows=document.getElementById("engineRows");
-  var EBRANDS=["คูโบต้า","ยันม่าร์","มิตซูบิชิ","ไทเกอร์ / จีน","อื่นๆ"];
-  var EAGES=["< 1 ปี","1–2 ปี","3–5 ปี","6–10 ปี","> 10 ปี"];
+  var EBRANDS=["คูโบต้า","YANMAR","GOLDEN BOW","KAWAMA","I-POWER","อื่นๆ"];
+  var EMODELS=["ZT100Plus","ZT110Plus","ZT120Plus","ZT125Plus","ZT140Plus","ZT155Plus","ZT180Plus","ไม่ทราบรุ่น"];
+  var ESTART=["มือหมุน (STD)","มอเตอร์สตาร์ท (ES)","สวิตช์กุญแจ (SW)"];
+  var EAGES=["< 1 ปี","1–2 ปี","2–5 ปี","6–10 ปี","> 10 ปี"];
+  function opt(list,sel){ return '<option value="">–</option>'+list.map(function(v){return '<option'+(v===sel?' selected':'')+'>'+v+'</option>'}).join(''); }
+  function fillRowUsage(row,checked){
+    var box=row.querySelector(".er-usage"); checked=checked||[];
+    var f=currentFarm(), list=USAGE[f];
+    if(!list){ box.innerHTML='<span class="hint">เลือกประเภทฟาร์มด้านบนก่อน</span>'; return; }
+    box.innerHTML=list.map(function(v){
+      return '<label class="chk"><input type="checkbox" class="er-use-cb" value="'+v.replace(/"/g,'&quot;')+'"'+(checked.indexOf(v)>-1?' checked':'')+'> '+v+'</label>';
+    }).join('');
+  }
   function engineRowEl(d){
     d=d||{};
     var row=document.createElement("div"); row.className="engine-row";
     row.innerHTML=
-      '<div><span class="er-lbl">แบรนด์</span><select class="er-brand"><option value="">–</option>'+
-        EBRANDS.map(function(b){return '<option'+(d.brand===b?' selected':'')+'>'+b+'</option>'}).join('')+'</select></div>'+
-      '<div><span class="er-lbl">รุ่น / รายละเอียด</span><input class="er-model" type="text" placeholder="เช่น ZT140Plus"></div>'+
-      '<div><span class="er-lbl">อายุ</span><select class="er-age"><option value="">–</option>'+
-        EAGES.map(function(a){return '<option'+(d.age===a?' selected':'')+'>'+a+'</option>'}).join('')+'</select></div>'+
-      '<div><span class="er-lbl">จำนวน (เครื่อง)</span><input class="er-qty" type="number" min="0" placeholder="เช่น 3"></div>'+
-      '<div><span class="er-lbl">ใช้งานหลัก</span><input class="er-use" type="text" placeholder="เช่น พัดลม EVAP"></div>'+
-      '<button type="button" class="er-x" aria-label="ลบแถว">×</button>';
-    row.querySelector(".er-model").value=d.model||"";
+      '<button type="button" class="er-x" aria-label="ลบแถว">×</button>'+
+      '<div class="er-grid">'+
+        '<div><span class="er-lbl">แบรนด์</span><select class="er-brand">'+opt(EBRANDS,d.brand)+'</select></div>'+
+        '<div><span class="er-lbl">รุ่นที่ใช้</span><select class="er-model">'+opt(EMODELS,d.model)+'</select></div>'+
+        '<div><span class="er-lbl">ระบบสตาร์ท</span><select class="er-start">'+opt(ESTART,d.start)+'</select></div>'+
+        '<div><span class="er-lbl">จำนวน (เครื่อง)</span><input class="er-qty" type="number" min="0" placeholder="เช่น 3"></div>'+
+        '<div><span class="er-lbl">อายุเครื่องยนต์</span><select class="er-age">'+opt(EAGES,d.age)+'</select></div>'+
+      '</div>'+
+      '<span class="er-lbl" style="margin-top:8px">นำเครื่องยนต์ไปใช้งานใดในฟาร์ม (เลือกได้หลายข้อ)</span>'+
+      '<div class="opts er-usage" style="margin-top:3px"></div>'+
+      '<input class="er-use-other" type="text" placeholder="อื่นๆ โปรดระบุ" style="margin-top:5px;max-width:280px">';
     row.querySelector(".er-qty").value=d.qty||"";
-    row.querySelector(".er-use").value=d.use||"";
+    row.querySelector(".er-use-other").value=d.useOther||"";
+    fillRowUsage(row, Array.isArray(d.use)?d.use:[]);
     row.querySelector(".er-x").addEventListener("click",function(){ row.remove(); if(!engineRows.children.length) engineRowEl(); saveDraft(); });
     engineRows.appendChild(row);
     return row;
   }
   document.getElementById("addEngine").addEventListener("click",function(){ engineRowEl(); });
+  function rebuildRowUsages(){
+    engineRows.querySelectorAll(".engine-row").forEach(function(r){
+      var checked=[]; r.querySelectorAll(".er-use-cb:checked").forEach(function(i){ checked.push(i.value); });
+      fillRowUsage(r,checked);
+    });
+  }
   function collectEngines(){
     var out=[];
     engineRows.querySelectorAll(".engine-row").forEach(function(r){
+      var use=[]; r.querySelectorAll(".er-use-cb:checked").forEach(function(i){ use.push(i.value); });
       var o={brand:r.querySelector(".er-brand").value,model:r.querySelector(".er-model").value,
-        age:r.querySelector(".er-age").value,qty:r.querySelector(".er-qty").value,use:r.querySelector(".er-use").value};
-      if(o.brand||o.model||o.age||o.qty||o.use) out.push(o);
+        start:r.querySelector(".er-start").value,qty:r.querySelector(".er-qty").value,
+        age:r.querySelector(".er-age").value,use:use,useOther:r.querySelector(".er-use-other").value};
+      if(o.brand||o.model||o.start||o.qty||o.age||use.length||o.useOther) out.push(o);
     });
     return out;
   }
@@ -985,7 +980,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     var r=form.querySelector('input[name="general.farmType"]:checked');
     return r?r.value:"";
   }
-  function applyFarm(keepUsage){
+  function applyFarm(){
     var f=currentFarm();
     var map={"หมู":"only-pig","ไก่":"only-chicken","กุ้ง":"only-shrimp"};
     document.querySelectorAll('[data-farm]').forEach(function(el){
@@ -994,9 +989,14 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       el.hidden=!show;
     });
     document.getElementById("p2gate").style.display=f?"none":"";
-    buildUsage(f,keepUsage);
+    rebuildRowUsages();
   }
   form.querySelectorAll('input[name="general.farmType"]').forEach(function(r){ r.addEventListener("change",function(){applyFarm();}); });
+
+  /* ---------- house type: อื่นๆ text toggle ---------- */
+  var houseOtherChk=document.getElementById("houseOtherChk"), houseOther=document.getElementById("houseOther");
+  function applyHouseOther(){ houseOther.hidden=!houseOtherChk.checked; }
+  houseOtherChk.addEventListener("change",applyHouseOther);
 
   /* ---------- conditional: engine fuel -> maintenance lists ---------- */
   var mtFuel=document.getElementById("mt_fuel");
@@ -1121,10 +1121,9 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   }
   function restore(o){
     clearForm(true);
-    // farm type first so the usage list is built for the right farm
+    // farm type first so the per-engine usage list is built for the right farm
     var ft=o["general.farmType"];
     if(ft){ var rr=form.querySelector('input[name="general.farmType"][value="'+ft+'"]'); if(rr) rr.checked=true; }
-    applyFarm(Array.isArray(o["engine.usage"])?o["engine.usage"]:[]);
     Object.keys(o).forEach(function(k){
       var els=form.querySelectorAll('[name="'+k+'"]');
       if(!els.length) return;
@@ -1135,7 +1134,6 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
         else { el.value=val; }
       });
     });
-    fillEngines(o["engine.list"]);
     setAddress(o);
     if(Array.isArray(o["mkt.channelsRanked"])){
       o["mkt.channelsRanked"].forEach(function(c){
@@ -1149,7 +1147,8 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       if(Array.isArray(m.photos)&&m.photos.length){ photos=m.photos.slice(); renderPhotos(); }
       if(m.videoBlob){ setVideo(m.videoBlob,m.videoName); }
     }); }
-    applyFarm(); applyFuel(); applyCompare();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther();
+    fillEngines(o["engine.list"]);
     form.querySelectorAll('[data-reveal]').forEach(function(s){ s.dispatchEvent(new Event("change")); });
   }
 
@@ -1158,7 +1157,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     photos=[]; renderPhotos(); setVideo(null);
     selProv.value=""; onProv();
     fillEngines(null);
-    applyFarm([]); applyFuel(); applyCompare();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther();
     form.querySelectorAll('[data-reveal]').forEach(function(s){ var t=document.querySelector(s.getAttribute("data-reveal")); if(t)t.classList.remove("on"); });
     if(!silent){ safeLS(function(){localStorage.removeItem(LS_DRAFT)}); toast("ล้างฟอร์มแล้ว"); }
   }
@@ -1358,8 +1357,8 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
 
   /* ---------- init ---------- */
   (function initDate(){ var d=document.getElementById("m_date"); if(!d.value) d.value=new Date().toISOString().slice(0,10); })();
-  fillEngines(null); renderPhotos();
-  applyFarm([]); applyFuel(); applyCompare();
+  renderPhotos();
+  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); fillEngines(null);
   var draft=safeLS(function(){return JSON.parse(localStorage.getItem(LS_DRAFT)||"null")});
   if(draft){ try{ restore(draft); }catch(e){} }
   refreshCount();
