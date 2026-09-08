@@ -163,6 +163,11 @@
   .dim-other.is-dim::before{content:"ลูกค้าใช้คูโบต้าอย่างเดียว — ไม่ต้องกรอกฝั่งนี้";display:block;font-size:10.5px;font-weight:700;color:var(--crit);margin-bottom:5px}
   .brand-inline{display:inline-block!important;width:auto!important;max-width:150px;padding:2px 7px!important;font-size:12px;font-weight:400;margin-left:4px}
   .shared-q{margin-top:12px;padding-top:11px;border-top:1px dashed var(--line-strong)}
+  .final-note{margin:20px 0 4px;background:var(--accent-soft);border:2px solid var(--accent);border-radius:14px;
+    padding:15px 17px;box-shadow:var(--shadow)}
+  .final-note h3{font-size:15px;font-weight:700;color:var(--accent-ink)}
+  .final-note p{margin:4px 0 9px;font-size:12px;color:var(--ink-soft)}
+  .final-note textarea{min-height:78px;background:#fff;border-color:color-mix(in srgb,var(--accent) 40%,var(--line-strong))}
   .f.full{grid-column:1/-1}
   .f.row{flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap}
   .f.row > label{flex:1;min-width:150px}
@@ -847,9 +852,6 @@
       <div class="f full" style="margin-top:8px"><label for="em_future">เหตุผลที่จะกลับมาซื้อคูโบต้าอีกในอนาคต</label><textarea id="em_future" name="brand.futureReason"></textarea></div>
     </div>
 
-    <div class="block">
-      <div class="f full"><label for="mk_extra">ข้อเสนอแนะเพิ่มเติม (ปลายเปิด พูดได้ทุกเรื่อง)</label><textarea id="mk_extra" name="mkt.suggestions"></textarea></div>
-    </div>
   </section>
 
   <!-- ============ PART 4 ============ -->
@@ -878,6 +880,12 @@
       </div>
     </div>
   </section>
+
+  <div class="final-note">
+    <h3>ข้อเสนอแนะเพิ่มเติม</h3>
+    <p>ปลายเปิด พูดได้ทุกเรื่อง — สิ่งที่ลูกค้าอยากบอก, ข้อสังเกตของทีมสำรวจ, บริบทที่ควรรู้ ฯลฯ กรอกก่อนกดบันทึก</p>
+    <textarea id="mk_extra" name="mkt.suggestions" rows="4"></textarea>
+  </div>
   </form>
 </main>
 
