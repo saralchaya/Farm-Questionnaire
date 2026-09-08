@@ -927,7 +927,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   /* ---------- engine list repeater ---------- */
   var engineRows=document.getElementById("engineRows");
   var EBRANDS=["KUBOTA","YANMAR","GOLDEN BOW","KAWAMA","I-POWER","อื่นๆ"];
-  var EMODELS=["ZT100Plus","ZT110Plus","ZT120Plus","ZT125Plus","ZT140Plus","ZT155Plus","ZT180Plus","ไม่ทราบรุ่น"];
+  var EMODELS=["ZT100Plus","ZT110Plus","ZT120Plus","ZT125Plus","ZT140Plus","ZT155Plus","ZT180Plus","อื่นๆ"];
   var ESTART=["มือหมุน (STD)","มอเตอร์สตาร์ท (ES)","สวิตช์กุญแจ (SW)"];
   var EAGES=["< 1 ปี","1–2 ปี","2–5 ปี","6–10 ปี","> 10 ปี"];
   function opt(list,sel){ return '<option value="">–</option>'+list.map(function(v){return '<option'+(v===sel?' selected':'')+'>'+v+'</option>'}).join(''); }
@@ -949,7 +949,8 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       '<div class="er-grid">'+
         '<div><span class="er-lbl">แบรนด์</span><select class="er-brand">'+opt(EBRANDS,d.brand)+'</select>'+
           '<input class="er-brand-other" type="text" placeholder="ระบุแบรนด์" style="margin-top:4px" hidden></div>'+
-        '<div><span class="er-lbl">รุ่นที่ใช้</span><select class="er-model">'+opt(EMODELS,d.model)+'</select></div>'+
+        '<div><span class="er-lbl">รุ่นที่ใช้</span><select class="er-model">'+opt(EMODELS,d.model)+'</select>'+
+          '<input class="er-model-other" type="text" placeholder="ระบุรุ่น" style="margin-top:4px" hidden></div>'+
         '<div><span class="er-lbl">ระบบสตาร์ท</span><select class="er-start">'+opt(ESTART,d.start)+'</select></div>'+
         '<div><span class="er-lbl">จำนวน (เครื่อง)</span><input class="er-qty" type="number" min="0" placeholder="เช่น 3"></div>'+
         '<div><span class="er-lbl">อายุเครื่องยนต์</span><select class="er-age">'+opt(EAGES,d.age)+'</select></div>'+
@@ -963,6 +964,10 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     var bSel=row.querySelector(".er-brand");
     function brandToggle(){ bOther.hidden = bSel.value!=="อื่นๆ"; }
     bSel.addEventListener("change",brandToggle); brandToggle();
+    var mOther=row.querySelector(".er-model-other"); mOther.value=d.modelOther||"";
+    var mSel=row.querySelector(".er-model");
+    function modelToggle(){ mOther.hidden = mSel.value!=="อื่นๆ"; }
+    mSel.addEventListener("change",modelToggle); modelToggle();
     fillRowUsage(row, typeof d.use==="string" ? d.use : (Array.isArray(d.use)&&d.use[0]) || "");
     row.querySelector(".er-x").addEventListener("click",function(){ row.remove(); if(!engineRows.children.length) engineRowEl(); saveDraft(); });
     engineRows.appendChild(row);
@@ -978,10 +983,10 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     engineRows.querySelectorAll(".engine-row").forEach(function(r){
       var use=rowUsageVal(r);
       var o={brand:r.querySelector(".er-brand").value,brandOther:r.querySelector(".er-brand-other").value,
-        model:r.querySelector(".er-model").value,
+        model:r.querySelector(".er-model").value,modelOther:r.querySelector(".er-model-other").value,
         start:r.querySelector(".er-start").value,qty:r.querySelector(".er-qty").value,
         age:r.querySelector(".er-age").value,use:use,useOther:r.querySelector(".er-use-other").value};
-      if(o.brand||o.brandOther||o.model||o.start||o.qty||o.age||use||o.useOther) out.push(o);
+      if(o.brand||o.brandOther||o.model||o.modelOther||o.start||o.qty||o.age||use||o.useOther) out.push(o);
     });
     return out;
   }
