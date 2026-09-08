@@ -163,6 +163,10 @@
   .dim-other.is-dim::before{content:"ลูกค้าใช้คูโบต้าอย่างเดียว — ไม่ต้องกรอกฝั่งนี้";display:block;font-size:10.5px;font-weight:700;color:var(--crit);margin-bottom:5px}
   .brand-inline{display:inline-block!important;width:auto!important;max-width:150px;padding:2px 7px!important;font-size:12px;font-weight:400;margin-left:4px}
   .shared-q{margin-top:12px;padding-top:11px;border-top:1px dashed var(--line-strong)}
+  .unit-in{display:flex;align-items:stretch}
+  .unit-in input{border-top-right-radius:0;border-bottom-right-radius:0}
+  .unit-in .unit{display:flex;align-items:center;padding:0 10px;font-size:12.5px;font-weight:600;color:var(--ink-soft);
+    background:var(--surface-2);border:1px solid var(--line-strong);border-left:0;border-radius:0 7px 7px 0;white-space:nowrap}
   .blade-row{display:flex;gap:14px;align-items:flex-start;margin-top:12px;background:var(--surface-2);
     border:1px solid var(--line);border-radius:10px;padding:10px 12px}
   .blade-svg{width:110px;height:88px;flex:none}
@@ -563,10 +567,13 @@
           <text x="101" y="53" font-size="17" font-weight="700" fill="var(--accent)" font-family="'IBM Plex Mono',monospace">?</text>
         </svg>
         <div class="f" style="flex:1">
-          <label for="pw_blade">ขนาดใบพัด (วัดเส้นผ่านศูนย์กลางใบพัด)</label>
+          <label for="pw_blade">ขนาดใบพัด — วัดเส้นผ่านศูนย์กลางใบพัด (ซม.)</label>
           <div class="grid c2" style="gap:8px">
             <select id="pw_blade" name="power.bladeSize"><option value="">— เลือกขนาด —</option><option>เล็ก</option><option>กลาง</option><option>ใหญ่</option><option>ผสมหลายขนาด</option></select>
-            <input type="text" id="pw_bladedia" name="power.bladeDiameter" placeholder="เส้นผ่านศูนย์กลาง เช่น 50 นิ้ว / 130 ซม.">
+            <div class="unit-in">
+              <input type="number" id="pw_bladedia" name="power.bladeDiameterCm" min="0" placeholder="เช่น 130">
+              <span class="unit">ซม.</span>
+            </div>
           </div>
         </div>
       </div>
