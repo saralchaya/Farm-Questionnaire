@@ -171,6 +171,13 @@
     border:1px solid var(--line);border-radius:10px;padding:10px 12px}
   .blade-svg{width:110px;height:88px;flex:none}
   @media(max-width:480px){.blade-row{flex-direction:column;align-items:stretch}.blade-svg{align-self:center}}
+  .usedother-q{background:var(--surface-2);border:1px solid var(--line-strong);border-radius:10px;padding:11px 13px;margin-bottom:12px}
+  .usedother-q .legend{font-weight:700;font-size:13px}
+  .chk.opt-yes,.chk.opt-no{border:1.5px solid;border-radius:8px;padding:7px 14px;font-weight:600}
+  .chk.opt-yes{background:#E6F1E8;border-color:#93C0A2;color:#245c39}
+  .chk.opt-yes:has(input:checked){background:#CFE6D6;border-color:var(--good);box-shadow:0 0 0 3px rgba(47,125,69,.15)}
+  .chk.opt-no{background:#F7E5E3;border-color:#DBA9A2;color:#8a352c}
+  .chk.opt-no:has(input:checked){background:#F0D2CD;border-color:var(--crit);box-shadow:0 0 0 3px rgba(178,59,46,.15)}
   .final-note{margin:20px 0 4px;background:var(--accent-soft);border:2px solid var(--accent);border-radius:14px;
     padding:15px 17px;box-shadow:var(--shadow)}
   .final-note h3{font-size:15px;font-weight:700;color:var(--accent-ink)}
@@ -796,6 +803,15 @@
 
     <div class="block">
       <h3>ประสบการณ์และเหตุผลการซื้อ</h3>
+
+      <div class="usedother-q">
+        <span class="legend">ลูกค้าเคยใช้เครื่องยนต์แบรนด์อื่นมาก่อนหรือไม่</span>
+        <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap">
+          <label class="chk opt-yes"><input type="radio" name="mkt.usedOtherBrand" value="เคยใช้"> เคยใช้แบรนด์อื่น</label>
+          <label class="chk opt-no"><input type="radio" name="mkt.usedOtherBrand" value="ไม่เคย"> ไม่เคย (ใช้คูโบต้าอย่างเดียว)</label>
+        </div>
+      </div>
+
       <div class="f full">
         <span class="legend">หัวข้อ guide เหตุผลที่เลือกซื้อ (สำหรับถามลูกค้า — ไม่ต้องติ๊ก)</span>
         <ul class="guide-list" style="margin-top:4px">
@@ -811,14 +827,6 @@
           <li>การรับประกัน 3 ปี</li>
           <li>คนรู้จักแนะนำ</li>
         </ul>
-      </div>
-
-      <div class="f full" style="margin-top:10px">
-        <span class="legend">เคยใช้เครื่องยนต์แบรนด์อื่นมาก่อนหรือไม่</span>
-        <div class="opts" style="margin-top:5px;grid-template-columns:none;display:flex;gap:8px">
-          <label class="chk" style="border:1px solid var(--line-strong);border-radius:7px;padding:6px 12px"><input type="radio" name="mkt.usedOtherBrand" value="เคยใช้"> เคยใช้แบรนด์อื่น</label>
-          <label class="chk" style="border:1px solid var(--line-strong);border-radius:7px;padding:6px 12px"><input type="radio" name="mkt.usedOtherBrand" value="ไม่เคย"> ไม่เคย (ใช้คูโบต้าอย่างเดียว)</label>
-        </div>
       </div>
 
       <div id="cmpGrid" class="cmp2 dual" style="margin-top:12px">
