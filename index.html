@@ -408,6 +408,29 @@
     </div>
 
     <div class="block">
+      <h3>รูปแบบการซื้อสินค้า</h3>
+      <div class="f row full">
+        <label for="pm_type">ซื้อด้วยวิธีใด</label>
+        <select id="pm_type" name="general.purchaseMethod" data-reveal="#pm_wrap" data-reveal-when="ผ่อนสินเชื่อ">
+          <option value="">— เลือก —</option><option>เงินสด</option><option>ผ่อนสินเชื่อ</option>
+        </select>
+      </div>
+      <div class="revealed" id="pm_wrap">
+        <div class="grid c2">
+          <div class="f">
+            <label for="pm_term">ระยะเวลาผ่อน (รายกี่เดือน)</label>
+            <select id="pm_term" name="general.installmentTerm"><option value="">— เลือก —</option><option>12 เดือน</option><option>24 เดือน</option><option>36 เดือน</option><option>48 เดือน</option><option>60 เดือน</option><option>อื่นๆ</option></select>
+          </div>
+          <div class="f">
+            <label for="pm_fin">บริษัทที่ขอสินเชื่อ</label>
+            <select id="pm_fin" name="general.financeProvider"><option value="">— เลือก —</option><option>SKL (สยามคูโบต้า ลีสซิ่ง)</option><option>ธนาคาร</option><option>สหกรณ์การเกษตร</option><option>บริษัทสินเชื่ออื่นๆ</option></select>
+          </div>
+          <div class="f full"><label for="pm_finname">ระบุชื่อบริษัท / ธนาคาร (กรณีไม่ใช่ SKL)</label><input type="text" id="pm_finname" name="general.financeProviderName"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
       <h3>เครื่องยนต์ที่ถือครอง</h3>
       <div class="grid c2">
         <div class="colstack">
@@ -853,6 +876,14 @@
     </div>
 
     <div class="block">
+      <h3>ความต้องการด้านกิจกรรมส่งเสริมการขาย (Promotion &amp; Incentives)</h3>
+      <div class="sub">สิทธิประโยชน์รูปแบบใดที่ทำให้ลูกค้าตัดสินใจซื้อได้ง่ายขึ้น — จัดอันดับ 1–3</div>
+      <div class="callout warn"><span class="dot"></span><div>บอกลูกค้าว่า <b>ทุกตัวเลือกมีมูลค่าเท่ากัน</b> ให้เลือกตามความชอบ ไม่ใช่ตามมูลค่าเงิน</div></div>
+      <div class="rank" style="margin-top:8px" id="promoRank"></div>
+      <div class="f full" style="margin-top:10px"><label for="mk_promoother">ข้อเสนออื่น ๆ ที่ลูกค้าอยากได้ (พิมพ์เสนอ)</label><input type="text" id="mk_promoother" name="mkt.promoOther"></div>
+    </div>
+
+    <div class="block">
       <h3>ช่องทางการรับรู้และการตัดสินใจ</h3>
       <div class="f full">
         <span class="legend">รู้จัก / หาข้อมูลเครื่องยนต์คูโบต้าจากช่องทางใด — จัดอันดับ 3 ช่องทางที่ใช้บ่อยที่สุด</span>
@@ -980,14 +1011,22 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   var CHANNELS=["เว็บไซต์คูโบต้า","Facebook ของบริษัท/ดีลเลอร์","YouTube ของบริษัท/ดีลเลอร์","TikTok ของบริษัท/ดีลเลอร์",
     "รีวิวจาก Influencer","งานแสดงสินค้า / อีเวนต์","ตัวแทนจำหน่าย / ร้านค้า (Dealer)","เพื่อนบ้าน / ญาติ / คนรู้จัก",
     "ช่างซ่อมในพื้นที่","กลุ่มเกษตรกร / กลุ่มฟาร์ม"];
+  var PROMO=["เงินส่วนลด / ช่วยเหลือค่าดอกเบี้ย","ส่วนลดค่าอะไหล่ / ค่าบริการ","บัตรของขวัญ (ห้าง / ร้านค้า)",
+    "บัตรเติมน้ำมัน","ของที่ระลึกพิเศษจากคูโบต้า"];
+  function buildRank(hostId,items,attr){
+    var host=document.getElementById(hostId);
+    items.forEach(function(c){
+      var s=document.createElement("span"); s.textContent=c; host.appendChild(s);
+      var sel=document.createElement("select");
+      sel.innerHTML='<option value="">–</option><option>1</option><option>2</option><option>3</option>';
+      sel.dataset[attr]=c;
+      host.appendChild(sel);
+    });
+  }
   var chRank=document.getElementById("channelRank");
-  CHANNELS.forEach(function(c,idx){
-    var s=document.createElement("span"); s.textContent=c; chRank.appendChild(s);
-    var sel=document.createElement("select"); sel.name="mkt.channel."+idx;
-    sel.innerHTML='<option value="">–</option><option>1</option><option>2</option><option>3</option>';
-    sel.dataset.channelLabel=c;
-    chRank.appendChild(sel);
-  });
+  buildRank("channelRank",CHANNELS,"channelLabel");
+  var promoRank=document.getElementById("promoRank");
+  buildRank("promoRank",PROMO,"promoLabel");
 
   /* ---------- address : จังหวัด → อำเภอ → ตำบล cascade ---------- */
   var GEO=(window.__GEO||[]);
@@ -1240,10 +1279,15 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
         if(el.value!=="") o[k]=el.value;
       }
     });
-    // channel ranks -> readable
-    var chans=[];
-    chRank.querySelectorAll("select").forEach(function(s){ if(s.value) chans.push({rank:s.value,channel:s.dataset.channelLabel}); });
-    if(chans.length){ chans.sort(function(a,b){return a.rank-b.rank}); o["mkt.channelsRanked"]=chans; }
+    // ranked lists -> readable
+    function grabRank(host,attr){
+      var a=[]; host.querySelectorAll("select").forEach(function(s){ if(s.value) a.push({rank:s.value,item:s.dataset[attr]}); });
+      a.sort(function(x,y){return x.rank-y.rank}); return a;
+    }
+    var chans=grabRank(chRank,"channelLabel");
+    if(chans.length) o["mkt.channelsRanked"]=chans.map(function(x){return {rank:x.rank,channel:x.item};});
+    var promo=grabRank(promoRank,"promoLabel");
+    if(promo.length) o["mkt.promoRanked"]=promo.map(function(x){return {rank:x.rank,incentive:x.item};});
     var eng=collectEngines(); if(eng.length) o["engine.list"]=eng;
     return o;
   }
@@ -1266,6 +1310,11 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     if(Array.isArray(o["mkt.channelsRanked"])){
       o["mkt.channelsRanked"].forEach(function(c){
         chRank.querySelectorAll("select").forEach(function(s){ if(s.dataset.channelLabel===c.channel) s.value=c.rank; });
+      });
+    }
+    if(Array.isArray(o["mkt.promoRanked"])){
+      o["mkt.promoRanked"].forEach(function(c){
+        promoRank.querySelectorAll("select").forEach(function(s){ if(s.dataset.promoLabel===c.incentive) s.value=c.rank; });
       });
     }
     photos = Array.isArray(o.__photos)? o.__photos.slice() : [];
