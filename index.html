@@ -883,14 +883,6 @@
     </div>
 
     <div class="block">
-      <h3>ความต้องการด้านกิจกรรมส่งเสริมการขาย (Promotion &amp; Incentives)</h3>
-      <div class="sub">สิทธิประโยชน์รูปแบบใดที่ทำให้ลูกค้าตัดสินใจซื้อได้ง่ายขึ้น — จัดอันดับ 1–3</div>
-      <div class="callout warn"><span class="dot"></span><div>บอกลูกค้าว่า <b>ทุกตัวเลือกมีมูลค่าเท่ากัน</b> ให้เลือกตามความชอบ ไม่ใช่ตามมูลค่าเงิน</div></div>
-      <div class="rank" style="margin-top:8px" id="promoRank"></div>
-      <div class="f full" style="margin-top:10px"><label for="mk_promoother">ข้อเสนออื่น ๆ ที่ลูกค้าอยากได้ (พิมพ์เสนอ)</label><input type="text" id="mk_promoother" name="mkt.promoOther"></div>
-    </div>
-
-    <div class="block">
       <h3>ช่องทางการรับรู้และการตัดสินใจ</h3>
       <div class="f full">
         <span class="legend">รู้จัก / หาข้อมูลเครื่องยนต์คูโบต้าจากช่องทางใด — จัดอันดับ 3 ช่องทางที่ใช้บ่อยที่สุด</span>
@@ -911,6 +903,14 @@
       <div class="revealed" id="ch_followWrap">
         <div class="f full"><label for="ch_channels">ระบุชื่อช่อง / เพจ</label><input type="text" id="ch_channels" name="mkt.reviewerChannels"></div>
       </div>
+    </div>
+
+    <div class="block">
+      <h3>ความต้องการด้านกิจกรรมส่งเสริมการขาย (Promotion &amp; Incentives)</h3>
+      <div class="sub">สิทธิประโยชน์รูปแบบใดที่ทำให้ลูกค้าตัดสินใจซื้อได้ง่ายขึ้น — จัดอันดับ 1–3</div>
+      <div class="callout warn"><span class="dot"></span><div>บอกลูกค้าว่า <b>ทุกตัวเลือกมีมูลค่าเท่ากัน</b> ให้เลือกตามความชอบ ไม่ใช่ตามมูลค่าเงิน</div></div>
+      <div class="rank" style="margin-top:8px" id="promoRank"></div>
+      <div class="f full" style="margin-top:10px"><label for="mk_promoother">ข้อเสนออื่น ๆ ที่ลูกค้าอยากได้ (พิมพ์เสนอ)</label><input type="text" id="mk_promoother" name="mkt.promoOther"></div>
     </div>
 
     <div class="block">
@@ -1018,7 +1018,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   var CHANNELS=["เว็บไซต์คูโบต้า","Facebook ของบริษัท/ดีลเลอร์","YouTube ของบริษัท/ดีลเลอร์","TikTok ของบริษัท/ดีลเลอร์",
     "รีวิวจาก Influencer","งานแสดงสินค้า / อีเวนต์","ตัวแทนจำหน่าย / ร้านค้า (Dealer)","เพื่อนบ้าน / ญาติ / คนรู้จัก",
     "ช่างซ่อมในพื้นที่","กลุ่มเกษตรกร / กลุ่มฟาร์ม"];
-  var PROMO=["เงินส่วนลด / ช่วยเหลือค่าดอกเบี้ย","ส่วนลดค่าอะไหล่ / ค่าบริการ","บัตรของขวัญ (ห้าง / ร้านค้า)",
+  var PROMO=["เงินส่วนลด / ช่วยเหลือค่าดอกเบี้ย","ส่วนลดค่าอะไหล่ / ค่าบริการ","บัตรของขวัญ (เช่น บัตรโลตัส)",
     "บัตรเติมน้ำมัน","ของที่ระลึกพิเศษจากคูโบต้า"];
   function buildRank(hostId,items,attr){
     var host=document.getElementById(hostId);
