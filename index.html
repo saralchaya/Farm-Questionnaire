@@ -145,8 +145,10 @@
     padding-bottom:5px;margin-bottom:7px;border-bottom:2px solid var(--accent)}
   .colhead.good{color:var(--good);border-bottom-color:var(--good)}
   .colhead.bad{color:var(--crit);border-bottom-color:var(--crit)}
-  .colhead.good::before{content:"👍";font-size:1.25em;margin-right:6px;vertical-align:-2px}
-  .colhead.bad::before{content:"😖";font-size:1.25em;margin-right:6px;vertical-align:-2px}
+  .cmp-q.good,.cmp-q.bad{position:relative}
+  .cmp-q.good{color:var(--good)} .cmp-q.bad{color:var(--crit)}
+  .cmp-q.good::before{content:"👍";font-size:1.25em;margin-right:6px;vertical-align:-2px}
+  .cmp-q.bad::before{content:"😖";font-size:1.25em;margin-right:6px;vertical-align:-2px}
   .subhead{display:block;font-family:"Noto Sans Thai",sans-serif;font-weight:700;font-size:12px;color:var(--ink-soft);margin-top:6px}
   .exp-tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:5px}
   .exp-a{background:#E6EEF7;color:#2C5A86}
@@ -156,13 +158,20 @@
   .rival-word{color:var(--crit);font-weight:700}
   .colstack{display:flex;flex-direction:column;gap:7px}
   .colstack .f input+input{margin-top:4px}
-  .cmp2{display:grid;gap:16px}
-  @media(min-width:640px){.cmp2.dual{grid-template-columns:1fr 1fr;gap:16px 18px}}
-  .cmp2 #otherCol{border-left:3px solid var(--line-strong);padding-left:12px}
-  @media(max-width:639px){.cmp2 #otherCol{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:12px}}
-  .dim-other{border-radius:8px;transition:none}
-  .dim-other.is-dim{background:rgba(178,59,46,.07);box-shadow:0 0 0 6px rgba(178,59,46,.07)}
-  .dim-other.is-dim::before{content:"ลูกค้าใช้คูโบต้าอย่างเดียว — ไม่ต้องกรอกฝั่งนี้";display:block;font-size:10.5px;font-weight:700;color:var(--crit);margin-bottom:5px}
+  /* row-aligned comparison grid */
+  .cmp2{display:grid;gap:8px 16px}
+  @media(min-width:640px){.cmp2.dual{grid-template-columns:1fr 1fr}}
+  .cmp-head{font-family:"Noto Sans Thai",sans-serif;font-weight:700;font-size:13px;color:var(--ink);
+    padding-bottom:5px;border-bottom:2px solid var(--accent)}
+  .cmp-sub{grid-column:1/-1;font-family:"Noto Sans Thai",sans-serif;font-weight:700;font-size:12px;color:var(--ink-soft);margin-top:2px}
+  .cmp-row{grid-column:1/-1;display:grid;gap:4px 16px}
+  @media(min-width:640px){.cmp-row{grid-template-columns:1fr 1fr}}
+  .cmp-row > .cmp-q{grid-column:1/-1;font-family:"Noto Sans Thai",sans-serif;font-weight:600;font-size:12px;color:var(--ink);line-height:1.3}
+  .rankset{display:flex;flex-direction:column;gap:4px}
+  .dim-cell{transition:none}
+  #cmpGrid.cmp-dim .dim-cell,#cmpGrid.cmp-dim .dim-cell input{background:rgba(178,59,46,.06);border-color:rgba(178,59,46,.32)}
+  .dim-other.is-dim::before{content:"ลูกค้าใช้คูโบต้าอย่างเดียว — ไม่ต้องกรอกฝั่งนี้";display:block;font-size:10px;font-weight:700;color:var(--crit);margin-bottom:3px}
+  .dim-other.is-dim{background:rgba(178,59,46,.07);border-radius:6px;padding:5px 7px}
   .brand-inline{display:inline-block!important;width:auto!important;max-width:150px;padding:2px 7px!important;font-size:12px;font-weight:400;margin-left:4px}
   .shared-q{margin-top:12px;padding-top:11px;border-top:1px dashed var(--line-strong)}
   .unit-in{display:flex;align-items:stretch}
@@ -835,48 +844,46 @@
       </div>
 
       <div id="cmpGrid" class="cmp2 dual" style="margin-top:12px">
-        <div class="colstack">
-          <span class="colhead">KUBOTA ZT Plus</span>
-          <div class="f"><label>เหตุผลหลักที่เลือกซื้อ</label><textarea name="mkt.k.buyReason"></textarea></div>
-          <span class="subhead">ประสบการณ์การใช้งาน</span>
-          <div class="f"><label><span class="exp-tag exp-a">ด้านสินค้า</span></label><textarea name="mkt.k.exp.product"></textarea></div>
-          <div class="f"><label><span class="exp-tag exp-b">ด้านอะไหล่ / บริการ</span></label><textarea name="mkt.k.exp.service"></textarea></div>
-          <div class="f"><label><span class="exp-tag exp-c">การดูแลของผู้แทนจำหน่าย</span></label><textarea name="mkt.k.exp.dealer"></textarea></div>
-          <span class="colhead good" style="margin-top:6px">3 เรื่องที่ชอบที่สุด</span>
-          <div class="f rankset">
-            <input type="text" name="mkt.k.like.1" placeholder="อันดับ 1">
-            <input type="text" name="mkt.k.like.2" placeholder="อันดับ 2">
-            <input type="text" name="mkt.k.like.3" placeholder="อันดับ 3">
-          </div>
-          <span class="colhead bad" style="margin-top:6px">3 เรื่องที่ไม่ชอบที่สุด</span>
-          <div class="f rankset">
-            <input type="text" name="mkt.k.dislike.1" placeholder="อันดับ 1">
-            <input type="text" name="mkt.k.dislike.2" placeholder="อันดับ 2">
-            <input type="text" name="mkt.k.dislike.3" placeholder="อันดับ 3">
-          </div>
+        <div class="cmp-head">KUBOTA ZT Plus</div>
+        <div class="cmp-head dim-other" id="otherCol">แบรนด์อื่น: <input type="text" name="mkt.o.brand" class="brand-inline" placeholder="ระบุยี่ห้อ"></div>
+
+        <div class="cmp-row"><span class="cmp-q">เหตุผลหลักที่เลือกซื้อ</span>
+          <textarea name="mkt.k.buyReason"></textarea>
+          <textarea name="mkt.o.buyReason" class="dim-cell" placeholder="แบรนด์อื่น (ตอนนั้น)"></textarea>
         </div>
 
-        <div class="colstack dim-other" id="otherCol">
-          <span class="colhead">แบรนด์อื่น: <input type="text" name="mkt.o.brand" class="brand-inline" placeholder="ระบุยี่ห้อ"></span>
-          <div class="f"><label>เหตุผลหลักที่เลือกซื้อ (ตอนนั้น)</label><textarea name="mkt.o.buyReason"></textarea></div>
-          <span class="subhead">ประสบการณ์การใช้งาน</span>
-          <div class="f"><label><span class="exp-tag exp-a">ด้านสินค้า</span></label><textarea name="mkt.o.exp.product"></textarea></div>
-          <div class="f"><label><span class="exp-tag exp-b">ด้านอะไหล่ / บริการ</span></label><textarea name="mkt.o.exp.service"></textarea></div>
-          <div class="f"><label><span class="exp-tag exp-c">การดูแลของผู้แทนจำหน่าย</span></label><textarea name="mkt.o.exp.dealer"></textarea></div>
-          <span class="colhead good" style="margin-top:6px">3 เรื่องที่ชอบที่สุด</span>
-          <div class="f rankset">
-            <input type="text" name="mkt.o.like.1" placeholder="อันดับ 1">
-            <input type="text" name="mkt.o.like.2" placeholder="อันดับ 2">
-            <input type="text" name="mkt.o.like.3" placeholder="อันดับ 3">
-          </div>
-          <span class="colhead bad" style="margin-top:6px">3 เรื่องที่ไม่ชอบที่สุด</span>
-          <div class="f rankset">
-            <input type="text" name="mkt.o.dislike.1" placeholder="อันดับ 1">
-            <input type="text" name="mkt.o.dislike.2" placeholder="อันดับ 2">
-            <input type="text" name="mkt.o.dislike.3" placeholder="อันดับ 3">
-          </div>
-          <div class="f"><label>ทำไมสุดท้ายถึงเลือก / กลับมาใช้คูโบต้ามากกว่า</label><textarea name="mkt.o.whyKubota"></textarea></div>
+        <div class="cmp-sub">ประสบการณ์การใช้งาน</div>
+        <div class="cmp-row"><span class="cmp-q"><span class="exp-tag exp-a">ด้านสินค้า</span></span>
+          <textarea name="mkt.k.exp.product"></textarea><textarea name="mkt.o.exp.product" class="dim-cell"></textarea>
         </div>
+        <div class="cmp-row"><span class="cmp-q"><span class="exp-tag exp-b">ด้านอะไหล่ / บริการ</span></span>
+          <textarea name="mkt.k.exp.service"></textarea><textarea name="mkt.o.exp.service" class="dim-cell"></textarea>
+        </div>
+        <div class="cmp-row"><span class="cmp-q"><span class="exp-tag exp-c">การดูแลของผู้แทนจำหน่าย</span></span>
+          <textarea name="mkt.k.exp.dealer"></textarea><textarea name="mkt.o.exp.dealer" class="dim-cell"></textarea>
+        </div>
+
+        <div class="cmp-row"><span class="cmp-q good">3 เรื่องที่ชอบที่สุด</span>
+          <div class="rankset">
+            <input type="text" name="mkt.k.like.1" placeholder="อันดับ 1"><input type="text" name="mkt.k.like.2" placeholder="อันดับ 2"><input type="text" name="mkt.k.like.3" placeholder="อันดับ 3">
+          </div>
+          <div class="rankset dim-cell">
+            <input type="text" name="mkt.o.like.1" placeholder="อันดับ 1"><input type="text" name="mkt.o.like.2" placeholder="อันดับ 2"><input type="text" name="mkt.o.like.3" placeholder="อันดับ 3">
+          </div>
+        </div>
+        <div class="cmp-row"><span class="cmp-q bad">3 เรื่องที่ไม่ชอบที่สุด</span>
+          <div class="rankset">
+            <input type="text" name="mkt.k.dislike.1" placeholder="อันดับ 1"><input type="text" name="mkt.k.dislike.2" placeholder="อันดับ 2"><input type="text" name="mkt.k.dislike.3" placeholder="อันดับ 3">
+          </div>
+          <div class="rankset dim-cell">
+            <input type="text" name="mkt.o.dislike.1" placeholder="อันดับ 1"><input type="text" name="mkt.o.dislike.2" placeholder="อันดับ 2"><input type="text" name="mkt.o.dislike.3" placeholder="อันดับ 3">
+          </div>
+        </div>
+      </div>
+
+      <div class="f full only-other" data-onlyother hidden style="margin-top:10px">
+        <label>ทำไมสุดท้ายถึงเลือก / กลับมาใช้คูโบต้ามากกว่า (กรณีเคยใช้แบรนด์อื่น)</label>
+        <textarea name="mkt.o.whyKubota"></textarea>
       </div>
 
       <div class="shared-q">
@@ -1222,8 +1229,10 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   /* ---------- conditional: used other brand -> comparison column ---------- */
   function applyCompare(){
     var r=form.querySelector('input[name="mkt.usedOtherBrand"]:checked');
-    var notUsed=!!(r && r.value==="ไม่เคย");
+    var used=!!(r && r.value==="เคยใช้"), notUsed=!!(r && r.value==="ไม่เคย");
     document.querySelectorAll(".dim-other").forEach(function(el){ el.classList.toggle("is-dim",notUsed); });
+    var cg=document.getElementById("cmpGrid"); if(cg) cg.classList.toggle("cmp-dim",notUsed);
+    document.querySelectorAll("[data-onlyother]").forEach(function(el){ el.hidden=!used; });
   }
   form.querySelectorAll('input[name="mkt.usedOtherBrand"]').forEach(function(i){ i.addEventListener("change",applyCompare); });
 
