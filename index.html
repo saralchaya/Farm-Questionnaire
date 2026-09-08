@@ -931,12 +931,14 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   var ESTART=["มือหมุน (STD)","มอเตอร์สตาร์ท (ES)","สวิตช์กุญแจ (SW)"];
   var EAGES=["< 1 ปี","1–2 ปี","2–5 ปี","6–10 ปี","> 10 ปี"];
   function opt(list,sel){ return '<option value="">–</option>'+list.map(function(v){return '<option'+(v===sel?' selected':'')+'>'+v+'</option>'}).join(''); }
-  function fillRowUsage(row,checked){
-    var box=row.querySelector(".er-usage"); checked=checked||[];
+  var usageSeq=0;
+  function fillRowUsage(row,sel){
+    var box=row.querySelector(".er-usage");
+    if(!row._ug) row._ug="ug"+(++usageSeq);
     var f=currentFarm(), list=USAGE[f];
     if(!list){ box.innerHTML='<span class="hint">เลือกประเภทฟาร์มด้านบนก่อน</span>'; return; }
     box.innerHTML=list.map(function(v){
-      return '<label class="chk"><input type="checkbox" class="er-use-cb" value="'+v.replace(/"/g,'&quot;')+'"'+(checked.indexOf(v)>-1?' checked':'')+'> '+v+'</label>';
+      return '<label class="chk"><input type="radio" class="er-use-cb" name="'+row._ug+'" value="'+v.replace(/"/g,'&quot;')+'"'+(sel===v?' checked':'')+'> '+v+'</label>';
     }).join('');
   }
   function engineRowEl(d){
@@ -952,7 +954,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
         '<div><span class="er-lbl">จำนวน (เครื่อง)</span><input class="er-qty" type="number" min="0" placeholder="เช่น 3"></div>'+
         '<div><span class="er-lbl">อายุเครื่องยนต์</span><select class="er-age">'+opt(EAGES,d.age)+'</select></div>'+
       '</div>'+
-      '<span class="er-lbl" style="margin-top:8px">นำเครื่องยนต์ไปใช้งานใดในฟาร์ม (เลือกได้หลายข้อ)</span>'+
+      '<span class="er-lbl" style="margin-top:8px">นำเครื่องยนต์ไปใช้งานใดในฟาร์ม</span>'+
       '<div class="opts er-usage" style="margin-top:3px"></div>'+
       '<input class="er-use-other" type="text" placeholder="อื่นๆ โปรดระบุ" style="margin-top:5px;max-width:280px">';
     row.querySelector(".er-qty").value=d.qty||"";
@@ -961,27 +963,25 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     var bSel=row.querySelector(".er-brand");
     function brandToggle(){ bOther.hidden = bSel.value!=="อื่นๆ"; }
     bSel.addEventListener("change",brandToggle); brandToggle();
-    fillRowUsage(row, Array.isArray(d.use)?d.use:[]);
+    fillRowUsage(row, typeof d.use==="string" ? d.use : (Array.isArray(d.use)&&d.use[0]) || "");
     row.querySelector(".er-x").addEventListener("click",function(){ row.remove(); if(!engineRows.children.length) engineRowEl(); saveDraft(); });
     engineRows.appendChild(row);
     return row;
   }
   document.getElementById("addEngine").addEventListener("click",function(){ engineRowEl(); });
+  function rowUsageVal(r){ var i=r.querySelector(".er-use-cb:checked"); return i?i.value:""; }
   function rebuildRowUsages(){
-    engineRows.querySelectorAll(".engine-row").forEach(function(r){
-      var checked=[]; r.querySelectorAll(".er-use-cb:checked").forEach(function(i){ checked.push(i.value); });
-      fillRowUsage(r,checked);
-    });
+    engineRows.querySelectorAll(".engine-row").forEach(function(r){ fillRowUsage(r, rowUsageVal(r)); });
   }
   function collectEngines(){
     var out=[];
     engineRows.querySelectorAll(".engine-row").forEach(function(r){
-      var use=[]; r.querySelectorAll(".er-use-cb:checked").forEach(function(i){ use.push(i.value); });
+      var use=rowUsageVal(r);
       var o={brand:r.querySelector(".er-brand").value,brandOther:r.querySelector(".er-brand-other").value,
         model:r.querySelector(".er-model").value,
         start:r.querySelector(".er-start").value,qty:r.querySelector(".er-qty").value,
         age:r.querySelector(".er-age").value,use:use,useOther:r.querySelector(".er-use-other").value};
-      if(o.brand||o.brandOther||o.model||o.start||o.qty||o.age||use.length||o.useOther) out.push(o);
+      if(o.brand||o.brandOther||o.model||o.start||o.qty||o.age||use||o.useOther) out.push(o);
     });
     return out;
   }
