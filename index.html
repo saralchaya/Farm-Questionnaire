@@ -611,12 +611,12 @@
       <div class="callout warn"><span class="dot"></span><div>การเปรียบเทียบความประหยัดเชิงลึก (ดีเซล vs แก๊ส vs ไฟฟ้า) ทีมสรุปเองหลังบ้าน — หน้างานกรอกแค่ตัวเลขดิบและคำพูดลูกค้า</div></div>
     </div>
 
-    <!-- 2.4 maintenance : fuel-linked -->
+    <!-- 2.4 การบำรุงรักษา : fuel-linked -->
     <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
-      <h3>2.4 การบำรุงรักษาและการซ่อมบำรุง</h3>
+      <h3>2.4 การบำรุงรักษา</h3>
       <div class="grid c2">
         <div class="f">
-          <label for="mt_fuel">ชนิดเชื้อเพลิงของเครื่องยนต์ (สำหรับรายการอะไหล่) *</label>
+          <label for="mt_fuel">ชนิดเชื้อเพลิงของเครื่องยนต์ *</label>
           <select id="mt_fuel" name="maint.engineFuel">
             <option value="">— เลือก —</option>
             <option value="diesel">แบบใช้น้ำมัน (ดีเซล)</option>
@@ -624,20 +624,19 @@
           </select>
         </div>
         <div class="f">
-          <label for="mt_by">ใครดูแลการบำรุงรักษา</label>
-          <select id="mt_by" name="maint.maintainedBy"><option value="">— เลือก —</option><option>ซ่อมเอง</option><option>ผู้ติดตั้งระบบ</option><option>ช่างทั่วไปในพื้นที่</option><option>ช่างศูนย์คูโบต้า</option></select>
+          <label for="mt_by">การบำรุงรักษาโดย</label>
+          <select id="mt_by" name="maint.maintainedBy"><option value="">— เลือก —</option><option>ซ่อมเอง</option><option>ผู้ติดตั้ง</option><option>ช่างทั่วไป</option><option>ช่างศูนย์</option></select>
         </div>
         <div class="f">
-          <label for="mt_freq">รอบการบำรุงรักษา</label>
-          <select id="mt_freq" name="maint.interval"><option value="">— เลือก —</option><option>ทุก 7–15 วัน</option><option>ทุกเดือน</option><option>ทุก 3 เดือน</option><option>ทุก 6 เดือน</option><option>ตามชั่วโมงเครื่อง</option></select>
+          <label for="mt_freq">ระยะเวลาบำรุงรักษา</label>
+          <select id="mt_freq" name="maint.interval"><option value="">— เลือก —</option><option>ทุก 7–15 วัน</option><option>ทุกเดือน</option><option>ทุก 3 เดือน</option><option>ทุก 6 เดือน</option></select>
         </div>
-        <div class="f"><label for="mt_cost">ค่าบำรุงรักษาเฉลี่ยต่อครั้ง (บาท)</label><input type="text" id="mt_cost" name="maint.costPerService"></div>
+        <div class="f"><label for="mt_cost">ค่าใช้จ่ายในการบำรุงรักษา (ต่อครั้ง) บาท</label><input type="text" id="mt_cost" name="maint.costPerService"></div>
       </div>
 
-      <p class="part-note" id="mtGate">↑ เลือกชนิดเชื้อเพลิงเพื่อแสดงรายการบำรุงรักษา/ซ่อมที่เกี่ยวข้อง</p>
-
+      <p class="part-note fuel-gate">↑ เลือกชนิดเชื้อเพลิงเพื่อแสดงรายการที่บำรุงรักษา</p>
       <div class="revealed fuel-diesel" data-fuel>
-        <span class="legend">รายการบำรุงรักษา — เครื่องยนต์ดีเซล (ทำข้อไหนบ้าง)</span>
+        <span class="legend">รายการที่บำรุงรักษา — แบบใช้น้ำมัน (ดีเซล)</span>
         <div class="opts col" style="margin-top:6px">
           <label class="chk"><input type="checkbox" name="maint.diesel.items" value="เปลี่ยนถ่ายน้ำมันเครื่อง"> เปลี่ยนถ่ายน้ำมันเครื่อง</label>
           <label class="chk"><input type="checkbox" name="maint.diesel.items" value="เปลี่ยนถ่ายน้ำระบายความร้อน"> เปลี่ยนถ่ายน้ำระบายความร้อน</label>
@@ -645,7 +644,41 @@
           <label class="chk"><input type="checkbox" name="maint.diesel.items" value="ไส้กรองอากาศ"> ไส้กรองอากาศ</label>
           <label class="chk"><input type="checkbox" name="maint.diesel.items" value="สายพานพัดลม"> สายพานพัดลม</label>
         </div>
-        <span class="legend" style="display:block;margin-top:14px">รายการที่ต้องซ่อม — เครื่องยนต์ดีเซล</span>
+      </div>
+      <div class="revealed fuel-gas" data-fuel>
+        <span class="legend">รายการที่บำรุงรักษา — แบบใช้แก๊ส</span>
+        <div class="opts col" style="margin-top:6px">
+          <label class="chk"><input type="checkbox" name="maint.gas.items" value="เปลี่ยนถ่ายน้ำมันเครื่อง"> เปลี่ยนถ่ายน้ำมันเครื่อง</label>
+          <label class="chk"><input type="checkbox" name="maint.gas.items" value="เปลี่ยนถ่ายน้ำระบายความร้อน"> เปลี่ยนถ่ายน้ำระบายความร้อน</label>
+          <label class="chk"><input type="checkbox" name="maint.gas.items" value="ไส้กรองอากาศ"> ไส้กรองอากาศ</label>
+          <label class="chk"><input type="checkbox" name="maint.gas.items" value="สายพานพัดลม"> สายพานพัดลม</label>
+          <label class="chk"><input type="checkbox" name="maint.gas.items" value="ปรับตั้งวาล์ว"> ปรับตั้งวาล์ว</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.5 การซ่อมบำรุง : fuel-linked -->
+    <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
+      <h3>2.5 การซ่อมบำรุง</h3>
+      <div class="grid c2">
+        <div class="f">
+          <label for="rp_by">การซ่อมบำรุงโดย</label>
+          <select id="rp_by" name="repair.repairedBy"><option value="">— เลือก —</option><option>ซ่อมเอง</option><option>ผู้ติดตั้ง</option><option>ช่างทั่วไป</option><option>ช่างศูนย์</option></select>
+        </div>
+        <div class="f">
+          <label for="rp_freq">ระยะเวลาซ่อมบำรุง</label>
+          <select id="rp_freq" name="repair.interval"><option value="">— เลือก —</option><option>ทุกเดือน</option><option>ทุก 3 เดือน</option><option>ทุก 6 เดือน</option><option>ทุก 1 ปี</option></select>
+        </div>
+        <div class="f"><label for="rp_cost">ค่าใช้จ่ายในการซ่อมบำรุง (ต่อรอบ) บาท</label><input type="text" id="rp_cost" name="repair.costPerRound"></div>
+        <div class="f">
+          <label for="rp_parts">หาซื้ออะไหล่ยากไหม</label>
+          <select id="rp_parts" name="repair.partsAvailability"><option value="">— เลือก —</option><option>หาง่าย มีในพื้นที่</option><option>ปานกลาง ต้องสั่ง</option><option>หายาก / รอนาน</option></select>
+        </div>
+      </div>
+
+      <p class="part-note fuel-gate">↑ เลือกชนิดเชื้อเพลิงในหัวข้อ 2.4 เพื่อแสดงรายการที่ซ่อม</p>
+      <div class="revealed fuel-diesel" data-fuel>
+        <span class="legend">รายการที่ซ่อม — แบบใช้น้ำมัน (ดีเซล)</span>
         <div class="opts col" style="margin-top:6px">
           <label class="chk"><input type="checkbox" name="repair.diesel.items" value="ลูกสูบ"> ลูกสูบ</label>
           <label class="chk"><input type="checkbox" name="repair.diesel.items" value="แหวนลูกสูบ"> แหวนลูกสูบ</label>
@@ -656,46 +689,18 @@
           <label class="chk"><input type="checkbox" name="repair.diesel.items" value="หัวฉีด"> หัวฉีด</label>
         </div>
       </div>
-
       <div class="revealed fuel-gas" data-fuel>
-        <span class="legend">รายการบำรุงรักษา — เครื่องยนต์แก๊ส (ทำข้อไหนบ้าง)</span>
-        <div class="opts col" style="margin-top:6px">
-          <label class="chk"><input type="checkbox" name="maint.gas.items" value="เปลี่ยนถ่ายน้ำมันเครื่อง"> เปลี่ยนถ่ายน้ำมันเครื่อง</label>
-          <label class="chk"><input type="checkbox" name="maint.gas.items" value="เปลี่ยนถ่ายน้ำระบายความร้อน"> เปลี่ยนถ่ายน้ำระบายความร้อน</label>
-          <label class="chk"><input type="checkbox" name="maint.gas.items" value="ไส้กรองอากาศ"> ไส้กรองอากาศ</label>
-          <label class="chk"><input type="checkbox" name="maint.gas.items" value="สายพานพัดลม"> สายพานพัดลม</label>
-          <label class="chk"><input type="checkbox" name="maint.gas.items" value="ปรับตั้งวาล์ว"> ปรับตั้งวาล์ว</label>
-          <label class="chk"><input type="checkbox" name="maint.gas.items" value="ทำความสะอาด/ปรับชุดผสมแก๊ส"> ทำความสะอาด/ปรับชุดผสมแก๊ส</label>
-        </div>
-        <span class="legend" style="display:block;margin-top:14px">รายการที่ต้องซ่อม — เครื่องยนต์แก๊ส</span>
+        <span class="legend">รายการที่ซ่อม — แบบใช้แก๊ส</span>
         <div class="opts col" style="margin-top:6px">
           <label class="chk"><input type="checkbox" name="repair.gas.items" value="ลูกสูบ"> ลูกสูบ</label>
           <label class="chk"><input type="checkbox" name="repair.gas.items" value="แหวนลูกสูบ"> แหวนลูกสูบ</label>
           <label class="chk"><input type="checkbox" name="repair.gas.items" value="ปลอกสูบ"> ปลอกสูบ</label>
-          <label class="chk"><input type="checkbox" name="repair.gas.items" value="วาล์ว (สึกเร็วกว่าปกติ)"> วาล์ว (สึกเร็วกว่าปกติ)</label>
+          <label class="chk"><input type="checkbox" name="repair.gas.items" value="วาล์ว"> วาล์ว</label>
           <label class="chk"><input type="checkbox" name="repair.gas.items" value="เพลาข้อเหวี่ยง"> เพลาข้อเหวี่ยง</label>
-          <label class="chk"><input type="checkbox" name="repair.gas.items" value="ชุดผสมแก๊ส / มิกเซอร์"> ชุดผสมแก๊ส / มิกเซอร์</label>
-          <label class="chk"><input type="checkbox" name="repair.gas.items" value="เรกูเลเตอร์แก๊ส"> เรกูเลเตอร์แก๊ส</label>
-          <label class="chk"><input type="checkbox" name="repair.gas.items" value="หัวเทียน"> หัวเทียน</label>
         </div>
       </div>
 
-      <div class="grid c3" style="margin-top:14px">
-        <div class="f">
-          <label for="rp_by">ใครเป็นคนซ่อมบำรุงใหญ่</label>
-          <select id="rp_by" name="repair.repairedBy"><option value="">— เลือก —</option><option>ซ่อมเอง</option><option>ผู้ติดตั้งระบบ</option><option>ช่างทั่วไปในพื้นที่</option><option>ช่างศูนย์คูโบต้า</option></select>
-        </div>
-        <div class="f">
-          <label for="rp_freq">รอบการซ่อมบำรุงใหญ่</label>
-          <select id="rp_freq" name="repair.interval"><option value="">— เลือก —</option><option>ทุก 3 เดือน</option><option>ทุก 6 เดือน</option><option>ทุก 1 ปี</option><option>ทุก 2 ปี</option><option>เมื่อเสียเท่านั้น</option></select>
-        </div>
-        <div class="f"><label for="rp_cost">ค่าซ่อมบำรุงเฉลี่ยต่อรอบ (บาท)</label><input type="text" id="rp_cost" name="repair.costPerRound"></div>
-        <div class="f">
-          <label for="rp_parts">หาซื้ออะไหล่ยากไหม</label>
-          <select id="rp_parts" name="repair.partsAvailability"><option value="">— เลือก —</option><option>หาง่าย มีในพื้นที่</option><option>ปานกลาง ต้องสั่ง</option><option>หายาก / รอนาน</option></select>
-        </div>
-        <div class="f full"><label for="rp_where">ปกติซื้ออะไหล่จากที่ไหน</label><input type="text" id="rp_where" name="repair.partsSource" placeholder="เช่น ร้านอะไหล่ในอำเภอ, ศูนย์คูโบต้า, ออนไลน์"></div>
-      </div>
+      <div class="f full" style="margin-top:12px"><label for="rp_where">ปกติซื้ออะไหล่จากที่ไหน</label><input type="text" id="rp_where" name="repair.partsSource" placeholder="เช่น ร้านอะไหล่ในอำเภอ, ศูนย์คูโบต้า, ออนไลน์"></div>
     </div>
   </section>
 
@@ -1066,7 +1071,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     document.querySelectorAll('[data-fuel]').forEach(function(el){
       el.classList.toggle("on", (v==="diesel"&&el.classList.contains("fuel-diesel"))||(v==="gas"&&el.classList.contains("fuel-gas")));
     });
-    document.getElementById("mtGate").style.display=v?"none":"";
+    document.querySelectorAll(".fuel-gate").forEach(function(g){ g.style.display=v?"none":""; });
   }
   mtFuel.addEventListener("change",applyFuel);
 
