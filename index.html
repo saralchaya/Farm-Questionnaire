@@ -165,8 +165,18 @@
     padding-bottom:5px;border-bottom:2px solid var(--accent)}
   .cmp-sub{grid-column:1/-1;font-family:"Noto Sans Thai",sans-serif;font-weight:700;font-size:12px;color:var(--ink-soft);margin-top:2px}
   .cmp-row{grid-column:1/-1;display:grid;gap:4px 16px}
-  @media(min-width:640px){.cmp-row{grid-template-columns:1fr 1fr}}
-  .cmp-row > .cmp-q{grid-column:1/-1;font-family:"Noto Sans Thai",sans-serif;font-weight:600;font-size:12px;color:var(--ink);line-height:1.3}
+  .cmp-row > .cmp-q{order:1}
+  .cmp-row > .cmp-side-k{order:2}
+  .cmp-row > .cmp-q.q-o{order:3}
+  .cmp-row > .cmp-side-o{order:4}
+  @media(min-width:640px){
+    .cmp-row{grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:auto auto}
+    .cmp-row > .cmp-q{order:0} .cmp-row > .cmp-q.q-o{order:0}
+    .cmp-row > .cmp-side-k,.cmp-row > .cmp-side-o{order:0}
+  }
+  .cmp-row > .cmp-q{font-family:"Noto Sans Thai",sans-serif;font-weight:600;font-size:12px;color:var(--ink);line-height:1.3}
+  .cmp-q.q-o{color:var(--ink-soft)}
+  @media(min-width:640px){.cmp-row > .cmp-q{min-height:2.4em;display:flex;align-items:flex-end}}
   .rankset{display:flex;flex-direction:column;gap:4px}
   .dim-cell{transition:none}
   #cmpGrid.cmp-dim .dim-cell,#cmpGrid.cmp-dim .dim-cell input{background:rgba(178,59,46,.06);border-color:rgba(178,59,46,.32)}
@@ -847,35 +857,50 @@
         <div class="cmp-head">KUBOTA ZT Plus</div>
         <div class="cmp-head dim-other" id="otherCol">แบรนด์อื่น: <input type="text" name="mkt.o.brand" class="brand-inline" placeholder="ระบุยี่ห้อ"></div>
 
-        <div class="cmp-row"><span class="cmp-q">เหตุผลหลักที่เลือกซื้อ</span>
-          <textarea name="mkt.k.buyReason"></textarea>
-          <textarea name="mkt.o.buyReason" class="dim-cell" placeholder="แบรนด์อื่น (ตอนนั้น)"></textarea>
+        <div class="cmp-row">
+          <span class="cmp-q">เหตุผลหลักที่เลือกซื้อ — KUBOTA ZT Plus</span>
+          <textarea class="cmp-side-k" name="mkt.k.buyReason"></textarea>
+          <span class="cmp-q q-o">เหตุผลหลักที่เลือกซื้อ — แบรนด์อื่น</span>
+          <textarea class="cmp-side-o dim-cell" name="mkt.o.buyReason" placeholder="แบรนด์อื่น (ตอนนั้น)"></textarea>
         </div>
 
         <div class="cmp-sub">ประสบการณ์การใช้งาน</div>
-        <div class="cmp-row"><span class="cmp-q"><span class="exp-tag exp-a">ด้านสินค้า</span></span>
-          <textarea name="mkt.k.exp.product"></textarea><textarea name="mkt.o.exp.product" class="dim-cell"></textarea>
+        <div class="cmp-row">
+          <span class="cmp-q"><span class="exp-tag exp-a">ด้านสินค้า</span> — KUBOTA ZT Plus</span>
+          <textarea class="cmp-side-k" name="mkt.k.exp.product"></textarea>
+          <span class="cmp-q q-o"><span class="exp-tag exp-a">ด้านสินค้า</span> — แบรนด์อื่น</span>
+          <textarea class="cmp-side-o dim-cell" name="mkt.o.exp.product"></textarea>
         </div>
-        <div class="cmp-row"><span class="cmp-q"><span class="exp-tag exp-b">ด้านอะไหล่ / บริการ</span></span>
-          <textarea name="mkt.k.exp.service"></textarea><textarea name="mkt.o.exp.service" class="dim-cell"></textarea>
+        <div class="cmp-row">
+          <span class="cmp-q"><span class="exp-tag exp-b">ด้านอะไหล่ / บริการ</span> — KUBOTA ZT Plus</span>
+          <textarea class="cmp-side-k" name="mkt.k.exp.service"></textarea>
+          <span class="cmp-q q-o"><span class="exp-tag exp-b">ด้านอะไหล่ / บริการ</span> — แบรนด์อื่น</span>
+          <textarea class="cmp-side-o dim-cell" name="mkt.o.exp.service"></textarea>
         </div>
-        <div class="cmp-row"><span class="cmp-q"><span class="exp-tag exp-c">การดูแลของผู้แทนจำหน่าย</span></span>
-          <textarea name="mkt.k.exp.dealer"></textarea><textarea name="mkt.o.exp.dealer" class="dim-cell"></textarea>
+        <div class="cmp-row">
+          <span class="cmp-q"><span class="exp-tag exp-c">การดูแลของผู้แทนจำหน่าย</span> — KUBOTA ZT Plus</span>
+          <textarea class="cmp-side-k" name="mkt.k.exp.dealer"></textarea>
+          <span class="cmp-q q-o"><span class="exp-tag exp-c">การดูแลของผู้แทนจำหน่าย</span> — แบรนด์อื่น</span>
+          <textarea class="cmp-side-o dim-cell" name="mkt.o.exp.dealer"></textarea>
         </div>
 
-        <div class="cmp-row"><span class="cmp-q good">3 เรื่องที่ชอบที่สุด</span>
-          <div class="rankset">
+        <div class="cmp-row">
+          <span class="cmp-q good">3 เรื่องที่ชอบที่สุด — KUBOTA ZT Plus</span>
+          <div class="rankset cmp-side-k">
             <input type="text" name="mkt.k.like.1" placeholder="อันดับ 1"><input type="text" name="mkt.k.like.2" placeholder="อันดับ 2"><input type="text" name="mkt.k.like.3" placeholder="อันดับ 3">
           </div>
-          <div class="rankset dim-cell">
+          <span class="cmp-q good q-o">3 เรื่องที่ชอบที่สุด — แบรนด์อื่น</span>
+          <div class="rankset cmp-side-o dim-cell">
             <input type="text" name="mkt.o.like.1" placeholder="อันดับ 1"><input type="text" name="mkt.o.like.2" placeholder="อันดับ 2"><input type="text" name="mkt.o.like.3" placeholder="อันดับ 3">
           </div>
         </div>
-        <div class="cmp-row"><span class="cmp-q bad">3 เรื่องที่ไม่ชอบที่สุด</span>
-          <div class="rankset">
+        <div class="cmp-row">
+          <span class="cmp-q bad">3 เรื่องที่ไม่ชอบที่สุด — KUBOTA ZT Plus</span>
+          <div class="rankset cmp-side-k">
             <input type="text" name="mkt.k.dislike.1" placeholder="อันดับ 1"><input type="text" name="mkt.k.dislike.2" placeholder="อันดับ 2"><input type="text" name="mkt.k.dislike.3" placeholder="อันดับ 3">
           </div>
-          <div class="rankset dim-cell">
+          <span class="cmp-q bad q-o">3 เรื่องที่ไม่ชอบที่สุด — แบรนด์อื่น</span>
+          <div class="rankset cmp-side-o dim-cell">
             <input type="text" name="mkt.o.dislike.1" placeholder="อันดับ 1"><input type="text" name="mkt.o.dislike.2" placeholder="อันดับ 2"><input type="text" name="mkt.o.dislike.3" placeholder="อันดับ 3">
           </div>
         </div>
