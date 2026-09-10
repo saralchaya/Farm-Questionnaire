@@ -381,7 +381,7 @@
           <option>คอนแทรคฟาร์ม เครืออื่น</option><option>ฟาร์มเครือใหญ่ (ลูกจ้างบริษัท)</option><option>อื่นๆ</option>
         </select>
       </div>
-      <div class="f full" style="margin-top:12px">
+      <div class="f full hide-shrimp" id="houseTypeWrap" style="margin-top:12px">
         <span class="legend">รูปแบบโรงเรือน</span>
         <div class="opts" style="margin-top:5px">
           <label class="chk"><input type="checkbox" name="general.houseType" value="เล้าปิด EVAP (ปรับอากาศ)"> เล้าปิด EVAP (ปรับอากาศ)</label>
@@ -1201,6 +1201,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     document.querySelectorAll(".farm-noun").forEach(function(el){ el.textContent=noun; });
     var eb=document.getElementById("eyebrow");
     if(eb) eb.textContent="Customer Insight · "+(f?("ฟาร์ม"+f):"หมู / ไก่ / กุ้ง");
+    document.querySelectorAll(".hide-shrimp").forEach(function(el){ el.hidden=(f==="กุ้ง"); });
     rebuildRowUsages();
   }
   form.querySelectorAll('input[name="general.farmType"]').forEach(function(r){ r.addEventListener("change",function(){applyFarm();}); });
