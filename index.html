@@ -527,7 +527,6 @@
       </div>
       <div class="grid c2 only-shrimp" data-farm hidden style="margin-top:12px">
         <div class="f"><label for="sh_ponds">จำนวนบ่อ</label><input type="number" id="sh_ponds" name="farm.shrimp.pondCount" min="0"></div>
-        <div class="f"><label for="sh_rai">พื้นที่รวม (ไร่)</label><input type="text" id="sh_rai" name="farm.shrimp.areaRai"></div>
         <div class="f"><label for="sh_pw">ขนาดบ่อ — กว้าง (ม.)</label><input type="number" id="sh_pw" name="farm.shrimp.pondWidth" min="0" step="0.5"></div>
         <div class="f"><label for="sh_pl">ขนาดบ่อ — ยาว (ม.)</label><input type="number" id="sh_pl" name="farm.shrimp.pondLength" min="0" step="0.5"></div>
         <div class="f"><label for="sh_head">จำนวนกุ้งต่อบ่อ (ตัว)</label><input type="number" id="sh_head" name="farm.shrimp.headPerPond" min="0"></div>
@@ -550,7 +549,7 @@
             <option>มอเตอร์ไฟฟ้าอย่างเดียว</option><option>เครื่องยนต์แบรนด์อื่น</option><option>เครื่องยนต์คูโบต้ารุ่นเก่า</option><option>เพิ่งเริ่มทำฟาร์ม (ไม่มีของเดิม)</option>
           </select>
         </div>
-        <div class="f">
+        <div class="f hide-shrimp">
           <label for="pw_setup">การใช้เครื่องยนต์ร่วมกับมอเตอร์ไฟฟ้า</label>
           <select id="pw_setup" name="power.setup" data-reveal="#pw_backupWrap" data-reveal-when="ไฟฟ้าเป็นหลัก – เครื่องยนต์สำรองตอนไฟดับ">
             <option value="">— เลือก —</option>
@@ -560,8 +559,18 @@
             <option>สลับกันตามช่วง/ตามค่าไฟ</option>
           </select>
         </div>
+        <div class="f only-shrimp" data-farm hidden>
+          <label for="pw_prime">ระบบต้นกำลังที่ใช้ปัจจุบัน</label>
+          <select id="pw_prime" name="power.primeMover">
+            <option value="">— เลือก —</option>
+            <option>เครื่องยนต์ดีเซล</option>
+            <option>เครื่องยนต์แก๊ส (LPG)</option>
+            <option>มอเตอร์ไฟฟ้า</option>
+            <option>ใช้หลายอย่างร่วมกัน</option>
+          </select>
+        </div>
       </div>
-      <div class="revealed" id="pw_backupWrap">
+      <div class="revealed hide-shrimp" id="pw_backupWrap">
         <div class="grid c2">
           <div class="f"><label for="pw_outage">ไฟดับเฉลี่ยกี่ครั้ง / เดือน</label><input type="number" id="pw_outage" name="power.outagesPerMonth" min="0"></div>
           <div class="f"><label for="pw_bkhrs">เครื่องยนต์สำรองทำงานเฉลี่ยกี่ชั่วโมง / เดือน</label><input type="number" id="pw_bkhrs" name="power.backupHoursPerMonth" min="0"></div>
