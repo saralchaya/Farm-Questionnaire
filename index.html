@@ -338,7 +338,7 @@
 
 <main class="wrap">
   <div class="hero">
-    <div class="eyebrow">Customer Insight · หมู / ไก่</div>
+    <div class="eyebrow" id="eyebrow">Customer Insight · หมู / ไก่ / กุ้ง</div>
     <h1>สัมภาษณ์ลูกค้าฟาร์มที่ใช้เครื่องยนต์คูโบต้า ZT Plus</h1>
     <p>ทีมสำรวจใช้ฟอร์มนี้สัมภาษณ์และกรอกหน้างาน — ส่วนที่ 1 ข้อมูลทั่วไป · ส่วนที่ 2 เชิงลึกฟาร์ม (ปรับตามประเภทฟาร์ม) · ส่วนที่ 3 การตลาด · ส่วนที่ 4 ภาพและวิดีโอ</p>
     <details class="how">
@@ -490,9 +490,9 @@
     <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
       <h3>2.1 โครงสร้างฟาร์มและกำลังการผลิต</h3>
       <div class="grid c3 only-pig only-chicken" data-farm hidden>
-        <div class="f"><label for="s_houses">จำนวนโรงเรือน / เล้า</label><input type="number" id="s_houses" name="farm.houseCount" min="0"></div>
-        <div class="f"><label for="s_w">ขนาดโรงเรือน — กว้าง (ม.)</label><input type="number" id="s_w" name="farm.houseWidth" min="0" step="0.5"></div>
-        <div class="f"><label for="s_l">ขนาดโรงเรือน — ยาว (ม.)</label><input type="number" id="s_l" name="farm.houseLength" min="0" step="0.5"></div>
+        <div class="f"><label for="s_houses">จำนวน<span class="farm-noun">เล้า</span></label><input type="number" id="s_houses" name="farm.houseCount" min="0"></div>
+        <div class="f"><label for="s_w">ขนาด<span class="farm-noun">เล้า</span> — กว้าง (ม.)</label><input type="number" id="s_w" name="farm.houseWidth" min="0" step="0.5"></div>
+        <div class="f"><label for="s_l">ขนาด<span class="farm-noun">เล้า</span> — ยาว (ม.)</label><input type="number" id="s_l" name="farm.houseLength" min="0" step="0.5"></div>
       </div>
 
       <div class="grid c2 only-pig" data-farm hidden style="margin-top:12px">
@@ -582,10 +582,10 @@
 
       <span class="subhead" style="margin-top:14px">ระบบพัดลม EVAP และการต่อพ่วง</span>
       <div class="grid c3" style="margin-top:6px">
-        <div class="f"><label for="pw_engperhouse">1. จำนวนเครื่องยนต์ที่ใช้ต่อเล้า</label>
+        <div class="f"><label for="pw_engperhouse">1. จำนวนเครื่องยนต์ที่ใช้ต่อ<span class="farm-noun">เล้า</span></label>
           <div class="unit-in"><input type="number" id="pw_engperhouse" name="power.enginesPerHouse" min="0" placeholder="เติมเลข"><span class="unit">เครื่อง</span></div>
         </div>
-        <div class="f"><label for="pw_fanperhouse">2. จำนวนพัดลมต่อเล้า</label>
+        <div class="f"><label for="pw_fanperhouse">2. จำนวนพัดลมต่อ<span class="farm-noun">เล้า</span></label>
           <div class="unit-in"><input type="number" id="pw_fanperhouse" name="power.fansPerHouse" min="0" placeholder="เติมเลข"><span class="unit">ตัว</span></div>
         </div>
         <div class="f"><label for="pw_fanpereng">3. พัดลมต่อเครื่องยนต์ 1 เครื่อง</label>
@@ -652,7 +652,7 @@
             <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊ส LPG (ถัง)</option><option>แก๊สชีวภาพ (ไบโอแก๊ส)</option><option>ไฟฟ้า</option><option>ผสม</option>
           </select>
         </div>
-        <div class="f"><label for="fs_y_eng">จำนวนเครื่องยนต์ที่ใช้ช่วงนี้ (ต่อเล้า)</label><input type="number" id="fs_y_eng" name="fuel.young.engines" min="0"></div>
+        <div class="f"><label for="fs_y_eng">จำนวนเครื่องยนต์ที่ใช้ช่วงนี้ (ต่อ<span class="farm-noun">เล้า</span>)</label><input type="number" id="fs_y_eng" name="fuel.young.engines" min="0"></div>
         <div class="f"><label for="fs_y_hrs">ชั่วโมงทำงานเฉลี่ย / วัน</label><input type="number" id="fs_y_hrs" name="fuel.young.hoursPerDay" min="0" max="24" step="0.5"></div>
         <div class="f"><label for="fs_y_rate">อัตราการใช้เชื้อเพลิง</label><input type="text" id="fs_y_rate" name="fuel.young.rate" placeholder="ลิตร/ชม. หรือ กก./วัน หรือ ถัง/สัปดาห์"></div>
         <div class="f"><label for="fs_y_cost">ค่าเชื้อเพลิงเฉลี่ย</label><input type="text" id="fs_y_cost" name="fuel.young.cost" placeholder="บาท/วัน หรือ บาท/เดือน"></div>
@@ -666,7 +666,7 @@
             <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊ส LPG (ถัง)</option><option>แก๊สชีวภาพ (ไบโอแก๊ส)</option><option>ไฟฟ้า</option><option>ผสม</option>
           </select>
         </div>
-        <div class="f"><label for="fs_o_eng">จำนวนเครื่องยนต์ที่ใช้ช่วงนี้ (ต่อเล้า)</label><input type="number" id="fs_o_eng" name="fuel.old.engines" min="0"></div>
+        <div class="f"><label for="fs_o_eng">จำนวนเครื่องยนต์ที่ใช้ช่วงนี้ (ต่อ<span class="farm-noun">เล้า</span>)</label><input type="number" id="fs_o_eng" name="fuel.old.engines" min="0"></div>
         <div class="f"><label for="fs_o_hrs">ชั่วโมงทำงานเฉลี่ย / วัน</label><input type="number" id="fs_o_hrs" name="fuel.old.hoursPerDay" min="0" max="24" step="0.5"></div>
         <div class="f"><label for="fs_o_rate">อัตราการใช้เชื้อเพลิง</label><input type="text" id="fs_o_rate" name="fuel.old.rate" placeholder="ลิตร/ชม. หรือ กก./วัน หรือ ถัง/สัปดาห์"></div>
         <div class="f"><label for="fs_o_cost">ค่าเชื้อเพลิงเฉลี่ย</label><input type="text" id="fs_o_cost" name="fuel.old.cost" placeholder="บาท/วัน หรือ บาท/เดือน"></div>
@@ -1195,6 +1195,10 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       el.hidden=!show;
     });
     document.getElementById("p2gate").style.display=f?"none":"";
+    var noun=f==="กุ้ง"?"บ่อ":(f==="ไก่"?"โรงเรือน":"เล้า");
+    document.querySelectorAll(".farm-noun").forEach(function(el){ el.textContent=noun; });
+    var eb=document.getElementById("eyebrow");
+    if(eb) eb.textContent="Customer Insight · "+(f?("ฟาร์ม"+f):"หมู / ไก่ / กุ้ง");
     rebuildRowUsages();
   }
   form.querySelectorAll('input[name="general.farmType"]').forEach(function(r){ r.addEventListener("change",function(){applyFarm();}); });
