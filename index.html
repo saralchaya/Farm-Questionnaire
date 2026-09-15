@@ -328,6 +328,13 @@
   .r-item .r-act button{font-size:11.5px;padding:4px 9px;border-radius:6px;border:1px solid var(--line-strong);background:var(--paper);cursor:pointer;font-family:inherit;color:var(--ink)}
   .drawer-foot{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap}
   .sync-note{font-size:11.5px;color:var(--ink-faint);padding:0 18px 12px}
+  .backend-box{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:0 18px 10px}
+  .backend-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .backend-lbl{font-size:12px;font-weight:700;color:var(--ink)}
+  .backend-status{font-size:11px;color:var(--ink-faint)}
+  .backend-status.ok{color:var(--good);font-weight:600}
+  #backendUrl{flex:1;min-width:150px;font-size:12px;padding:5px 8px}
+  .backend-box .btn{font-size:11.5px;padding:5px 10px}
 
   .foot{padding:26px 0 60px;color:var(--ink-faint);font-size:12px;text-align:center}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -1112,6 +1119,19 @@
     <button id="drawerClose" aria-label="ปิด">×</button>
   </div>
   <p class="sync-note" id="syncNote">ข้อมูลเก็บในเครื่องนี้เท่านั้น — สิ้นวันกด “ส่งออก JSON” ส่งไฟล์กลับออฟฟิศ / ฝั่งออฟฟิศใช้ “นำเข้า JSON” รวมไฟล์จากทุกเครื่อง</p>
+  <div class="backend-box">
+    <div class="backend-row">
+      <span class="backend-lbl">🔗 Backend (Google Sheet)</span>
+      <span class="backend-status" id="backendStatus">ยังไม่ได้ตั้งค่า</span>
+    </div>
+    <div class="backend-row" style="margin-top:6px">
+      <input type="url" id="backendUrl" placeholder="วาง Web App URL จาก Apps Script ที่นี่">
+      <button type="button" class="btn ghost" id="backendSave">บันทึก</button>
+    </div>
+    <div class="backend-row" style="margin-top:6px">
+      <button type="button" class="btn ghost" id="backendSyncAll">🔄 ส่งข้อมูลทั้งหมดในเครื่องนี้ไปยัง Sheet</button>
+    </div>
+  </div>
   <div class="drawer-body" id="drawerBody"></div>
   <div class="drawer-foot">
     <button class="btn primary" id="btnJSON2">ส่งออกทั้งหมด (JSON)</button>
@@ -1713,6 +1733,37 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   });
 
   /* ---------- save ---------- */
+  /* ---------- backend sync (Google Sheets via Apps Script Web App) ---------- */
+  var LS_BACKEND="farmsurvey_backend_url_v1";
+  var backendUrlInput=document.getElementById("backendUrl"), backendStatus=document.getElementById("backendStatus");
+  function getBackendUrl(){ return safeLS(function(){return localStorage.getItem(LS_BACKEND)})||""; }
+  function renderBackendStatus(){
+    var u=getBackendUrl();
+    backendUrlInput.value=u;
+    backendStatus.textContent=u?"เชื่อมต่อแล้ว ✓":"ยังไม่ได้ตั้งค่า";
+    backendStatus.classList.toggle("ok",!!u);
+  }
+  document.getElementById("backendSave").addEventListener("click",function(){
+    var v=backendUrlInput.value.trim();
+    safeLS(function(){ v?localStorage.setItem(LS_BACKEND,v):localStorage.removeItem(LS_BACKEND); });
+    renderBackendStatus();
+    toast(v?"บันทึก URL backend แล้ว":"ลบ URL backend แล้ว");
+  });
+  function syncToBackend(rec){
+    var url=getBackendUrl();
+    if(!url) return;
+    try{ fetch(url,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(rec)}).catch(function(){}); }catch(e){}
+  }
+  document.getElementById("backendSyncAll").addEventListener("click",function(){
+    var url=getBackendUrl();
+    if(!url){ toast("ยังไม่ได้ตั้งค่า URL backend",true); return; }
+    var a=getResp();
+    if(!a.length){ toast("ไม่มีข้อมูลในเครื่องนี้ให้ส่ง"); return; }
+    a.forEach(function(r){ syncToBackend(r); });
+    toast("กำลังส่ง "+a.length+" รายการไปยัง Google Sheet…");
+  });
+  renderBackendStatus();
+
   document.getElementById("btnSave").addEventListener("click",async function(){
     var o=collect();
     if(!o["general.farmType"]){ toast("เลือกประเภทฟาร์มก่อนบันทึก",true); location.hash="#p1"; return; }
@@ -1725,9 +1776,10 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     await idbPut(rec.id,{photos:photoArr, videoBlob:vBlob, videoName:vName});
     var a=getResp(); a.push(rec); setResp(a);
     safeLS(function(){localStorage.removeItem(LS_DRAFT)});
+    syncToBackend(rec);
     clearForm(true);
     window.scrollTo({top:0,behavior:"smooth"});
-    toast("บันทึกแล้ว ✓ (เก็บในเครื่องนี้) — เริ่มรายถัดไปได้เลย");
+    toast(getBackendUrl() ? "บันทึกแล้ว ✓ (เก็บในเครื่องนี้ + ส่งไป Google Sheet) — เริ่มรายถัดไปได้เลย" : "บันทึกแล้ว ✓ (เก็บในเครื่องนี้) — เริ่มรายถัดไปได้เลย");
     renderDrawer();
   });
   document.getElementById("btnClear").addEventListener("click",function(){
@@ -1800,7 +1852,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
 
   /* ---------- drawer ---------- */
   var scrim=document.getElementById("scrim"), drawer=document.getElementById("drawer");
-  function openDrawer(){ renderDrawer(); scrim.classList.add("on"); drawer.classList.add("on"); }
+  function openDrawer(){ renderDrawer(); renderBackendStatus(); scrim.classList.add("on"); drawer.classList.add("on"); }
   function closeDrawer(){ scrim.classList.remove("on"); drawer.classList.remove("on"); }
   document.getElementById("countPill").addEventListener("click",openDrawer);
   document.getElementById("countPill").addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){e.preventDefault();openDrawer();} });
