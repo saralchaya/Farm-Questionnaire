@@ -590,40 +590,43 @@
     <!-- 2.2 power source -->
     <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
       <h3>2.2 ต้นกำลังและระบบระบายอากาศ</h3>
-      <div class="f full">
-        <label for="pw_before">ก่อนหน้านี้ใช้งานแบบใด</label>
-        <select id="pw_before" name="power.before" style="max-width:360px">
-          <option value="">— เลือก —</option>
-          <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
-          <option>ใช้ทั้ง 2 ระบบร่วมกัน (ไฟฟ้าและเครื่องยนต์)</option>
-          <option>ใช้มอเตอร์ไฟฟ้าอย่างเดียว</option>
-        </select>
-      </div>
-      <div class="f full" style="margin-top:10px"><label for="pw_oldproblem">ปัญหาที่เจอจากการใช้งานแบบเก่า</label><textarea id="pw_oldproblem" name="power.oldProblem"></textarea></div>
-
-      <div class="grid c2" style="margin-top:12px">
-        <div class="f hide-shrimp">
-          <label for="pw_setup">ปัจจุบันใช้งานแบบใด</label>
-          <select id="pw_setup" name="power.setup" data-reveal="#pw_backupWrap" data-reveal-when="ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง">
-            <option value="">— เลือก —</option>
-            <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
-            <option>ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง</option>
-            <option>อื่นๆ</option>
-          </select>
-          <input type="text" id="pw_setupOther" name="power.setupOther" placeholder="ระบุ" style="margin-top:6px" hidden>
+      <div class="grid c2">
+        <div class="colstack">
+          <div class="f">
+            <label for="pw_before">ก่อนหน้านี้ใช้งานแบบใด</label>
+            <select id="pw_before" name="power.before">
+              <option value="">— เลือก —</option>
+              <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
+              <option>ใช้ทั้ง 2 ระบบร่วมกัน (ไฟฟ้าและเครื่องยนต์)</option>
+              <option>ใช้มอเตอร์ไฟฟ้าอย่างเดียว</option>
+            </select>
+          </div>
+          <div class="f"><label for="pw_oldproblem">ปัญหาที่เจอจากการใช้งานแบบเก่า</label><textarea id="pw_oldproblem" name="power.oldProblem"></textarea></div>
         </div>
-        <div class="f only-shrimp" data-farm hidden>
-          <label for="pw_prime">ระบบต้นกำลังที่ใช้ปัจจุบัน</label>
-          <select id="pw_prime" name="power.primeMover">
-            <option value="">— เลือก —</option>
-            <option>เครื่องยนต์ดีเซล</option>
-            <option>เครื่องยนต์แก๊ส (LPG)</option>
-            <option>มอเตอร์ไฟฟ้า</option>
-            <option>ใช้หลายอย่างร่วมกัน</option>
-          </select>
+        <div class="colstack">
+          <div class="f hide-shrimp">
+            <label for="pw_setup">ปัจจุบันใช้งานแบบใด</label>
+            <select id="pw_setup" name="power.setup" data-reveal="#pw_backupWrap" data-reveal-when="ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง">
+              <option value="">— เลือก —</option>
+              <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
+              <option>ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง</option>
+              <option>อื่นๆ</option>
+            </select>
+            <input type="text" id="pw_setupOther" name="power.setupOther" placeholder="ระบุ" style="margin-top:6px" hidden>
+          </div>
+          <div class="f only-shrimp" data-farm hidden>
+            <label for="pw_prime">ระบบต้นกำลังที่ใช้ปัจจุบัน</label>
+            <select id="pw_prime" name="power.primeMover">
+              <option value="">— เลือก —</option>
+              <option>เครื่องยนต์ดีเซล</option>
+              <option>เครื่องยนต์แก๊ส (LPG)</option>
+              <option>มอเตอร์ไฟฟ้า</option>
+              <option>ใช้หลายอย่างร่วมกัน</option>
+            </select>
+          </div>
         </div>
       </div>
-      <div class="revealed hide-shrimp" id="pw_backupWrap">
+      <div class="revealed hide-shrimp" id="pw_backupWrap" style="margin-top:12px">
         <div class="grid c2">
           <div class="f"><label for="pw_outage">ไฟดับเฉลี่ยกี่ครั้ง / เดือน</label><input type="number" id="pw_outage" name="power.outagesPerMonth" min="0"></div>
           <div class="f"><label for="pw_bkhrs">เครื่องยนต์สำรองทำงานเฉลี่ยกี่ชั่วโมง / เดือน</label><input type="number" id="pw_bkhrs" name="power.backupHoursPerMonth" min="0"></div>
