@@ -739,25 +739,6 @@
         <div class="f"><label for="fs_o_cost">ค่าเชื้อเพลิงเฉลี่ย</label><input type="text" id="fs_o_cost" name="fuel.old.cost" placeholder="บาท/วัน หรือ บาท/เดือน"></div>
       </div>
 
-      <!-- pig biogas -->
-      <div class="only-pig" data-farm hidden id="bioWrap" style="margin-top:14px">
-        <div class="callout"><span class="dot"></span><div>ฟาร์มหมูช่วงสัตว์โตมักต่อ<b>แก๊สชีวภาพจากบ่อหมักมูลหมู</b> ทำให้ต้นทุนเชื้อเพลิงช่วงนั้นเกือบเป็นศูนย์</div></div>
-        <div class="f row full" style="margin-top:10px">
-          <label for="bio_use">ใช้ไบโอแก๊สจากบ่อมูลหมูหรือไม่</label>
-          <select id="bio_use" name="fuel.biogas.use" data-reveal="#bioDetail" data-reveal-when="ใช้">
-            <option value="">— เลือก —</option><option>ใช้</option><option>ไม่ใช้ (แต่สนใจ)</option><option>ไม่ใช้ / ไม่สนใจ</option>
-          </select>
-        </div>
-        <div class="revealed" id="bioDetail">
-          <div class="grid c3">
-            <div class="f"><label for="bio_pct">ครอบคลุมกี่ % ของความต้องการเชื้อเพลิงช่วงสัตว์โต</label><input type="text" id="bio_pct" name="fuel.biogas.coveragePct" placeholder="เช่น 80"></div>
-            <div class="f"><label for="bio_eng">จำนวนเครื่องยนต์ที่ดัดแปลงใช้แก๊ส</label><input type="number" id="bio_eng" name="fuel.biogas.convertedEngines" min="0"></div>
-            <div class="f"><label for="bio_save">ประหยัดค่าน้ำมันได้ประมาณ (บาท/เดือน)</label><input type="text" id="bio_save" name="fuel.biogas.savingPerMonth"></div>
-          </div>
-          <div class="f full" style="margin-top:10px"><label for="bio_issue">ปัญหาจากการใช้แก๊สชีวภาพ (เช่น เครื่องสึก, กำลังตก, ต้องปรับวาล์วบ่อย)</label><textarea id="bio_issue" name="fuel.biogas.issues"></textarea></div>
-        </div>
-      </div>
-
       <!-- shrimp gas tank -->
       <div class="only-shrimp" data-farm hidden style="margin-top:14px">
         <div class="callout"><span class="dot"></span><div>ฟาร์มกุ้งมักใช้<b>แก๊ส LPG แบบถัง</b> — กรอกจำนวนถัง/รอบ และราคาต่อถัง</div></div>
@@ -768,17 +749,7 @@
         </div>
       </div>
 
-      <div class="grid c2" style="margin-top:14px">
-        <div class="f">
-          <label for="sv_perceived">ลูกค้ารู้สึกว่าเปลี่ยนมาใช้แบบนี้แล้วประหยัดขึ้นแค่ไหน</label>
-          <select id="sv_perceived" name="saving.perceived">
-            <option value="">— เลือก —</option><option>ประหยัดมาก (&gt; 30%)</option><option>ประหยัดพอสมควร (10–30%)</option><option>ประหยัดเล็กน้อย (&lt; 10%)</option><option>พอๆ กัน</option><option>แพงขึ้นแต่คุ้มเรื่องอื่น</option>
-          </select>
-        </div>
-        <div class="f"><label for="sv_amount">ประมาณการเป็นเงิน (บาท/เดือน) เท่าที่ลูกค้าให้ข้อมูล</label><input type="text" id="sv_amount" name="saving.amountPerMonth"></div>
-        <div class="f full"><label for="sv_story">เล่ารายละเอียดความประหยัด (คำพูดลูกค้า)</label><textarea id="sv_story" name="saving.story"></textarea></div>
-      </div>
-      <div class="callout warn"><span class="dot"></span><div>การเปรียบเทียบความประหยัดเชิงลึก (ดีเซล vs แก๊ส vs ไฟฟ้า) ทีมสรุปเองหลังบ้าน — หน้างานกรอกแค่ตัวเลขดิบและคำพูดลูกค้า</div></div>
+      <div class="f full" style="margin-top:14px"><label for="sv_story">อธิบายเพิ่มเติม เรื่องความประหยัด (ถ้ามี)</label><textarea id="sv_story" name="saving.story"></textarea></div>
     </div>
 
     <!-- 2.4 การบำรุงรักษา : fuel-linked -->
