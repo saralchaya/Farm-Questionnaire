@@ -522,17 +522,20 @@
     <!-- 2.1 structure : common + type-specific -->
     <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
       <h3>2.1 โครงสร้างฟาร์มและกำลังการผลิต</h3>
-      <span class="legend only-pig only-chicken" data-farm hidden>— ขนาดและจำนวน<span class="farm-noun">เล้า</span> —</span>
-      <div class="grid c3 only-pig only-chicken" data-farm hidden style="margin-top:4px">
+      <div class="grid c3 only-pig only-chicken" data-farm hidden>
         <div class="f"><label for="s_houses">จำนวน<span class="farm-noun">เล้า</span></label><input type="number" id="s_houses" name="farm.houseCount" min="0"></div>
         <div class="f"><label for="s_w">ขนาด<span class="farm-noun">เล้า</span> — กว้าง (ม.)</label><input type="number" id="s_w" name="farm.houseWidth" min="0" step="0.5"></div>
         <div class="f"><label for="s_l">ขนาด<span class="farm-noun">เล้า</span> — ยาว (ม.)</label><input type="number" id="s_l" name="farm.houseLength" min="0" step="0.5"></div>
       </div>
 
-      <span class="legend only-pig" data-farm hidden style="margin-top:12px;display:block">— รายละเอียดการเลี้ยงหมู —</span>
-      <div class="grid c2 only-pig" data-farm hidden style="margin-top:4px">
+      <div class="grid c3 only-pig" data-farm hidden style="margin-top:12px">
         <div class="f"><label for="pg_head">จำนวนหมูต่อ<span class="farm-noun">เล้า</span> (ตัว)</label><input type="number" id="pg_head" name="farm.pig.headPerHouse" min="0"></div>
-        <div class="f"><label for="pg_rounds">รอบการเลี้ยงต่อปี</label><input type="text" id="pg_rounds" name="farm.pig.roundsPerYear" placeholder="เช่น 2.5"></div>
+        <div class="f"><label for="pg_cycledays">ระยะเวลาต่อรอบการเลี้ยง</label>
+          <div class="unit-in"><input type="number" id="pg_cycledays" name="farm.pig.cycleDays" min="0" placeholder="เช่น 150"><span class="unit">วัน</span></div>
+        </div>
+        <div class="f"><label for="pg_rounds">จำนวนรอบการเลี้ยงต่อปี</label>
+          <div class="unit-in"><input type="number" id="pg_rounds" name="farm.pig.roundsPerYear" min="0" step="0.1" placeholder="เช่น 2.5"><span class="unit">ครั้ง</span></div>
+        </div>
       </div>
 
       <span class="legend only-chicken" data-farm hidden style="margin-top:12px;display:block">— รายละเอียดการเลี้ยงไก่ —</span>
@@ -549,12 +552,15 @@
         <div class="f"><label for="ck_days">อายุจับ / ปลดต่อรอบ (วัน)</label><input type="text" id="ck_days" name="farm.chicken.cycleDays" placeholder="เช่น 40"></div>
       </div>
 
-      <span class="legend only-pig only-chicken" data-farm hidden style="margin-top:12px;display:block">— ผู้ติดตั้งระบบ EVAP —</span>
-      <div class="grid c2 only-pig only-chicken" data-farm hidden style="margin-top:4px">
+      <div class="grid c2 only-pig only-chicken" data-farm hidden style="margin-top:12px">
         <div class="f"><label for="s_evapco">บริษัทที่รับติดตั้งระบบ EVAP</label><input type="text" id="s_evapco" name="farm.evapInstaller"></div>
         <div class="f"><label for="s_evapprov">จังหวัดของผู้ติดตั้ง</label>
           <input type="text" id="s_evapprov" name="farm.evapInstallerProvince" list="provList" autocomplete="off" placeholder="พิมพ์หรือเลือกจังหวัด">
           <datalist id="provList"></datalist>
+        </div>
+        <div class="f"><label for="s_evaptel">เบอร์โทรผู้ติดตั้ง (ถ้ามี)</label><input type="tel" id="s_evaptel" name="farm.evapInstallerTel"></div>
+        <div class="f"><label for="s_evapcost">ค่าใช้จ่ายในการลงทุนติดตั้งเบ็ดเสร็จ</label>
+          <div class="unit-in"><input type="number" id="s_evapcost" name="farm.evapInstallCost" min="0" placeholder="เช่น 85000"><span class="unit">บาท</span></div>
         </div>
       </div>
 
@@ -574,28 +580,37 @@
           <select id="sh_species" name="farm.shrimp.species"><option value="">— เลือก —</option><option>กุ้งขาว</option><option>กุ้งกุลาดำ</option><option>กุ้งก้ามกราม</option></select>
         </div>
       </div>
+
+      <div class="f full" style="margin-top:12px">
+        <label for="s_note21">หมายเหตุ</label>
+        <textarea id="s_note21" name="farm.structureNote" rows="2" style="min-height:30px"></textarea>
+      </div>
     </div>
 
     <!-- 2.2 power source -->
     <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
       <h3>2.2 ต้นกำลังและระบบระบายอากาศ</h3>
-      <div class="grid c2">
-        <div class="f">
-          <label for="pw_before">ก่อนหน้านี้ใช้ต้นกำลังแบบใด</label>
-          <select id="pw_before" name="power.before">
-            <option value="">— เลือก —</option>
-            <option>มอเตอร์ไฟฟ้าอย่างเดียว</option><option>เครื่องยนต์แบรนด์อื่น</option><option>เครื่องยนต์คูโบต้ารุ่นเก่า</option><option>เพิ่งเริ่มทำฟาร์ม (ไม่มีของเดิม)</option>
-          </select>
-        </div>
+      <div class="f full">
+        <label for="pw_before">ก่อนหน้านี้ใช้งานแบบใด</label>
+        <select id="pw_before" name="power.before" style="max-width:360px">
+          <option value="">— เลือก —</option>
+          <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
+          <option>ใช้ทั้ง 2 ระบบร่วมกัน (ไฟฟ้าและเครื่องยนต์)</option>
+          <option>ใช้มอเตอร์ไฟฟ้าอย่างเดียว</option>
+        </select>
+      </div>
+      <div class="f full" style="margin-top:10px"><label for="pw_oldproblem">ปัญหาที่เจอจากการใช้งานแบบเก่า</label><textarea id="pw_oldproblem" name="power.oldProblem"></textarea></div>
+
+      <div class="grid c2" style="margin-top:12px">
         <div class="f hide-shrimp">
-          <label for="pw_setup">การใช้เครื่องยนต์ร่วมกับมอเตอร์ไฟฟ้า</label>
-          <select id="pw_setup" name="power.setup" data-reveal="#pw_backupWrap" data-reveal-when="ไฟฟ้าเป็นหลัก – เครื่องยนต์สำรองตอนไฟดับ">
+          <label for="pw_setup">ปัจจุบันใช้งานแบบใด</label>
+          <select id="pw_setup" name="power.setup" data-reveal="#pw_backupWrap" data-reveal-when="ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง">
             <option value="">— เลือก —</option>
-            <option>ไฟฟ้าเป็นหลัก – เครื่องยนต์สำรองตอนไฟดับ</option>
-            <option>เครื่องยนต์เป็นหลัก – มอเตอร์ไฟฟ้าสำรอง</option>
-            <option>เครื่องยนต์อย่างเดียว (ไม่มีไฟฟ้า)</option>
-            <option>สลับกันตามช่วง/ตามค่าไฟ</option>
+            <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
+            <option>ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง</option>
+            <option>อื่นๆ</option>
           </select>
+          <input type="text" id="pw_setupOther" name="power.setupOther" placeholder="ระบุ" style="margin-top:6px" hidden>
         </div>
         <div class="f only-shrimp" data-farm hidden>
           <label for="pw_prime">ระบบต้นกำลังที่ใช้ปัจจุบัน</label>
@@ -617,7 +632,7 @@
       </div>
 
       <div class="f full" style="margin-top:12px">
-        <label for="pw_whychange">เหตุผลที่เปลี่ยน/เลือกมาใช้เครื่องยนต์ (เลือกได้หลายข้อ)</label>
+        <label for="pw_whychange">เหตุผลที่เปลี่ยน/เลือกมาซื้อเครื่องยนต์ดีเซลคูโบต้า (เลือกได้หลายข้อ)</label>
         <div class="opts" style="margin-top:6px">
           <label class="chk"><input type="checkbox" name="power.whyChange" value="ไม่มีไฟฟ้าเข้าถึง"> ไม่มีไฟฟ้าเข้าถึง</label>
           <label class="chk"><input type="checkbox" name="power.whyChange" value="ไฟตก/ไฟดับบ่อย"> ไฟตก / ไฟดับบ่อย</label>
@@ -1419,6 +1434,11 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   }
   pmFin.addEventListener("change",applyFinance);
 
+  /* ---------- conditional: current power setup = อื่นๆ -> free-text field ---------- */
+  var pwSetup=document.getElementById("pw_setup");
+  function applyPwSetup(){ document.getElementById("pw_setupOther").hidden = pwSetup.value!=="อื่นๆ"; }
+  pwSetup.addEventListener("change",applyPwSetup);
+
   /* ---------- conditional: farmer group / meeting -> reveal + frequency-driven month pickers ---------- */
   var GRP_MONTHS=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
   var GRP_FREQ_N={"1 ครั้ง/ปี":1,"2 ครั้ง/ปี":2,"3 ครั้ง/ปี":3,"4 ครั้ง/ปี":4};
@@ -1612,7 +1632,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       if(Array.isArray(m.photos)&&m.photos.length){ photos=m.photos.slice(); renderPhotos(); }
       if(m.videoBlob){ setVideo(m.videoBlob,m.videoName); }
     }); }
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance(); applyPwSetup();
     fillEngines(o["engine.list"]);
     form.querySelectorAll('[data-reveal]').forEach(function(s){ s.dispatchEvent(new Event("change")); });
   }
@@ -1624,7 +1644,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     fillEngines(null);
     refreshRankOptions(chRank,3); refreshRankOptions(promoRank,3);
     rebuildGroupMonths("");
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance(); applyPwSetup();
     form.querySelectorAll('[data-reveal]').forEach(function(s){ var t=document.querySelector(s.getAttribute("data-reveal")); if(t)t.classList.remove("on"); });
     if(!silent){ safeLS(function(){localStorage.removeItem(LS_DRAFT)}); toast("ล้างฟอร์มแล้ว"); }
   }
@@ -1844,7 +1864,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   (function initDate(){ var d=document.getElementById("m_date"); if(!d.value) d.value=new Date().toISOString().slice(0,10); })();
   renderPhotos();
   rebuildGroupMonths("");
-  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance(); fillEngines(null);
+  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance(); applyPwSetup(); fillEngines(null);
   var draft=safeLS(function(){return JSON.parse(localStorage.getItem(LS_DRAFT)||"null")});
   if(draft){ try{ restore(draft); }catch(e){} }
   refreshCount();
