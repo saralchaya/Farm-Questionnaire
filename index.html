@@ -508,19 +508,22 @@
     <!-- 2.1 structure : common + type-specific -->
     <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
       <h3>2.1 โครงสร้างฟาร์มและกำลังการผลิต</h3>
-      <div class="grid c3 only-pig only-chicken" data-farm hidden>
+      <span class="legend only-pig only-chicken" data-farm hidden>— ขนาดและจำนวน<span class="farm-noun">เล้า</span> —</span>
+      <div class="grid c3 only-pig only-chicken" data-farm hidden style="margin-top:4px">
         <div class="f"><label for="s_houses">จำนวน<span class="farm-noun">เล้า</span></label><input type="number" id="s_houses" name="farm.houseCount" min="0"></div>
         <div class="f"><label for="s_w">ขนาด<span class="farm-noun">เล้า</span> — กว้าง (ม.)</label><input type="number" id="s_w" name="farm.houseWidth" min="0" step="0.5"></div>
         <div class="f"><label for="s_l">ขนาด<span class="farm-noun">เล้า</span> — ยาว (ม.)</label><input type="number" id="s_l" name="farm.houseLength" min="0" step="0.5"></div>
       </div>
 
-      <div class="grid c2 only-pig" data-farm hidden style="margin-top:12px">
-        <div class="f"><label for="pg_head">จำนวนหมูต่อเล้า (ตัว)</label><input type="number" id="pg_head" name="farm.pig.headPerHouse" min="0"></div>
+      <span class="legend only-pig" data-farm hidden style="margin-top:12px;display:block">— รายละเอียดการเลี้ยงหมู —</span>
+      <div class="grid c2 only-pig" data-farm hidden style="margin-top:4px">
+        <div class="f"><label for="pg_head">จำนวนหมูต่อ<span class="farm-noun">เล้า</span> (ตัว)</label><input type="number" id="pg_head" name="farm.pig.headPerHouse" min="0"></div>
         <div class="f"><label for="pg_rounds">รอบการเลี้ยงต่อปี</label><input type="text" id="pg_rounds" name="farm.pig.roundsPerYear" placeholder="เช่น 2.5"></div>
       </div>
 
-      <div class="grid c2 only-chicken" data-farm hidden style="margin-top:12px">
-        <div class="f"><label for="ck_head">จำนวนไก่ต่อเล้า (ตัว)</label><input type="number" id="ck_head" name="farm.chicken.headPerHouse" min="0"></div>
+      <span class="legend only-chicken" data-farm hidden style="margin-top:12px;display:block">— รายละเอียดการเลี้ยงไก่ —</span>
+      <div class="grid c2 only-chicken" data-farm hidden style="margin-top:4px">
+        <div class="f"><label for="ck_head">จำนวนไก่ต่อ<span class="farm-noun">เล้า</span> (ตัว)</label><input type="number" id="ck_head" name="farm.chicken.headPerHouse" min="0"></div>
         <div class="f">
           <label for="ck_type">ประเภทการเลี้ยงไก่</label>
           <select id="ck_type" name="farm.chicken.type">
@@ -532,7 +535,8 @@
         <div class="f"><label for="ck_days">อายุจับ / ปลดต่อรอบ (วัน)</label><input type="text" id="ck_days" name="farm.chicken.cycleDays" placeholder="เช่น 40"></div>
       </div>
 
-      <div class="grid c2 only-pig only-chicken" data-farm hidden style="margin-top:12px">
+      <span class="legend only-pig only-chicken" data-farm hidden style="margin-top:12px;display:block">— ผู้ติดตั้งระบบ EVAP —</span>
+      <div class="grid c2 only-pig only-chicken" data-farm hidden style="margin-top:4px">
         <div class="f"><label for="s_evapco">บริษัทที่รับติดตั้งระบบ EVAP</label><input type="text" id="s_evapco" name="farm.evapInstaller"></div>
         <div class="f"><label for="s_evapprov">จังหวัดของผู้ติดตั้ง</label>
           <input type="text" id="s_evapprov" name="farm.evapInstallerProvince" list="provList" autocomplete="off" placeholder="พิมพ์หรือเลือกจังหวัด">
@@ -544,7 +548,8 @@
         <span class="dot"></span>
         <div>ชุดคำถามเชิงลึกสำหรับ<b> ฟาร์มกุ้ง</b> อยู่ระหว่างจัดทำ — ตอนนี้กรอกเฉพาะข้อมูลทั่วไป (ส่วนที่ 1), โครงสร้างบ่อ, เชื้อเพลิง (2.3) และการตลาด (ส่วนที่ 3) ไปก่อน แล้วบันทึกหมายเหตุเพิ่มเติมท้ายฟอร์ม</div>
       </div>
-      <div class="grid c2 only-shrimp" data-farm hidden style="margin-top:12px">
+      <span class="legend only-shrimp" data-farm hidden style="margin-top:8px;display:block">— รายละเอียดการเลี้ยงกุ้ง —</span>
+      <div class="grid c2 only-shrimp" data-farm hidden style="margin-top:4px">
         <div class="f"><label for="sh_ponds">จำนวนบ่อ</label><input type="number" id="sh_ponds" name="farm.shrimp.pondCount" min="0"></div>
         <div class="f"><label for="sh_pw">ขนาดบ่อ — กว้าง (ม.)</label><input type="number" id="sh_pw" name="farm.shrimp.pondWidth" min="0" step="0.5"></div>
         <div class="f"><label for="sh_pl">ขนาดบ่อ — ยาว (ม.)</label><input type="number" id="sh_pl" name="farm.shrimp.pondLength" min="0" step="0.5"></div>
