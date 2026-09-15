@@ -244,6 +244,9 @@
   .engine-row .er-x{position:absolute;top:5px;right:5px;border:0;background:none;color:var(--crit);font-size:17px;line-height:1;cursor:pointer;padding:2px 5px}
   .engine-row .er-lbl{font-size:10.5px;color:var(--ink-soft);font-weight:600;display:block;margin-bottom:2px}
   .engine-row .er-usage{background:transparent}
+  .engine-row .er-kubota-badge{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:var(--accent);padding:3px 10px;border-radius:6px;margin-bottom:8px}
+  .eg-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:5px}
+  .colhead.muted{border-bottom-color:var(--line-strong);color:var(--ink-soft)}
 
   .guide-list{margin:2px 0 0;padding-left:0;list-style:none;display:grid;gap:3px 14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
   .guide-list li{font-size:13px;color:var(--ink);padding-left:14px;position:relative;line-height:1.4}
@@ -464,19 +467,25 @@
 
     <div class="block">
       <h3>เครื่องยนต์ที่ถือครอง</h3>
+      <div class="sub">กรอกจำนวนเครื่องยนต์แต่ละฝั่ง — รายการด้านล่างจะสร้างช่องกรอกให้อัตโนมัติตามจำนวน</div>
       <div class="grid c2">
-        <div class="colstack">
-          <span class="colhead">ภาพรวม</span>
-          <div class="f"><label for="e_kubota">จำนวนเครื่องยนต์คูโบต้า (เครื่อง)</label><input type="number" id="e_kubota" name="engine.countKubota" min="0"></div>
-          <div class="f"><label for="e_total">จำนวนเครื่องยนต์รวมทุกแบรนด์ (เครื่อง)</label><input type="number" id="e_total" name="engine.countTotal" min="0"></div>
-          <div class="f"><label for="e_hrs">ชั่วโมงใช้งานเครื่องยนต์ / วัน (เฉลี่ย)</label><input type="number" id="e_hrs" name="engine.hoursPerDay" min="0" max="24" step="0.5"></div>
+        <div class="f"><label for="e_kubota">จำนวนเครื่องยนต์คูโบต้า (เครื่อง)</label><input type="number" id="e_kubota" name="engine.countKubota" min="0"></div>
+        <div class="f"><label for="e_other">จำนวนเครื่องยนต์แบรนด์อื่น (เครื่อง)</label><input type="number" id="e_other" name="engine.countOther" min="0"></div>
+      </div>
+
+      <div class="engine-group" style="margin-top:14px">
+        <div class="eg-head">
+          <span class="colhead" style="margin-bottom:0">รายการเครื่องยนต์คูโบต้า</span>
+          <button type="button" class="btn ghost" id="sameKubota" style="font-size:11.5px;padding:4px 10px" hidden>⇅ ใช้รุ่น / ระบบสตาร์ทเดียวกันทั้งหมด</button>
         </div>
-        <div class="colstack">
-          <span class="colhead">รายการเครื่องยนต์ (แยกกรอกแต่ละรุ่น / แบรนด์)</span>
-          <div class="hint" style="margin-bottom:2px">เช่น ZT140Plus × 3 เครื่อง + ยันม่าร์ × 1 เครื่อง</div>
-          <div id="engineRows"></div>
-          <button type="button" class="btn ghost" id="addEngine" style="align-self:flex-start;font-size:12.5px;padding:6px 12px">+ เพิ่มเครื่องยนต์</button>
-        </div>
+        <div id="engineRowsKubota"></div>
+        <div class="hint" id="kubotaEmptyHint">กรอกจำนวนเครื่องยนต์คูโบต้าด้านบนเพื่อสร้างรายการ</div>
+      </div>
+
+      <div class="engine-group" style="margin-top:14px">
+        <span class="colhead muted">รายการเครื่องยนต์แบรนด์อื่น</span>
+        <div id="engineRowsOther"></div>
+        <div class="hint" id="otherEmptyHint">กรอกจำนวนเครื่องยนต์แบรนด์อื่นด้านบนเพื่อสร้างรายการ</div>
       </div>
     </div>
   </section>
@@ -1156,9 +1165,13 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     "กุ้ง":["เครื่องตีน้ำ / ใบพัดตีน้ำ","ปั๊มน้ำเข้า–ออกบ่อ","ปั่นไฟ (เจนเนอเรเตอร์)"]
   };
 
-  /* ---------- engine list repeater ---------- */
-  var engineRows=document.getElementById("engineRows");
-  var EBRANDS=["KUBOTA","YANMAR","GOLDEN BOW","KAWAMA","I-POWER","อื่นๆ"];
+  /* ---------- engine list: auto-built from the KUBOTA / other-brand counts ---------- */
+  var engineRowsKubota=document.getElementById("engineRowsKubota");
+  var engineRowsOther=document.getElementById("engineRowsOther");
+  var eKubotaCount=document.getElementById("e_kubota"), eOtherCount=document.getElementById("e_other");
+  var kubotaEmptyHint=document.getElementById("kubotaEmptyHint"), otherEmptyHint=document.getElementById("otherEmptyHint");
+  var sameKubotaBtn=document.getElementById("sameKubota");
+  var EBRANDS_OTHER=["YANMAR","GOLDEN BOW","KAWAMA","I-POWER","อื่นๆ"];
   var EMODELS=["ZT100Plus","ZT110Plus","ZT120Plus","ZT125Plus","ZT140Plus","ZT155Plus","ZT180Plus","อื่นๆ"];
   var ESTART=["มือหมุน (STD)","มอเตอร์สตาร์ท (ES)","สวิตช์กุญแจ (SW)"];
   var EAGES=["< 1 ปี","1–2 ปี","2–5 ปี","6–10 ปี","> 10 ปี"];
@@ -1173,58 +1186,94 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       return '<label class="chk"><input type="radio" class="er-use-cb" name="'+row._ug+'" value="'+v.replace(/"/g,'&quot;')+'"'+(sel===v?' checked':'')+'> '+v+'</label>';
     }).join('');
   }
-  function engineRowEl(d){
+  function engineRowEl(d,groupType,container){
     d=d||{};
     var row=document.createElement("div"); row.className="engine-row";
+    row.dataset.group=groupType;
+    var brandHtml = groupType==="kubota"
+      ? '<div class="er-kubota-badge">KUBOTA ZT Plus</div>'
+      : '<div style="margin-bottom:8px"><span class="er-lbl">แบรนด์</span><select class="er-brand">'+opt(EBRANDS_OTHER,d.brand)+'</select>'+
+        '<input class="er-brand-other" type="text" placeholder="ระบุแบรนด์" style="margin-top:4px" hidden></div>';
     row.innerHTML=
-      '<button type="button" class="er-x" aria-label="ลบแถว">×</button>'+
+      brandHtml+
       '<div class="er-grid">'+
-        '<div><span class="er-lbl">แบรนด์</span><select class="er-brand">'+opt(EBRANDS,d.brand)+'</select>'+
-          '<input class="er-brand-other" type="text" placeholder="ระบุแบรนด์" style="margin-top:4px" hidden></div>'+
         '<div><span class="er-lbl">รุ่นที่ใช้</span><select class="er-model">'+opt(EMODELS,d.model)+'</select>'+
           '<input class="er-model-other" type="text" placeholder="ระบุรุ่น" style="margin-top:4px" hidden></div>'+
         '<div><span class="er-lbl">ระบบสตาร์ท</span><select class="er-start">'+opt(ESTART,d.start)+'</select></div>'+
-        '<div><span class="er-lbl">จำนวน (เครื่อง)</span><input class="er-qty" type="number" min="0" placeholder="เช่น 3"></div>'+
         '<div><span class="er-lbl">อายุเครื่องยนต์</span><select class="er-age">'+opt(EAGES,d.age)+'</select></div>'+
+        '<div><span class="er-lbl">ชั่วโมงใช้งาน / วัน (เฉลี่ย)</span><input class="er-hours" type="number" min="0" max="24" step="0.5" placeholder="ชม."></div>'+
       '</div>'+
       '<span class="er-lbl" style="margin-top:8px">นำเครื่องยนต์ไปใช้งานใดในฟาร์ม</span>'+
       '<div class="opts er-usage" style="margin-top:3px"></div>'+
       '<input class="er-use-other" type="text" placeholder="อื่นๆ โปรดระบุ" style="margin-top:5px;max-width:280px">';
-    row.querySelector(".er-qty").value=d.qty||"";
+    row.querySelector(".er-hours").value=d.hours||"";
     row.querySelector(".er-use-other").value=d.useOther||"";
-    var bOther=row.querySelector(".er-brand-other"); bOther.value=d.brandOther||"";
-    var bSel=row.querySelector(".er-brand");
-    function brandToggle(){ bOther.hidden = bSel.value!=="อื่นๆ"; }
-    bSel.addEventListener("change",brandToggle); brandToggle();
+    if(groupType!=="kubota"){
+      var bOther=row.querySelector(".er-brand-other"); bOther.value=d.brandOther||"";
+      var bSel=row.querySelector(".er-brand");
+      (function(){ function brandToggle(){ bOther.hidden = bSel.value!=="อื่นๆ"; } bSel.addEventListener("change",brandToggle); brandToggle(); })();
+    }
     var mOther=row.querySelector(".er-model-other"); mOther.value=d.modelOther||"";
     var mSel=row.querySelector(".er-model");
     function modelToggle(){ mOther.hidden = mSel.value!=="อื่นๆ"; }
     mSel.addEventListener("change",modelToggle); modelToggle();
     fillRowUsage(row, typeof d.use==="string" ? d.use : (Array.isArray(d.use)&&d.use[0]) || "");
-    row.querySelector(".er-x").addEventListener("click",function(){ row.remove(); if(!engineRows.children.length) engineRowEl(); saveDraft(); });
-    engineRows.appendChild(row);
+    container.appendChild(row);
     return row;
   }
-  document.getElementById("addEngine").addEventListener("click",function(){ engineRowEl(); });
+  function syncEngineRows(container,groupType,n){
+    n=Math.max(0,parseInt(n,10)||0);
+    var rows=container.querySelectorAll(".engine-row");
+    while(rows.length<n){ engineRowEl({},groupType,container); rows=container.querySelectorAll(".engine-row"); }
+    while(rows.length>n){ container.removeChild(container.lastElementChild); rows=container.querySelectorAll(".engine-row"); }
+    if(groupType==="kubota"){ kubotaEmptyHint.hidden=n>0; sameKubotaBtn.hidden=n<2; }
+    else{ otherEmptyHint.hidden=n>0; }
+  }
+  eKubotaCount.addEventListener("input",function(){ syncEngineRows(engineRowsKubota,"kubota",this.value); saveDraft(); });
+  eOtherCount.addEventListener("input",function(){ syncEngineRows(engineRowsOther,"other",this.value); saveDraft(); });
+  sameKubotaBtn.addEventListener("click",function(){
+    var rows=engineRowsKubota.querySelectorAll(".engine-row");
+    if(rows.length<2) return;
+    var first=rows[0], fModel=first.querySelector(".er-model").value, fModelOther=first.querySelector(".er-model-other").value,
+        fStart=first.querySelector(".er-start").value, fAge=first.querySelector(".er-age").value;
+    for(var i=1;i<rows.length;i++){
+      var r=rows[i];
+      r.querySelector(".er-model").value=fModel; r.querySelector(".er-model-other").value=fModelOther;
+      r.querySelector(".er-model").dispatchEvent(new Event("change"));
+      r.querySelector(".er-start").value=fStart;
+      r.querySelector(".er-age").value=fAge;
+    }
+    saveDraft(); toast("คัดลอกรุ่น / ระบบสตาร์ทไปยังทุกแถวคูโบต้าแล้ว");
+  });
   function rowUsageVal(r){ var i=r.querySelector(".er-use-cb:checked"); return i?i.value:""; }
   function rebuildRowUsages(){
-    engineRows.querySelectorAll(".engine-row").forEach(function(r){ fillRowUsage(r, rowUsageVal(r)); });
+    document.querySelectorAll("#engineRowsKubota .engine-row, #engineRowsOther .engine-row").forEach(function(r){ fillRowUsage(r, rowUsageVal(r)); });
   }
   function collectEngines(){
     var out=[];
-    engineRows.querySelectorAll(".engine-row").forEach(function(r){
-      var use=rowUsageVal(r);
-      var o={brand:r.querySelector(".er-brand").value,brandOther:r.querySelector(".er-brand-other").value,
-        model:r.querySelector(".er-model").value,modelOther:r.querySelector(".er-model-other").value,
-        start:r.querySelector(".er-start").value,qty:r.querySelector(".er-qty").value,
-        age:r.querySelector(".er-age").value,use:use,useOther:r.querySelector(".er-use-other").value};
-      if(o.brand||o.brandOther||o.model||o.modelOther||o.start||o.qty||o.age||use||o.useOther) out.push(o);
-    });
+    function grab(container,groupType){
+      container.querySelectorAll(".engine-row").forEach(function(r){
+        out.push({
+          brand: groupType==="kubota" ? "KUBOTA" : r.querySelector(".er-brand").value,
+          brandOther: groupType==="kubota" ? "" : r.querySelector(".er-brand-other").value,
+          model:r.querySelector(".er-model").value, modelOther:r.querySelector(".er-model-other").value,
+          start:r.querySelector(".er-start").value, age:r.querySelector(".er-age").value,
+          hours:r.querySelector(".er-hours").value,
+          use:rowUsageVal(r), useOther:r.querySelector(".er-use-other").value
+        });
+      });
+    }
+    grab(engineRowsKubota,"kubota"); grab(engineRowsOther,"other");
     return out;
   }
   function fillEngines(arr){
-    engineRows.innerHTML="";
-    (arr&&arr.length?arr:[{}]).forEach(function(d){ engineRowEl(d); });
+    engineRowsKubota.innerHTML=""; engineRowsOther.innerHTML="";
+    var kub=[],oth=[];
+    (arr||[]).forEach(function(d){ (d.brand==="KUBOTA"?kub:oth).push(d); });
+    kub.forEach(function(d){ engineRowEl(d,"kubota",engineRowsKubota); });
+    oth.forEach(function(d){ engineRowEl(d,"other",engineRowsOther); });
+    kubotaEmptyHint.hidden=kub.length>0; otherEmptyHint.hidden=oth.length>0;
+    sameKubotaBtn.hidden=kub.length<2;
   }
 
   /* ---------- conditional: farm type ---------- */
