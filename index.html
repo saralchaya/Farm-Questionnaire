@@ -457,13 +457,25 @@
           </div>
           <div class="f">
             <label for="pm_sched">รูปแบบการผ่อนชำระ (งวด)</label>
-            <select id="pm_sched" name="general.paymentSchedule"><option value="">— เลือก —</option><option>รายเดือน</option><option>ราย 3 เดือน</option><option>ราย 6 เดือน</option><option>รายปี</option><option>อื่นๆ</option></select>
+            <select id="pm_sched" name="general.paymentSchedule" data-reveal="#pm_schedOtherWrap" data-reveal-when="อื่นๆ"><option value="">— เลือก —</option><option>รายเดือน</option><option>ราย 3 เดือน</option><option>ราย 6 เดือน</option><option>รายปี</option><option>อื่นๆ</option></select>
           </div>
+          <div class="revealed" id="pm_schedOtherWrap"><div class="f"><label for="pm_schedOther">ระบุรูปแบบการผ่อนชำระ</label><input type="text" id="pm_schedOther" name="general.paymentScheduleOther"></div></div>
           <div class="f">
             <label for="pm_fin">บริษัทที่ขอสินเชื่อ</label>
             <select id="pm_fin" name="general.financeProvider"><option value="">— เลือก —</option><option>SKL (สยามคูโบต้า ลีสซิ่ง)</option><option>ธนาคาร</option><option>สหกรณ์การเกษตร</option><option>บริษัทสินเชื่ออื่นๆ</option></select>
           </div>
-          <div class="f full"><label for="pm_finname">ระบุชื่อบริษัท / ธนาคาร (กรณีไม่ใช่ SKL)</label><input type="text" id="pm_finname" name="general.financeProviderName"></div>
+          <div class="revealed" id="pm_notSklWrap" style="grid-column:1/-1">
+            <div class="grid c2">
+              <div class="f"><label for="pm_finname">ระบุชื่อบริษัท / ธนาคาร (กรณีไม่ใช่ SKL)</label><input type="text" id="pm_finname" name="general.financeProviderName"></div>
+              <div class="f">
+                <label for="pm_rate">อัตราดอกเบี้ย (กรณีไม่ใช่ SKL)</label>
+                <div style="display:flex;gap:8px">
+                  <input type="number" id="pm_rate" name="general.financeRateValue" min="0" step="0.01" placeholder="เช่น 1.25" style="flex:1">
+                  <select id="pm_rateUnit" name="general.financeRateUnit" style="width:auto;min-width:100px;flex:none"><option value="">— เลือก —</option><option>ต่อเดือน</option><option>ต่อปี</option></select>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -490,9 +502,6 @@
 
         <div class="engine-group colstack">
           <span class="colhead muted">รายการเครื่องยนต์แบรนด์อื่น</span>
-          <label class="chk eg-samechk" id="sameOtherWrap" hidden>
-            <input type="checkbox" id="sameOther"> ใช้แบรนด์ / รุ่น / ระบบสตาร์ทเดียวกันทั้งหมด <span class="eg-samenote">(ปรับแต่ละแถวเพิ่มเติมได้)</span>
-          </label>
           <div id="engineRowsOther"></div>
           <div class="hint" id="otherEmptyHint">กรอกจำนวนเครื่องยนต์แบรนด์อื่นด้านบนเพื่อสร้างรายการ</div>
         </div>
@@ -1175,8 +1184,8 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
 
   /* ---------- engine usage options : adapt to farm type ---------- */
   var USAGE={
-    "หมู":["พัดลม EVAP","ปั๊มน้ำแรงดันสูง (พ่นหมอก / ล้างเล้า)"],
-    "ไก่":["พัดลม EVAP","ปั๊มน้ำแรงดันสูง (พ่นหมอก / ล้างเล้า)"],
+    "หมู":["พัดลม EVAP","ปั๊มน้ำแรงดันสูง (ล้างเล้า)"],
+    "ไก่":["พัดลม EVAP","ปั๊มน้ำแรงดันสูง (ล้างเล้า)"],
     "กุ้ง":["เครื่องตีน้ำ / ใบพัดตีน้ำ","ปั๊มน้ำเข้า–ออกบ่อ","ปั่นไฟ (เจนเนอเรเตอร์)"]
   };
 
@@ -1200,76 +1209,92 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       return '<label class="chk"><input type="radio" class="er-use-cb" name="'+row._ug+'" value="'+v.replace(/"/g,'&quot;')+'"'+(sel===v?' checked':'')+'> '+v+'</label>';
     }).join('');
   }
+  var hoursSeq=0;
   function engineRowEl(d,groupType,container){
     d=d||{};
     var row=document.createElement("div"); row.className="engine-row";
     row.dataset.group=groupType;
-    var brandHtml = groupType==="kubota"
-      ? '<div class="er-kubota-badge">KUBOTA ZT Plus</div>'
-      : '<div style="margin-bottom:8px"><span class="er-lbl">แบรนด์</span><select class="er-brand">'+opt(EBRANDS_OTHER,d.brand)+'</select>'+
-        '<input class="er-brand-other" type="text" placeholder="ระบุแบรนด์" style="margin-top:4px" hidden></div>';
-    row.innerHTML=
-      brandHtml+
-      '<div class="er-grid">'+
-        '<div><span class="er-lbl">รุ่นที่ใช้</span><select class="er-model">'+opt(EMODELS,d.model)+'</select>'+
-          '<input class="er-model-other" type="text" placeholder="ระบุรุ่น" style="margin-top:4px" hidden></div>'+
-        '<div><span class="er-lbl">ระบบสตาร์ท</span><select class="er-start">'+opt(ESTART,d.start)+'</select></div>'+
-        '<div><span class="er-lbl">อายุเครื่องยนต์</span><select class="er-age">'+opt(EAGES,d.age)+'</select></div>'+
-        '<div><span class="er-lbl">ชั่วโมงใช้งาน / วัน (เฉลี่ย)</span><input class="er-hours" type="number" min="0" max="24" step="0.5" placeholder="ชม."></div>'+
-      '</div>'+
-      '<span class="er-lbl" style="margin-top:8px">นำเครื่องยนต์ไปใช้งานใดในฟาร์ม</span>'+
-      '<div class="opts er-usage" style="margin-top:3px"></div>'+
-      '<input class="er-use-other" type="text" placeholder="อื่นๆ โปรดระบุ" style="margin-top:5px;max-width:280px">';
-    row.querySelector(".er-hours").value=d.hours||"";
-    row.querySelector(".er-use-other").value=d.useOther||"";
-    if(groupType!=="kubota"){
+    if(groupType==="kubota"){
+      row._hg="hg"+(++hoursSeq);
+      row.innerHTML=
+        '<div class="er-kubota-badge">KUBOTA ZT Plus</div>'+
+        '<div class="er-grid">'+
+          '<div><span class="er-lbl">รุ่นที่ใช้</span><select class="er-model">'+opt(EMODELS,d.model)+'</select>'+
+            '<input class="er-model-other" type="text" placeholder="ระบุรุ่น" style="margin-top:4px" hidden></div>'+
+          '<div><span class="er-lbl">ระบบสตาร์ท</span><select class="er-start">'+opt(ESTART,d.start)+'</select></div>'+
+          '<div><span class="er-lbl">อายุเครื่องยนต์</span><select class="er-age">'+opt(EAGES,d.age)+'</select></div>'+
+        '</div>'+
+        '<span class="er-lbl" style="margin-top:8px">ชั่วโมงใช้งาน / วัน (เฉลี่ย)</span>'+
+        '<div class="opts" style="margin-top:3px">'+
+          '<label class="chk"><input type="radio" class="er-hmode" name="'+row._hg+'" value="24"'+(d.hours==="24"?' checked':'')+'> ใช้งานต่อเนื่อง 24 ชม.</label>'+
+          '<label class="chk"><input type="radio" class="er-hmode" name="'+row._hg+'" value="custom"'+(d.hours&&d.hours!=="24"?' checked':'')+'> ไม่ใช่</label>'+
+        '</div>'+
+        '<input class="er-hours" type="number" min="0" max="24" step="0.5" placeholder="ระบุ ___ ชม./วัน" style="margin-top:5px;max-width:200px" hidden>'+
+        '<span class="er-lbl" style="margin-top:8px">นำเครื่องยนต์ไปใช้งานใดในฟาร์ม</span>'+
+        '<div class="opts er-usage" style="margin-top:3px"></div>'+
+        '<input class="er-use-other" type="text" placeholder="อื่นๆ โปรดระบุ" style="margin-top:5px;max-width:280px">';
+      var hoursIn=row.querySelector(".er-hours");
+      hoursIn.value=(d.hours && d.hours!=="24") ? d.hours : "";
+      function updHoursVis(){
+        var m=row.querySelector(".er-hmode:checked");
+        hoursIn.hidden=!(m && m.value==="custom");
+      }
+      row.querySelectorAll(".er-hmode").forEach(function(rb){ rb.addEventListener("change",updHoursVis); });
+      updHoursVis();
+      var mOther=row.querySelector(".er-model-other"); mOther.value=d.modelOther||"";
+      var mSel=row.querySelector(".er-model");
+      (function(){ function modelToggle(){ mOther.hidden = mSel.value!=="อื่นๆ"; } mSel.addEventListener("change",modelToggle); modelToggle(); })();
+    } else {
+      row.innerHTML=
+        '<div style="margin-bottom:8px"><span class="er-lbl">แบรนด์</span><select class="er-brand">'+opt(EBRANDS_OTHER,d.brand)+'</select>'+
+          '<input class="er-brand-other" type="text" placeholder="ระบุแบรนด์" style="margin-top:4px" hidden></div>'+
+        '<div class="f" style="max-width:220px;margin-bottom:2px"><span class="er-lbl">อายุการใช้งานเครื่องยนต์</span>'+
+          '<div style="display:flex;gap:6px">'+
+            '<input class="er-age-yr" type="number" min="0" placeholder="ปี" style="flex:1">'+
+            '<input class="er-age-mo" type="number" min="0" max="11" placeholder="เดือน" style="flex:1">'+
+          '</div>'+
+        '</div>'+
+        '<span class="er-lbl" style="margin-top:8px">นำเครื่องยนต์ไปใช้งานใดในฟาร์ม</span>'+
+        '<div class="opts er-usage" style="margin-top:3px"></div>'+
+        '<input class="er-use-other" type="text" placeholder="อื่นๆ โปรดระบุ" style="margin-top:5px;max-width:280px">';
+      row.querySelector(".er-age-yr").value=d.ageYears||"";
+      row.querySelector(".er-age-mo").value=d.ageMonths||"";
       var bOther=row.querySelector(".er-brand-other"); bOther.value=d.brandOther||"";
       var bSel=row.querySelector(".er-brand");
       (function(){ function brandToggle(){ bOther.hidden = bSel.value!=="อื่นๆ"; } bSel.addEventListener("change",brandToggle); brandToggle(); })();
     }
-    var mOther=row.querySelector(".er-model-other"); mOther.value=d.modelOther||"";
-    var mSel=row.querySelector(".er-model");
-    function modelToggle(){ mOther.hidden = mSel.value!=="อื่นๆ"; }
-    mSel.addEventListener("change",modelToggle); modelToggle();
+    row.querySelector(".er-use-other").value=d.useOther||"";
     fillRowUsage(row, typeof d.use==="string" ? d.use : (Array.isArray(d.use)&&d.use[0]) || "");
     container.appendChild(row);
     return row;
   }
-  /* "ใช้...เดียวกันทั้งหมด" checkbox: while checked, row 1's model/start(/brand) mirror to every other row;
-     rows stay editable afterward — unchecking just stops the mirroring. */
+  /* "ใช้รุ่น/ระบบสตาร์ทเดียวกันทั้งหมด" checkbox (KUBOTA rows only): while checked, row 1 mirrors to
+     every other row live; rows stay editable afterward — unchecking just stops the mirroring. */
   var sameKubotaWrap=document.getElementById("sameKubotaWrap"), sameKubota=document.getElementById("sameKubota");
-  var sameOtherWrap=document.getElementById("sameOtherWrap"), sameOther=document.getElementById("sameOther");
-  function makeSameToggle(container,checkbox,groupType){
+  function makeSameToggle(container,checkbox){
     function applyToAll(){
       var rows=container.querySelectorAll(".engine-row");
       if(rows.length<2) return;
       var first=rows[0], fModel=first.querySelector(".er-model").value, fModelOther=first.querySelector(".er-model-other").value,
-          fStart=first.querySelector(".er-start").value,
-          fBrand=groupType==="other" ? first.querySelector(".er-brand").value : null,
-          fBrandOther=groupType==="other" ? first.querySelector(".er-brand-other").value : null;
+          fStart=first.querySelector(".er-start").value;
       for(var i=1;i<rows.length;i++){
         var r=rows[i];
         r.querySelector(".er-model").value=fModel; r.querySelector(".er-model-other").value=fModelOther;
         r.querySelector(".er-model").dispatchEvent(new Event("change"));
         r.querySelector(".er-start").value=fStart;
-        if(groupType==="other"){
-          r.querySelector(".er-brand").value=fBrand; r.querySelector(".er-brand-other").value=fBrandOther;
-          r.querySelector(".er-brand").dispatchEvent(new Event("change"));
-        }
       }
     }
     checkbox.addEventListener("change",function(){ if(checkbox.checked){ applyToAll(); saveDraft(); } });
     container.addEventListener("change",function(e){
       if(!checkbox.checked) return;
-      var t=e.target, cls=["er-model","er-model-other","er-start"].concat(groupType==="other"?["er-brand","er-brand-other"]:[]);
-      if(!cls.some(function(c){return t.classList.contains(c);})) return;
+      var t=e.target;
+      if(!["er-model","er-model-other","er-start"].some(function(c){return t.classList.contains(c);})) return;
       var rows=container.querySelectorAll(".engine-row");
       if(rows.length && t.closest(".engine-row")===rows[0]) applyToAll();
     });
     return applyToAll;
   }
-  var applyKubotaSame=makeSameToggle(engineRowsKubota,sameKubota,"kubota");
-  var applyOtherSame=makeSameToggle(engineRowsOther,sameOther,"other");
+  var applyKubotaSame=makeSameToggle(engineRowsKubota,sameKubota);
   function syncEngineRows(container,groupType,n){
     n=Math.max(0,parseInt(n,10)||0);
     var rows=container.querySelectorAll(".engine-row");
@@ -1279,8 +1304,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       kubotaEmptyHint.hidden=n>0; sameKubotaWrap.hidden=n<2;
       if(n<2) sameKubota.checked=false; else if(sameKubota.checked) applyKubotaSame();
     } else {
-      otherEmptyHint.hidden=n>0; sameOtherWrap.hidden=n<2;
-      if(n<2) sameOther.checked=false; else if(sameOther.checked) applyOtherSame();
+      otherEmptyHint.hidden=n>0;
     }
   }
   eKubotaCount.addEventListener("input",function(){ syncEngineRows(engineRowsKubota,"kubota",this.value); saveDraft(); });
@@ -1291,19 +1315,23 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   }
   function collectEngines(){
     var out=[];
-    function grab(container,groupType){
-      container.querySelectorAll(".engine-row").forEach(function(r){
-        out.push({
-          brand: groupType==="kubota" ? "KUBOTA" : r.querySelector(".er-brand").value,
-          brandOther: groupType==="kubota" ? "" : r.querySelector(".er-brand-other").value,
-          model:r.querySelector(".er-model").value, modelOther:r.querySelector(".er-model-other").value,
-          start:r.querySelector(".er-start").value, age:r.querySelector(".er-age").value,
-          hours:r.querySelector(".er-hours").value,
-          use:rowUsageVal(r), useOther:r.querySelector(".er-use-other").value
-        });
+    engineRowsKubota.querySelectorAll(".engine-row").forEach(function(r){
+      var hmode=r.querySelector(".er-hmode:checked");
+      out.push({
+        brand:"KUBOTA", brandOther:"",
+        model:r.querySelector(".er-model").value, modelOther:r.querySelector(".er-model-other").value,
+        start:r.querySelector(".er-start").value, age:r.querySelector(".er-age").value,
+        hours: hmode ? (hmode.value==="24" ? "24" : r.querySelector(".er-hours").value) : "",
+        use:rowUsageVal(r), useOther:r.querySelector(".er-use-other").value
       });
-    }
-    grab(engineRowsKubota,"kubota"); grab(engineRowsOther,"other");
+    });
+    engineRowsOther.querySelectorAll(".engine-row").forEach(function(r){
+      out.push({
+        brand:r.querySelector(".er-brand").value, brandOther:r.querySelector(".er-brand-other").value,
+        ageYears:r.querySelector(".er-age-yr").value, ageMonths:r.querySelector(".er-age-mo").value,
+        use:rowUsageVal(r), useOther:r.querySelector(".er-use-other").value
+      });
+    });
     return out;
   }
   function fillEngines(arr){
@@ -1314,7 +1342,6 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     oth.forEach(function(d){ engineRowEl(d,"other",engineRowsOther); });
     kubotaEmptyHint.hidden=kub.length>0; otherEmptyHint.hidden=oth.length>0;
     sameKubotaWrap.hidden=kub.length<2; if(kub.length<2) sameKubota.checked=false;
-    sameOtherWrap.hidden=oth.length<2; if(oth.length<2) sameOther.checked=false;
   }
 
   /* ---------- conditional: farm type ---------- */
@@ -1352,6 +1379,14 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     document.getElementById("pw_ratioWrap").classList.toggle("on", !!(b && b.value==="ระบบสายพาน"));
   }
   form.querySelectorAll('input[name="power.coupling"]').forEach(function(r){ r.addEventListener("change",applyBelt); });
+
+  /* ---------- conditional: finance provider -> show finance-company name + interest rate unless SKL ---------- */
+  var pmFin=document.getElementById("pm_fin");
+  function applyFinance(){
+    var v=pmFin.value;
+    document.getElementById("pm_notSklWrap").classList.toggle("on", !!(v && v!=="SKL (สยามคูโบต้า ลีสซิ่ง)"));
+  }
+  pmFin.addEventListener("change",applyFinance);
 
   /* ---------- conditional: farmer group / meeting -> reveal + frequency-driven month pickers ---------- */
   var GRP_MONTHS=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
@@ -1544,7 +1579,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       if(Array.isArray(m.photos)&&m.photos.length){ photos=m.photos.slice(); renderPhotos(); }
       if(m.videoBlob){ setVideo(m.videoBlob,m.videoName); }
     }); }
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance();
     fillEngines(o["engine.list"]);
     form.querySelectorAll('[data-reveal]').forEach(function(s){ s.dispatchEvent(new Event("change")); });
   }
@@ -1555,7 +1590,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     selProv.value=""; onProv();
     fillEngines(null);
     rebuildGroupMonths("");
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance();
     form.querySelectorAll('[data-reveal]').forEach(function(s){ var t=document.querySelector(s.getAttribute("data-reveal")); if(t)t.classList.remove("on"); });
     if(!silent){ safeLS(function(){localStorage.removeItem(LS_DRAFT)}); toast("ล้างฟอร์มแล้ว"); }
   }
@@ -1775,7 +1810,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   (function initDate(){ var d=document.getElementById("m_date"); if(!d.value) d.value=new Date().toISOString().slice(0,10); })();
   renderPhotos();
   rebuildGroupMonths("");
-  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); fillEngines(null);
+  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance(); fillEngines(null);
   var draft=safeLS(function(){return JSON.parse(localStorage.getItem(LS_DRAFT)||"null")});
   if(draft){ try{ restore(draft); }catch(e){} }
   refreshCount();
