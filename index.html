@@ -154,6 +154,11 @@
   .exp-a{background:#E6EEF7;color:#2C5A86}
   .exp-b{background:#E6F1E9;color:#2E6B45}
   .exp-c{background:#F6EDDD;color:#8A5716}
+  .exp-d{background:#EFE6F7;color:#6A3F96}
+  .exp-e{background:#E1F3F1;color:#1E7A72}
+  .exp-f{background:#FBE7EC;color:#A23B57}
+  .exp-g{background:#E8ECF9;color:#3B4E96}
+  .f > label .exp-tag{margin-right:6px;vertical-align:1px}
   .kubota-word{color:var(--accent);font-weight:700}
   .rival-word{color:var(--crit);font-weight:700}
   .colstack{display:flex;flex-direction:column;gap:7px}
@@ -970,24 +975,41 @@
 
     <div class="block">
       <h3>ไลฟ์สไตล์ผู้บริโภค (Persona)</h3>
-      <div class="grid c2">
-        <div class="f full"><label for="ps_content">เล่น social media ชอบดู content แบบไหน (เช่น แต่งซิ่ง / วิธีบำรุงรักษา / รีวิวการใช้งานจริง)</label><textarea id="ps_content" name="persona.contentStyle"></textarea></div>
-        <div class="f"><label for="ps_hobby">งานอดิเรกนอกเวลางาน</label><input type="text" id="ps_hobby" name="persona.hobby"></div>
-        <div class="f"><label for="ps_sport">กีฬาที่ชอบดู</label><input type="text" id="ps_sport" name="persona.sport"></div>
-        <div class="f"><label for="ps_music">เพลง / แนวเพลงที่ชอบฟัง</label><input type="text" id="ps_music" name="persona.music"></div>
+      <div class="sub">เก็บไว้ใช้วางแผนคอนเทนต์และเลือกช่องทางการตลาดให้ตรงกับตัวตนลูกค้านอกเวลางาน</div>
+      <div class="f full" style="margin-top:2px">
+        <label for="ps_content"><span class="exp-tag exp-d">📱 คอนเทนต์ที่ชอบดู</span></label>
+        <textarea id="ps_content" name="persona.contentStyle" placeholder="เช่น แต่งซิ่ง / วิธีบำรุงรักษา / รีวิวการใช้งานจริง"></textarea>
+      </div>
+      <div class="grid c3" style="margin-top:10px">
+        <div class="f"><label for="ps_hobby"><span class="exp-tag exp-e">🎣 งานอดิเรกนอกเวลางาน</span></label><input type="text" id="ps_hobby" name="persona.hobby"></div>
+        <div class="f"><label for="ps_sport"><span class="exp-tag exp-f">⚽ กีฬาที่ชอบดู</span></label><input type="text" id="ps_sport" name="persona.sport"></div>
+        <div class="f"><label for="ps_music"><span class="exp-tag exp-g">🎵 เพลง / แนวเพลงที่ชอบฟัง</span></label><input type="text" id="ps_music" name="persona.music"></div>
       </div>
     </div>
 
     <div class="block">
       <h3>Emotional / Brand</h3>
-      <div class="f full"><label for="em_top">นึกถึงคูโบต้า นึกถึงอะไรเป็นอย่างแรก</label><input type="text" id="em_top" name="brand.topOfMind"></div>
-      <div class="f full" style="margin-top:8px"><label for="em_3w">ขอ 3 คำ ให้กับเครื่องยนต์คูโบต้า</label><input type="text" id="em_3w" name="brand.threeWords" placeholder="เช่น จบ ทุก งาน / แกร่ง ทนทาน / แรง ถึก ทน"></div>
+      <div class="sub">มุมมองและความรู้สึกที่ลูกค้ามีต่อแบรนด์คูโบต้า</div>
+      <div class="f full" style="margin-top:2px">
+        <label for="em_top"><span class="exp-tag exp-d">💭 Top of mind</span> นึกถึงคูโบต้า นึกถึงอะไรเป็นอย่างแรก</label>
+        <input type="text" id="em_top" name="brand.topOfMind">
+      </div>
+      <div class="f full" style="margin-top:8px">
+        <label for="em_3w"><span class="exp-tag exp-e">🏷️ 3 คำนิยาม</span> ขอ 3 คำ ให้กับเครื่องยนต์คูโบต้า</label>
+        <input type="text" id="em_3w" name="brand.threeWords" placeholder="เช่น จบ ทุก งาน / แกร่ง ทนทาน / แรง ถึก ทน">
+      </div>
       <div class="grid c2" style="margin-top:8px">
         <div class="f"><label for="em_better"><span class="kubota-word">คูโบต้า</span> เหนือกว่าคู่แข่งเรื่องอะไร</label><textarea id="em_better" name="brand.betterThan"></textarea></div>
         <div class="f"><label for="em_worse"><span class="rival-word">คู่แข่ง</span> เหนือกว่าคูโบต้าเรื่องอะไร</label><textarea id="em_worse" name="brand.worseThan"></textarea></div>
       </div>
-      <div class="f full" style="margin-top:8px"><label for="em_gone">ถ้าวันหนึ่งเครื่องยนต์คูโบต้าหายไปจากตลาด ลูกค้าจะรู้สึกอย่างไร</label><textarea id="em_gone" name="brand.ifGone"></textarea></div>
-      <div class="f full" style="margin-top:8px"><label for="em_future">เหตุผลที่จะกลับมาซื้อคูโบต้าอีกในอนาคต</label><textarea id="em_future" name="brand.futureReason"></textarea></div>
+      <div class="f full" style="margin-top:8px">
+        <label for="em_gone"><span class="exp-tag exp-f">💔 ถ้าคูโบต้าหายไป</span> ถ้าวันหนึ่งเครื่องยนต์คูโบต้าหายไปจากตลาด ลูกค้าจะรู้สึกอย่างไร</label>
+        <textarea id="em_gone" name="brand.ifGone"></textarea>
+      </div>
+      <div class="f full" style="margin-top:8px">
+        <label for="em_future"><span class="exp-tag exp-g">🔁 เหตุผลกลับมาซื้อ</span> เหตุผลที่จะกลับมาซื้อคูโบต้าอีกในอนาคต</label>
+        <textarea id="em_future" name="brand.futureReason"></textarea>
+      </div>
     </div>
 
     <div class="block">
