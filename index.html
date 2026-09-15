@@ -696,12 +696,32 @@
         <label>5. ลักษณะการต่อพ่วงเครื่องยนต์ ZT Plus กับ พัดลม EVAP (เลือก 1 ข้อ)</label>
         <div class="opts" style="margin-top:5px">
           <label class="chk"><input type="radio" id="pw_belt" name="power.coupling" value="ระบบสายพาน"> ระบบสายพาน</label>
-          <label class="chk"><input type="radio" name="power.coupling" value="Shaft"> Shaft</label>
+          <label class="chk"><input type="radio" id="pw_shaft" name="power.coupling" value="Shaft"> Shaft (การต่อแบบชุดเกียร์)</label>
           <label class="chk"><input type="radio" name="power.coupling" value="Coupling"> Coupling</label>
           <label class="chk"><input type="radio" name="power.coupling" value="อื่นๆ"> อื่นๆ</label>
         </div>
         <div class="revealed" id="pw_ratioWrap">
-          <div class="f" style="max-width:240px"><label for="pw_ratio">อัตราทด (กรณีระบบสายพาน)</label><input type="text" id="pw_ratio" name="power.gearRatio" placeholder="เช่น 1:1.8"></div>
+          <div class="f" style="max-width:280px">
+            <label for="pw_ratio_a">อัตราทดเครื่องยนต์ต่อใบพัด (นิ้ว)</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="pw_ratio_a" step="0.1" min="0" placeholder="เช่น 1" style="flex:1">
+              <span style="font-weight:700;color:var(--ink-soft)">:</span>
+              <input type="number" id="pw_ratio_b" step="0.1" min="0" placeholder="เช่น 1.8" style="flex:1">
+            </div>
+            <div class="hint" id="pw_ratioEq" style="margin-top:4px">เท่ากับ — : —</div>
+            <input type="hidden" id="pw_ratio" name="power.gearRatio">
+          </div>
+        </div>
+        <div class="revealed" id="pw_shaftRatioWrap">
+          <div class="f" style="max-width:280px">
+            <label for="pw_sratio_a">อัตราทด</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="pw_sratio_a" step="0.1" min="0" placeholder="__" style="flex:1">
+              <span style="font-weight:700;color:var(--ink-soft)">:</span>
+              <input type="number" id="pw_sratio_b" step="0.1" min="0" placeholder="__" style="flex:1">
+            </div>
+            <input type="hidden" id="pw_sratio" name="power.shaftGearRatio">
+          </div>
         </div>
       </div>
     </div>
@@ -1393,12 +1413,27 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   function applyHouseOther(){ houseOther.hidden=!houseOtherChk.checked; }
   houseOtherChk.addEventListener("change",applyHouseOther);
 
-  /* ---------- coupling: ระบบสายพาน -> reveal อัตราทด ---------- */
+  /* ---------- coupling: ระบบสายพาน / Shaft -> reveal their own gear-ratio fields ---------- */
   function applyBelt(){
     var b=form.querySelector('input[name="power.coupling"]:checked');
     document.getElementById("pw_ratioWrap").classList.toggle("on", !!(b && b.value==="ระบบสายพาน"));
+    document.getElementById("pw_shaftRatioWrap").classList.toggle("on", !!(b && b.value==="Shaft"));
   }
   form.querySelectorAll('input[name="power.coupling"]').forEach(function(r){ r.addEventListener("change",applyBelt); });
+
+  /* ---------- gear-ratio pairs: two boxes -> "A:B" combined value + live "เท่ากับ" preview ---------- */
+  var pwRatioA=document.getElementById("pw_ratio_a"), pwRatioB=document.getElementById("pw_ratio_b"), pwRatioEq=document.getElementById("pw_ratioEq");
+  function updRatioEq(){
+    var a=pwRatioA.value, b=pwRatioB.value;
+    pwRatioEq.textContent="เท่ากับ "+(a||"—")+" : "+(b||"—");
+    document.getElementById("pw_ratio").value=(a&&b)?(a+":"+b):"";
+  }
+  pwRatioA.addEventListener("input",updRatioEq); pwRatioB.addEventListener("input",updRatioEq);
+  var pwSRatioA=document.getElementById("pw_sratio_a"), pwSRatioB=document.getElementById("pw_sratio_b");
+  function updShaftRatio(){
+    document.getElementById("pw_sratio").value=(pwSRatioA.value&&pwSRatioB.value)?(pwSRatioA.value+":"+pwSRatioB.value):"";
+  }
+  pwSRatioA.addEventListener("input",updShaftRatio); pwSRatioB.addEventListener("input",updShaftRatio);
 
   /* ---------- conditional: finance provider -> show finance-company name + interest rate unless SKL ---------- */
   var pmFin=document.getElementById("pm_fin");
@@ -1582,6 +1617,14 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       });
     });
     setAddress(o);
+    if(o["power.gearRatio"]){
+      var grp=o["power.gearRatio"].split(":"); pwRatioA.value=grp[0]||""; pwRatioB.value=grp[1]||"";
+    }
+    updRatioEq();
+    if(o["power.shaftGearRatio"]){
+      var srp=o["power.shaftGearRatio"].split(":"); pwSRatioA.value=srp[0]||""; pwSRatioB.value=srp[1]||"";
+    }
+    updShaftRatio();
     if(Array.isArray(o["mkt.channelsRanked"])){
       o["mkt.channelsRanked"].forEach(function(c){
         chRank.querySelectorAll("select").forEach(function(s){ if(s.dataset.channelLabel===c.channel) s.value=c.rank; });
@@ -1618,6 +1661,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     fillEngines(null);
     refreshRankOptions(chRank,3); refreshRankOptions(promoRank,3);
     rebuildGroupMonths("");
+    updRatioEq(); updShaftRatio();
     applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyBelt(); applyGroupHas(); applyFinance(); applyPwSetup();
     form.querySelectorAll('[data-reveal]').forEach(function(s){ var t=document.querySelector(s.getAttribute("data-reveal")); if(t)t.classList.remove("on"); });
     if(!silent){ safeLS(function(){localStorage.removeItem(LS_DRAFT)}); toast("ล้างฟอร์มแล้ว"); }
