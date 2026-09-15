@@ -473,19 +473,21 @@
         <div class="f"><label for="e_other">จำนวนเครื่องยนต์แบรนด์อื่น (เครื่อง)</label><input type="number" id="e_other" name="engine.countOther" min="0"></div>
       </div>
 
-      <div class="engine-group" style="margin-top:14px">
-        <div class="eg-head">
-          <span class="colhead" style="margin-bottom:0">รายการเครื่องยนต์คูโบต้า</span>
-          <button type="button" class="btn ghost" id="sameKubota" style="font-size:11.5px;padding:4px 10px" hidden>⇅ ใช้รุ่น / ระบบสตาร์ทเดียวกันทั้งหมด</button>
+      <div class="grid c2" style="margin-top:14px;align-items:start">
+        <div class="engine-group colstack">
+          <div class="eg-head">
+            <span class="colhead" style="margin-bottom:0">รายการเครื่องยนต์คูโบต้า</span>
+          </div>
+          <button type="button" class="btn ghost" id="sameKubota" style="align-self:flex-start;font-size:11.5px;padding:4px 10px" hidden>⇅ ใช้รุ่น / ระบบสตาร์ทเดียวกันทั้งหมด</button>
+          <div id="engineRowsKubota"></div>
+          <div class="hint" id="kubotaEmptyHint">กรอกจำนวนเครื่องยนต์คูโบต้าด้านบนเพื่อสร้างรายการ</div>
         </div>
-        <div id="engineRowsKubota"></div>
-        <div class="hint" id="kubotaEmptyHint">กรอกจำนวนเครื่องยนต์คูโบต้าด้านบนเพื่อสร้างรายการ</div>
-      </div>
 
-      <div class="engine-group" style="margin-top:14px">
-        <span class="colhead muted">รายการเครื่องยนต์แบรนด์อื่น</span>
-        <div id="engineRowsOther"></div>
-        <div class="hint" id="otherEmptyHint">กรอกจำนวนเครื่องยนต์แบรนด์อื่นด้านบนเพื่อสร้างรายการ</div>
+        <div class="engine-group colstack">
+          <span class="colhead muted">รายการเครื่องยนต์แบรนด์อื่น</span>
+          <div id="engineRowsOther"></div>
+          <div class="hint" id="otherEmptyHint">กรอกจำนวนเครื่องยนต์แบรนด์อื่นด้านบนเพื่อสร้างรายการ</div>
+        </div>
       </div>
     </div>
   </section>
