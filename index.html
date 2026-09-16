@@ -830,15 +830,8 @@
     <!-- 2.4 การบำรุงรักษา : fuel-linked -->
     <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
       <h3>2.4 การบำรุงรักษา</h3>
+      <div class="sub">รายการที่บำรุงรักษาปรับตามเชื้อเพลิงที่ตอบไว้ในข้อ 2.3 (เชื้อเพลิงที่ใช้ — สัตว์โต) โดยอัตโนมัติ</div>
       <div class="grid c2">
-        <div class="f">
-          <label for="mt_fuel">ชนิดเชื้อเพลิงของเครื่องยนต์ *</label>
-          <select id="mt_fuel" name="maint.engineFuel">
-            <option value="">— เลือก —</option>
-            <option value="diesel">แบบใช้น้ำมัน (ดีเซล)</option>
-            <option value="gas">แบบใช้แก๊ส (LPG / ไบโอแก๊ส)</option>
-          </select>
-        </div>
         <div class="f">
           <label for="mt_by">การบำรุงรักษาโดย</label>
           <select id="mt_by" name="maint.maintainedBy"><option value="">— เลือก —</option><option>ซ่อมเอง</option><option>ผู้ติดตั้ง</option><option>ช่างทั่วไป</option><option>ช่างศูนย์</option></select>
@@ -850,7 +843,7 @@
         <div class="f"><label for="mt_cost">ค่าใช้จ่ายในการบำรุงรักษา (ต่อครั้ง) บาท</label><input type="text" id="mt_cost" name="maint.costPerService"></div>
       </div>
 
-      <p class="part-note fuel-gate">↑ เลือกชนิดเชื้อเพลิงเพื่อแสดงรายการที่บำรุงรักษา</p>
+      <p class="part-note fuel-gate">↑ ตอบ “เชื้อเพลิงที่ใช้ (สัตว์โต)” ในข้อ 2.3 ก่อน เพื่อแสดงรายการที่บำรุงรักษา</p>
       <div class="revealed fuel-diesel" data-fuel>
         <span class="legend">รายการที่บำรุงรักษา — แบบใช้น้ำมัน (ดีเซล)</span>
         <div class="opts col" style="margin-top:6px">
@@ -859,7 +852,9 @@
           <label class="chk"><input type="checkbox" name="maint.diesel.items" value="ไส้กรองน้ำมันเชื้อเพลิง"> ไส้กรองน้ำมันเชื้อเพลิง</label>
           <label class="chk"><input type="checkbox" name="maint.diesel.items" value="ไส้กรองอากาศ"> ไส้กรองอากาศ</label>
           <label class="chk"><input type="checkbox" name="maint.diesel.items" value="สายพานพัดลม"> สายพานพัดลม</label>
+          <label class="chk"><input type="checkbox" id="mtDieselOtherChk" name="maint.diesel.items" value="อื่นๆ"> อื่นๆ</label>
         </div>
+        <input type="text" id="mtDieselOther" name="maint.diesel.itemsOther" placeholder="ระบุ" style="margin-top:6px;max-width:280px" hidden>
       </div>
       <div class="revealed fuel-gas" data-fuel>
         <span class="legend">รายการที่บำรุงรักษา — แบบใช้แก๊ส</span>
@@ -869,7 +864,9 @@
           <label class="chk"><input type="checkbox" name="maint.gas.items" value="ไส้กรองอากาศ"> ไส้กรองอากาศ</label>
           <label class="chk"><input type="checkbox" name="maint.gas.items" value="สายพานพัดลม"> สายพานพัดลม</label>
           <label class="chk"><input type="checkbox" name="maint.gas.items" value="ปรับตั้งวาล์ว"> ปรับตั้งวาล์ว</label>
+          <label class="chk"><input type="checkbox" id="mtGasOtherChk" name="maint.gas.items" value="อื่นๆ"> อื่นๆ</label>
         </div>
+        <input type="text" id="mtGasOther" name="maint.gas.itemsOther" placeholder="ระบุ" style="margin-top:6px;max-width:280px" hidden>
       </div>
     </div>
 
@@ -892,7 +889,7 @@
         </div>
       </div>
 
-      <p class="part-note fuel-gate">↑ เลือกชนิดเชื้อเพลิงในหัวข้อ 2.4 เพื่อแสดงรายการที่ซ่อม</p>
+      <p class="part-note fuel-gate">↑ ตอบ “เชื้อเพลิงที่ใช้ (สัตว์โต)” ในข้อ 2.3 ก่อน เพื่อแสดงรายการที่ซ่อม</p>
       <div class="revealed fuel-diesel" data-fuel>
         <span class="legend">รายการที่ซ่อม — แบบใช้น้ำมัน (ดีเซล)</span>
         <div class="opts col" style="margin-top:6px">
@@ -903,7 +900,9 @@
           <label class="chk"><input type="checkbox" name="repair.diesel.items" value="เพลาข้อเหวี่ยง"> เพลาข้อเหวี่ยง</label>
           <label class="chk"><input type="checkbox" name="repair.diesel.items" value="ปั๊มน้ำมันเชื้อเพลิง"> ปั๊มน้ำมันเชื้อเพลิง</label>
           <label class="chk"><input type="checkbox" name="repair.diesel.items" value="หัวฉีด"> หัวฉีด</label>
+          <label class="chk"><input type="checkbox" id="rpDieselOtherChk" name="repair.diesel.items" value="อื่นๆ"> อื่นๆ</label>
         </div>
+        <input type="text" id="rpDieselOther" name="repair.diesel.itemsOther" placeholder="ระบุ" style="margin-top:6px;max-width:280px" hidden>
       </div>
       <div class="revealed fuel-gas" data-fuel>
         <span class="legend">รายการที่ซ่อม — แบบใช้แก๊ส</span>
@@ -913,7 +912,9 @@
           <label class="chk"><input type="checkbox" name="repair.gas.items" value="ปลอกสูบ"> ปลอกสูบ</label>
           <label class="chk"><input type="checkbox" name="repair.gas.items" value="วาล์ว"> วาล์ว</label>
           <label class="chk"><input type="checkbox" name="repair.gas.items" value="เพลาข้อเหวี่ยง"> เพลาข้อเหวี่ยง</label>
+          <label class="chk"><input type="checkbox" id="rpGasOtherChk" name="repair.gas.items" value="อื่นๆ"> อื่นๆ</label>
         </div>
+        <input type="text" id="rpGasOther" name="repair.gas.itemsOther" placeholder="ระบุ" style="margin-top:6px;max-width:280px" hidden>
       </div>
 
       <div class="f full" style="margin-top:12px"><label for="rp_where">ปกติซื้ออะไหล่จากที่ไหน</label><input type="text" id="rp_where" name="repair.partsSource" placeholder="เช่น ร้านอะไหล่ในอำเภอ, ศูนย์คูโบต้า, ออนไลน์"></div>
@@ -1627,16 +1628,27 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   }
   document.getElementById("grp_freq").addEventListener("change",function(){ rebuildGroupMonths(this.value); });
 
-  /* ---------- conditional: engine fuel -> maintenance lists ---------- */
-  var mtFuel=document.getElementById("mt_fuel");
+  /* ---------- conditional: fuel used (สัตว์โต, from 2.3) -> maintenance/repair lists ---------- */
+  var fsOFuelForMaint=document.getElementById("fs_o_fuel");
   function applyFuel(){
-    var v=mtFuel.value;
+    var raw=fsOFuelForMaint.value;
+    var v = raw==="น้ำมันดีเซล" ? "diesel" : (raw==="แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)" ? "gas" : "");
     document.querySelectorAll('[data-fuel]').forEach(function(el){
       el.classList.toggle("on", (v==="diesel"&&el.classList.contains("fuel-diesel"))||(v==="gas"&&el.classList.contains("fuel-gas")));
     });
     document.querySelectorAll(".fuel-gate").forEach(function(g){ g.style.display=v?"none":""; });
   }
-  mtFuel.addEventListener("change",applyFuel);
+  fsOFuelForMaint.addEventListener("change",applyFuel);
+
+  /* ---------- maintenance/repair: อื่นๆ text toggles ---------- */
+  var MAINT_OTHER_PAIRS=[["mtDieselOtherChk","mtDieselOther"],["mtGasOtherChk","mtGasOther"],["rpDieselOtherChk","rpDieselOther"],["rpGasOtherChk","rpGasOther"]];
+  function applyMaintOthers(){
+    MAINT_OTHER_PAIRS.forEach(function(pair){
+      var chk=document.getElementById(pair[0]), field=document.getElementById(pair[1]);
+      field.hidden=!chk.checked;
+    });
+  }
+  MAINT_OTHER_PAIRS.forEach(function(pair){ document.getElementById(pair[0]).addEventListener("change",applyMaintOthers); });
 
   /* ---------- conditional: used other brand -> comparison column ---------- */
   function applyCompare(){
@@ -1801,7 +1813,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       if(Array.isArray(m.photos)&&m.photos.length){ photos=m.photos.slice(); renderPhotos(); }
       if(m.videoBlob){ setVideo(m.videoBlob,m.videoName); }
     }); }
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink();
+    applyFarm(); applyFuel(); applyMaintOthers(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink();
     applyFuelRateUnit("fs_y_fuel","fs_y_rate","fs_y_rateUnit"); applyFuelRateUnit("fs_o_fuel","fs_o_rate","fs_o_rateUnit");
     if(o["fuel.young.rate"]!==undefined) document.getElementById("fs_y_rate").value=o["fuel.young.rate"];
     if(o["fuel.old.rate"]!==undefined) document.getElementById("fs_o_rate").value=o["fuel.old.rate"];
@@ -1817,7 +1829,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     refreshRankOptions(chRank,3); refreshRankOptions(promoRank,3);
     rebuildGroupMonths("");
     updRatioEq(); updShaftRatio();
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink();
+    applyFarm(); applyFuel(); applyMaintOthers(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink();
     form.querySelectorAll('[data-reveal]').forEach(function(s){ var t=document.querySelector(s.getAttribute("data-reveal")); if(t)t.classList.remove("on"); });
     if(!silent){ safeLS(function(){localStorage.removeItem(LS_DRAFT)}); toast("ล้างฟอร์มแล้ว"); }
   }
@@ -2004,7 +2016,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       var name=r["general.name"]||r["general.nickname"]||"(ไม่ระบุชื่อ)";
       var tags=[];
       if(r["general.farmType"]) tags.push("ฟาร์ม"+r["general.farmType"]);
-      if(r["maint.engineFuel"]) tags.push(r["maint.engineFuel"]==="diesel"?"ดีเซล":"แก๊ส");
+      if(r["fuel.old.type"]) tags.push(r["fuel.old.type"]);
       if(r["general.affiliation"]) tags.push(r["general.affiliation"]);
       if(r.photoCount) tags.push(r.photoCount+" รูป");
       if(r.hasVideo) tags.push("มีวิดีโอ");
@@ -2069,7 +2081,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   (function initDate(){ var d=document.getElementById("m_date"); if(!d.value) d.value=new Date().toISOString().slice(0,10); })();
   renderPhotos();
   rebuildGroupMonths("");
-  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink(); fillEngines(null);
+  applyFarm(); applyFuel(); applyMaintOthers(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink(); fillEngines(null);
   var draft=safeLS(function(){return JSON.parse(localStorage.getItem(LS_DRAFT)||"null")});
   if(draft){ try{ restore(draft); }catch(e){} }
   refreshCount();
