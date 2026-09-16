@@ -816,10 +816,10 @@
         <div class="hint" id="elecDiffRow" style="grid-column:1/-1"></div>
 
         <div class="f cost-gas-before cost-col-before"><label for="cb_gas">ค่าแก๊ส</label>
-          <div class="unit-in"><input type="number" id="cb_gas" name="cost.before.gas" min="0" value="0"><span class="unit">บาท</span></div>
+          <div class="unit-in"><input type="number" id="cb_gas" name="cost.before.gas" min="0" placeholder="0"><span class="unit">บาท</span></div>
         </div>
         <div class="f cost-gas-after cost-col-after"><label for="ca_gas">ค่าแก๊ส</label>
-          <div class="unit-in"><input type="number" id="ca_gas" name="cost.after.gas" min="0" value="0"><span class="unit">บาท</span></div>
+          <div class="unit-in"><input type="number" id="ca_gas" name="cost.after.gas" min="0" placeholder="0"><span class="unit">บาท</span></div>
         </div>
         <div class="hint" id="gasDiffRow" style="grid-column:1/-1"></div>
       </div>
@@ -1570,12 +1570,13 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     if(diff===0) return "เท่ากัน (0 "+unit+")";
     return (diff>0?"ประหยัดขึ้น ":"เพิ่มขึ้น ")+Math.abs(diff).toLocaleString()+" "+unit;
   }
+  function hasVal(id){ return document.getElementById(id).value.trim()!==""; }
   function updCostDiffs(){
     var lines=[];
     var fuelRow=document.getElementById("fuelDiffRow"), elecRow=document.getElementById("elecDiffRow"), gasRow=document.getElementById("gasDiffRow");
-    if(!fuelRow.hidden){ var d=numOrZero("cb_fuel")-numOrZero("ca_fuel"); var t="ค่าเชื้อเพลิง: "+fmtDiff(d,"บาท/รุ่น"); fuelRow.textContent=t; lines.push("ค่าเชื้อเพลิง "+fmtDiff(d,"บาท/รุ่น")); } else fuelRow.textContent="";
-    if(!elecRow.hidden){ var d2=numOrZero("cb_elec")-numOrZero("ca_elec"); var t2="ค่าไฟ: "+fmtDiff(d2,"บาท/เดือน"); elecRow.textContent=t2; lines.push("ค่าไฟ "+fmtDiff(d2,"บาท/เดือน")); } else elecRow.textContent="";
-    if(!gasRow.hidden){ var d3=numOrZero("cb_gas")-numOrZero("ca_gas"); var t3="ค่าแก๊ส: "+fmtDiff(d3,"บาท"); gasRow.textContent=t3; lines.push("ค่าแก๊ส "+fmtDiff(d3,"บาท")); } else gasRow.textContent="";
+    if(!fuelRow.hidden && (hasVal("cb_fuel")||hasVal("ca_fuel"))){ var d=numOrZero("cb_fuel")-numOrZero("ca_fuel"); var t="ค่าเชื้อเพลิง: "+fmtDiff(d,"บาท/รุ่น"); fuelRow.textContent=t; lines.push("ค่าเชื้อเพลิง "+fmtDiff(d,"บาท/รุ่น")); } else fuelRow.textContent="";
+    if(!elecRow.hidden && (hasVal("cb_elec")||hasVal("ca_elec"))){ var d2=numOrZero("cb_elec")-numOrZero("ca_elec"); var t2="ค่าไฟ: "+fmtDiff(d2,"บาท/เดือน"); elecRow.textContent=t2; lines.push("ค่าไฟ "+fmtDiff(d2,"บาท/เดือน")); } else elecRow.textContent="";
+    if(!gasRow.hidden && (hasVal("cb_gas")||hasVal("ca_gas"))){ var d3=numOrZero("cb_gas")-numOrZero("ca_gas"); var t3="ค่าแก๊ส: "+fmtDiff(d3,"บาท"); gasRow.textContent=t3; lines.push("ค่าแก๊ส "+fmtDiff(d3,"บาท")); } else gasRow.textContent="";
     document.getElementById("costSummaryText").textContent = lines.length ? ("โดยรวม: "+lines.join(" · ")) : "กรอกค่าใช้จ่ายด้านบนเพื่อดูสรุปความประหยัด";
   }
   function applyCostLink(){
