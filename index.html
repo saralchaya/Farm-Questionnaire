@@ -508,8 +508,8 @@
             <label for="pw_before">ก่อนหน้านี้ใช้งานแบบใด</label>
             <select id="pw_before" name="power.before">
               <option value="">— เลือก —</option>
-              <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
-              <option>ใช้ทั้ง 2 ระบบร่วมกัน (ไฟฟ้าและเครื่องยนต์)</option>
+              <option>ใช้เครื่องยนต์อย่างเดียว</option>
+              <option>ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง</option>
               <option>ใช้มอเตอร์ไฟฟ้าอย่างเดียว</option>
             </select>
           </div>
@@ -520,7 +520,7 @@
             <label for="pw_setup">ปัจจุบันใช้งานแบบใด</label>
             <select id="pw_setup" name="power.setup" data-reveal="#pw_backupWrap" data-reveal-when="ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง">
               <option value="">— เลือก —</option>
-              <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
+              <option>ใช้เครื่องยนต์อย่างเดียว</option>
               <option>ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง</option>
               <option>อื่นๆ</option>
             </select>
@@ -1560,7 +1560,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   /* ---------- savings comparison: which cost fields show + live before/after diff, linked to ก่อนหน้า/ปัจจุบัน ---------- */
   function pwClassify(v){
     if(!v || v==="อื่นๆ") return {elec:true,engine:true};
-    return {elec:/ไฟฟ้า/.test(v), engine:/ดีเซล|ทั้ง 2 ระบบ/.test(v)};
+    return {elec:/ไฟฟ้า/.test(v), engine:/เครื่องยนต์/.test(v)};
   }
   function setHiddenAll(cls,hide){ document.querySelectorAll("."+cls).forEach(function(el){ el.hidden=hide; }); }
   function numOrZero(id){ var v=parseFloat(document.getElementById(id).value); return isNaN(v)?0:v; }
