@@ -495,7 +495,52 @@
     <div class="block">
       <h3>จำนวนเครื่องยนต์ที่ถือครอง และใช้งานในฟาร์ม</h3>
       <div class="sub">กรอกจำนวนเครื่องยนต์แต่ละฝั่ง — รายการด้านล่างจะสร้างช่องกรอกให้อัตโนมัติตามจำนวน</div>
+
       <div class="grid c2">
+        <div class="colstack">
+          <div class="f">
+            <label for="pw_before">ก่อนหน้านี้ใช้งานแบบใด</label>
+            <select id="pw_before" name="power.before">
+              <option value="">— เลือก —</option>
+              <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
+              <option>ใช้ทั้ง 2 ระบบร่วมกัน (ไฟฟ้าและเครื่องยนต์)</option>
+              <option>ใช้มอเตอร์ไฟฟ้าอย่างเดียว</option>
+            </select>
+          </div>
+          <div class="f"><label for="pw_oldproblem">ปัญหาที่เจอจากการใช้งานแบบเก่า</label><textarea id="pw_oldproblem" name="power.oldProblem"></textarea></div>
+        </div>
+        <div class="colstack">
+          <div class="f hide-shrimp">
+            <label for="pw_setup">ปัจจุบันใช้งานแบบใด</label>
+            <select id="pw_setup" name="power.setup" data-reveal="#pw_backupWrap" data-reveal-when="ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง">
+              <option value="">— เลือก —</option>
+              <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
+              <option>ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง</option>
+              <option>อื่นๆ</option>
+            </select>
+            <input type="text" id="pw_setupOther" name="power.setupOther" placeholder="ระบุ" style="margin-top:6px" hidden>
+          </div>
+          <div class="f only-shrimp" data-farm hidden>
+            <label for="pw_prime">ระบบต้นกำลังที่ใช้ปัจจุบัน</label>
+            <select id="pw_prime" name="power.primeMover">
+              <option value="">— เลือก —</option>
+              <option>เครื่องยนต์ดีเซล</option>
+              <option>เครื่องยนต์แก๊ส (LPG)</option>
+              <option>มอเตอร์ไฟฟ้า</option>
+              <option>ใช้หลายอย่างร่วมกัน</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="revealed hide-shrimp" id="pw_backupWrap" style="margin-top:12px">
+        <div class="grid c2">
+          <div class="f"><label for="pw_outage">ไฟดับเฉลี่ยกี่ครั้ง / เดือน</label><input type="number" id="pw_outage" name="power.outagesPerMonth" min="0"></div>
+          <div class="f"><label for="pw_bkhrs">เครื่องยนต์สำรองทำงานเฉลี่ยกี่ชั่วโมง / เดือน</label><input type="number" id="pw_bkhrs" name="power.backupHoursPerMonth" min="0"></div>
+        </div>
+        <div class="callout"><span class="dot"></span><div>Main = ไฟฟ้า, เครื่องยนต์ไว้สำรอง — ประเด็นขายคือ “ความอุ่นใจตอนไฟดับ / กันสัตว์ตายยกเล้า” มากกว่าค่าน้ำมันรายวัน</div></div>
+      </div>
+
+      <div class="grid c2" style="margin-top:14px">
         <div class="f"><label for="e_kubota">จำนวนเครื่องยนต์คูโบต้า (เครื่อง)</label><input type="number" id="e_kubota" name="engine.countKubota" min="0"></div>
         <div class="f"><label for="e_other">จำนวนเครื่องยนต์แบรนด์อื่น (เครื่อง)</label><input type="number" id="e_other" name="engine.countOther" min="0"></div>
       </div>
@@ -694,86 +739,37 @@
       </div>
     </div>
 
-    <!-- 2.2 power source -->
+    <!-- 2.3 fuel -->
     <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
-      <h3>2.2 ต้นกำลังและระบบระบายอากาศ</h3>
-      <div class="grid c2">
-        <div class="colstack">
-          <div class="f">
-            <label for="pw_before">ก่อนหน้านี้ใช้งานแบบใด</label>
-            <select id="pw_before" name="power.before">
-              <option value="">— เลือก —</option>
-              <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
-              <option>ใช้ทั้ง 2 ระบบร่วมกัน (ไฟฟ้าและเครื่องยนต์)</option>
-              <option>ใช้มอเตอร์ไฟฟ้าอย่างเดียว</option>
-            </select>
-          </div>
-          <div class="f"><label for="pw_oldproblem">ปัญหาที่เจอจากการใช้งานแบบเก่า</label><textarea id="pw_oldproblem" name="power.oldProblem"></textarea></div>
-        </div>
-        <div class="colstack">
-          <div class="f hide-shrimp">
-            <label for="pw_setup">ปัจจุบันใช้งานแบบใด</label>
-            <select id="pw_setup" name="power.setup" data-reveal="#pw_backupWrap" data-reveal-when="ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง">
-              <option value="">— เลือก —</option>
-              <option>เครื่องยนต์ดีเซลอย่างเดียว</option>
-              <option>ใช้ไฟฟ้าเป็นหลัก และเครื่องยนต์สำรอง</option>
-              <option>อื่นๆ</option>
-            </select>
-            <input type="text" id="pw_setupOther" name="power.setupOther" placeholder="ระบุ" style="margin-top:6px" hidden>
-          </div>
-          <div class="f only-shrimp" data-farm hidden>
-            <label for="pw_prime">ระบบต้นกำลังที่ใช้ปัจจุบัน</label>
-            <select id="pw_prime" name="power.primeMover">
-              <option value="">— เลือก —</option>
-              <option>เครื่องยนต์ดีเซล</option>
-              <option>เครื่องยนต์แก๊ส (LPG)</option>
-              <option>มอเตอร์ไฟฟ้า</option>
-              <option>ใช้หลายอย่างร่วมกัน</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="revealed hide-shrimp" id="pw_backupWrap" style="margin-top:12px">
-        <div class="grid c2">
-          <div class="f"><label for="pw_outage">ไฟดับเฉลี่ยกี่ครั้ง / เดือน</label><input type="number" id="pw_outage" name="power.outagesPerMonth" min="0"></div>
-          <div class="f"><label for="pw_bkhrs">เครื่องยนต์สำรองทำงานเฉลี่ยกี่ชั่วโมง / เดือน</label><input type="number" id="pw_bkhrs" name="power.backupHoursPerMonth" min="0"></div>
-        </div>
-        <div class="callout"><span class="dot"></span><div>Main = ไฟฟ้า, เครื่องยนต์ไว้สำรอง — ประเด็นขายคือ “ความอุ่นใจตอนไฟดับ / กันสัตว์ตายยกเล้า” มากกว่าค่าน้ำมันรายวัน</div></div>
-      </div>
+      <h3>2.3 การใช้เชื้อเพลิงของพัดลมระบายอากาศ EVAP</h3>
+      <div class="sub only-pig only-chicken" data-farm hidden>หลายฟาร์มใช้เชื้อเพลิงต่างกันตามช่วงอายุสัตว์ — กรอกแยกช่วงสัตว์เล็ก / สัตว์โต</div>
 
-    </div>
-
-    <!-- 2.3 fuel + saving -->
-    <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
-      <h3>2.3 อัตราการใช้เชื้อเพลิง และมุมมองความประหยัด</h3>
-      <div class="sub">หลายฟาร์มใช้เชื้อเพลิงต่างกันตามช่วงอายุสัตว์ — กรอกแยกช่วงสัตว์เล็ก / สัตว์โต</div>
-
-      <div class="grid c2">
+      <div class="grid c2 only-pig only-chicken" data-farm hidden>
         <div class="f"><span class="legend">— ช่วงสัตว์เล็ก —</span></div><div></div>
         <div class="f">
           <label for="fs_y_fuel">เชื้อเพลิงที่ใช้ (สัตว์เล็ก)</label>
           <select id="fs_y_fuel" name="fuel.young.type">
-            <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊ส LPG (ถัง)</option><option>แก๊สชีวภาพ (ไบโอแก๊ส)</option><option>ไฟฟ้า</option><option>ผสม</option>
+            <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)</option>
           </select>
         </div>
-        <div class="f"><label for="fs_y_eng">จำนวนเครื่องยนต์ที่ใช้ช่วงนี้ (ต่อ<span class="farm-noun">เล้า</span>)</label><input type="number" id="fs_y_eng" name="fuel.young.engines" min="0"></div>
-        <div class="f"><label for="fs_y_hrs">ชั่วโมงทำงานเฉลี่ย / วัน</label><input type="number" id="fs_y_hrs" name="fuel.young.hoursPerDay" min="0" max="24" step="0.5"></div>
-        <div class="f"><label for="fs_y_rate">อัตราการใช้เชื้อเพลิง</label><input type="text" id="fs_y_rate" name="fuel.young.rate" placeholder="ลิตร/ชม. หรือ กก./วัน หรือ ถัง/สัปดาห์"></div>
-        <div class="f"><label for="fs_y_cost">ค่าเชื้อเพลิงเฉลี่ย</label><input type="text" id="fs_y_cost" name="fuel.young.cost" placeholder="บาท/วัน หรือ บาท/เดือน"></div>
+        <div class="f">
+          <label for="fs_y_rate">อัตราการใช้เชื้อเพลิง</label>
+          <div class="unit-in"><input type="text" id="fs_y_rate" name="fuel.young.rate" placeholder="เติมเลข"><span class="unit" id="fs_y_rateUnit">—</span></div>
+        </div>
       </div>
 
-      <div class="grid c2" style="margin-top:14px">
+      <div class="grid c2 only-pig only-chicken" data-farm hidden style="margin-top:14px">
         <div class="f"><span class="legend">— ช่วงสัตว์โต —</span></div><div></div>
         <div class="f">
           <label for="fs_o_fuel">เชื้อเพลิงที่ใช้ (สัตว์โต)</label>
           <select id="fs_o_fuel" name="fuel.old.type">
-            <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊ส LPG (ถัง)</option><option>แก๊สชีวภาพ (ไบโอแก๊ส)</option><option>ไฟฟ้า</option><option>ผสม</option>
+            <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)</option>
           </select>
         </div>
-        <div class="f"><label for="fs_o_eng">จำนวนเครื่องยนต์ที่ใช้ช่วงนี้ (ต่อ<span class="farm-noun">เล้า</span>)</label><input type="number" id="fs_o_eng" name="fuel.old.engines" min="0"></div>
-        <div class="f"><label for="fs_o_hrs">ชั่วโมงทำงานเฉลี่ย / วัน</label><input type="number" id="fs_o_hrs" name="fuel.old.hoursPerDay" min="0" max="24" step="0.5"></div>
-        <div class="f"><label for="fs_o_rate">อัตราการใช้เชื้อเพลิง</label><input type="text" id="fs_o_rate" name="fuel.old.rate" placeholder="ลิตร/ชม. หรือ กก./วัน หรือ ถัง/สัปดาห์"></div>
-        <div class="f"><label for="fs_o_cost">ค่าเชื้อเพลิงเฉลี่ย</label><input type="text" id="fs_o_cost" name="fuel.old.cost" placeholder="บาท/วัน หรือ บาท/เดือน"></div>
+        <div class="f">
+          <label for="fs_o_rate">อัตราการใช้เชื้อเพลิง</label>
+          <div class="unit-in"><input type="text" id="fs_o_rate" name="fuel.old.rate" placeholder="เติมเลข"><span class="unit" id="fs_o_rateUnit">—</span></div>
+        </div>
       </div>
 
       <!-- shrimp gas tank -->
@@ -785,8 +781,42 @@
           <div class="f"><label for="sh_gasuse">ใช้แก๊สกับอะไร</label><input type="text" id="sh_gasuse" name="fuel.shrimp.gasUse" placeholder="เช่น เครื่องตีน้ำสำรอง"></div>
         </div>
       </div>
+    </div>
 
-      <div class="f full" style="margin-top:14px"><label for="sv_story">อธิบายเพิ่มเติม เรื่องความประหยัด (ถ้ามี)</label><textarea id="sv_story" name="saving.story"></textarea></div>
+    <!-- savings perspective (fuel only) -->
+    <div class="block cond only-pig only-chicken only-shrimp" data-farm hidden>
+      <h3>มุมมองความประหยัด (เฉพาะด้านเชื้อเพลิง)</h3>
+      <div class="sub">เทียบค่าใช้จ่ายก่อนหน้า (ซ้าย) กับปัจจุบัน (ขวา) — ช่องที่ขึ้นจะปรับตาม “ก่อนหน้านี้ใช้งานแบบใด / ปัจจุบันใช้งานแบบใด” ที่ตอบไว้ด้านบน</div>
+      <div class="grid c2" id="costCmpGrid" style="margin-top:8px">
+        <div class="cmp-head">ก่อนหน้า</div>
+        <div class="cmp-head">ปัจจุบัน</div>
+
+        <div class="f cost-fuel-before"><label for="cb_fuel">ค่าเชื้อเพลิงเฉลี่ย</label>
+          <div class="unit-in"><input type="number" id="cb_fuel" name="cost.before.fuel" min="0"><span class="unit">บาท/รุ่น</span></div>
+        </div>
+        <div class="f cost-fuel-after"><label for="ca_fuel">ค่าเชื้อเพลิงเฉลี่ย</label>
+          <div class="unit-in"><input type="number" id="ca_fuel" name="cost.after.fuel" min="0"><span class="unit">บาท/รุ่น</span></div>
+        </div>
+        <div class="hint" id="fuelDiffRow" style="grid-column:1/-1"></div>
+
+        <div class="f cost-elec-before"><label for="cb_elec">ค่าไฟเฉลี่ย</label>
+          <div class="unit-in"><input type="number" id="cb_elec" name="cost.before.elec" min="0"><span class="unit">บาท/เดือน</span></div>
+        </div>
+        <div class="f cost-elec-after"><label for="ca_elec">ค่าไฟเฉลี่ย</label>
+          <div class="unit-in"><input type="number" id="ca_elec" name="cost.after.elec" min="0"><span class="unit">บาท/เดือน</span></div>
+        </div>
+        <div class="hint" id="elecDiffRow" style="grid-column:1/-1"></div>
+
+        <div class="f cost-gas-before"><label for="cb_gas">ค่าแก๊ส</label>
+          <div class="unit-in"><input type="number" id="cb_gas" name="cost.before.gas" min="0" value="0"><span class="unit">บาท</span></div>
+        </div>
+        <div class="f cost-gas-after"><label for="ca_gas">ค่าแก๊ส</label>
+          <div class="unit-in"><input type="number" id="ca_gas" name="cost.after.gas" min="0" value="0"><span class="unit">บาท</span></div>
+        </div>
+        <div class="hint" id="gasDiffRow" style="grid-column:1/-1"></div>
+      </div>
+      <div class="callout" style="margin-top:10px"><span class="dot"></span><div id="costSummaryText">กรอกค่าใช้จ่ายด้านบนเพื่อดูสรุปความประหยัด</div></div>
+      <div class="f full" style="margin-top:12px"><label for="sv_story">อธิบายเพิ่มเติม เรื่องความประหยัด (ถ้ามี)</label><textarea id="sv_story" name="saving.story"></textarea></div>
     </div>
 
     <!-- 2.4 การบำรุงรักษา : fuel-linked -->
@@ -1070,6 +1100,34 @@
           <label for="grp_freqOther">ระบุช่วงเวลาคร่าวๆ</label>
           <input type="text" id="grp_freqOther" name="mkt.group.freqNote" placeholder="เช่น ทุกต้นฤดูเก็บเกี่ยว / แล้วแต่ปี ไม่แน่นอน">
         </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>ความสนใจติดตั้งโซล่าร์เซลล์ในอนาคต</h3>
+      <div class="f full">
+        <label>ในอนาคตมีแผนจะติดตั้งโซล่าร์เซลล์หรือไม่</label>
+        <div class="opts" style="margin-top:6px">
+          <label class="chk opt-yes"><input type="radio" name="mkt.solar.interest" value="สนใจ"> สนใจ</label>
+          <label class="chk opt-no"><input type="radio" name="mkt.solar.interest" value="ไม่สนใจ"> ไม่สนใจ</label>
+        </div>
+      </div>
+      <div class="revealed" id="solarYesWrap" style="margin-top:10px">
+        <div class="f full">
+          <label for="solar_timeframe">คาดว่าจะติดตั้งภายในระยะเวลาใด</label>
+          <select id="solar_timeframe" name="mkt.solar.timeframe">
+            <option value="">— เลือก —</option>
+            <option>ภายใน 1 เดือน</option>
+            <option>ภายใน 3 เดือน</option>
+            <option>ภายใน 1 ปี</option>
+            <option>ภายใน 1–2 ปี</option>
+            <option>มากกว่า 2 ปีขึ้นไป</option>
+          </select>
+        </div>
+        <div class="f full" style="margin-top:8px"><label for="solar_why_yes">เหตุผลที่สนใจ</label><textarea id="solar_why_yes" name="mkt.solar.whyInterested"></textarea></div>
+      </div>
+      <div class="revealed" id="solarNoWrap" style="margin-top:10px">
+        <div class="f full"><label for="solar_why_no">เหตุผลที่ไม่สนใจ</label><textarea id="solar_why_no" name="mkt.solar.whyNotInterested"></textarea></div>
       </div>
     </div>
 
@@ -1483,6 +1541,48 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   function applyPwSetup(){ document.getElementById("pw_setupOther").hidden = pwSetup.value!=="อื่นๆ"; }
   pwSetup.addEventListener("change",applyPwSetup);
 
+  /* ---------- fuel-rate unit: linked to diesel/biogas choice — biogas has no usage cost, so show a dash ---------- */
+  function applyFuelRateUnit(fuelId,rateId,unitId){
+    var fuel=document.getElementById(fuelId).value, rate=document.getElementById(rateId), unit=document.getElementById(unitId);
+    if(fuel==="น้ำมันดีเซล"){ rate.readOnly=false; rate.placeholder="เช่น 15"; if(rate.value==="-") rate.value=""; unit.textContent="ลิตร/วัน"; }
+    else if(fuel==="แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)"){ rate.value="-"; rate.readOnly=true; unit.textContent="(ไม่มีค่าใช้จ่าย)"; }
+    else { rate.readOnly=false; rate.placeholder=""; if(rate.value==="-") rate.value=""; unit.textContent="—"; }
+  }
+  document.getElementById("fs_y_fuel").addEventListener("change",function(){ applyFuelRateUnit("fs_y_fuel","fs_y_rate","fs_y_rateUnit"); });
+  document.getElementById("fs_o_fuel").addEventListener("change",function(){ applyFuelRateUnit("fs_o_fuel","fs_o_rate","fs_o_rateUnit"); });
+
+  /* ---------- savings comparison: which cost fields show + live before/after diff, linked to ก่อนหน้า/ปัจจุบัน ---------- */
+  function pwClassify(v){
+    if(!v || v==="อื่นๆ") return {elec:true,engine:true};
+    return {elec:/ไฟฟ้า/.test(v), engine:/ดีเซล|ทั้ง 2 ระบบ/.test(v)};
+  }
+  function setHiddenAll(cls,hide){ document.querySelectorAll("."+cls).forEach(function(el){ el.hidden=hide; }); }
+  function numOrZero(id){ var v=parseFloat(document.getElementById(id).value); return isNaN(v)?0:v; }
+  function fmtDiff(diff,unit){
+    if(diff===0) return "เท่ากัน (0 "+unit+")";
+    return (diff>0?"ประหยัดขึ้น ":"เพิ่มขึ้น ")+Math.abs(diff).toLocaleString()+" "+unit;
+  }
+  function updCostDiffs(){
+    var lines=[];
+    var fuelRow=document.getElementById("fuelDiffRow"), elecRow=document.getElementById("elecDiffRow"), gasRow=document.getElementById("gasDiffRow");
+    if(!fuelRow.hidden){ var d=numOrZero("cb_fuel")-numOrZero("ca_fuel"); var t="ค่าเชื้อเพลิง: "+fmtDiff(d,"บาท/รุ่น"); fuelRow.textContent=t; lines.push("ค่าเชื้อเพลิง "+fmtDiff(d,"บาท/รุ่น")); } else fuelRow.textContent="";
+    if(!elecRow.hidden){ var d2=numOrZero("cb_elec")-numOrZero("ca_elec"); var t2="ค่าไฟ: "+fmtDiff(d2,"บาท/เดือน"); elecRow.textContent=t2; lines.push("ค่าไฟ "+fmtDiff(d2,"บาท/เดือน")); } else elecRow.textContent="";
+    if(!gasRow.hidden){ var d3=numOrZero("cb_gas")-numOrZero("ca_gas"); var t3="ค่าแก๊ส: "+fmtDiff(d3,"บาท"); gasRow.textContent=t3; lines.push("ค่าแก๊ส "+fmtDiff(d3,"บาท")); } else gasRow.textContent="";
+    document.getElementById("costSummaryText").textContent = lines.length ? ("โดยรวม: "+lines.join(" · ")) : "กรอกค่าใช้จ่ายด้านบนเพื่อดูสรุปความประหยัด";
+  }
+  function applyCostLink(){
+    var b=pwClassify(document.getElementById("pw_before").value), a=pwClassify(pwSetup.value);
+    setHiddenAll("cost-fuel-before",!b.engine); setHiddenAll("cost-gas-before",!b.engine); setHiddenAll("cost-elec-before",!b.elec);
+    setHiddenAll("cost-fuel-after",!a.engine); setHiddenAll("cost-gas-after",!a.engine); setHiddenAll("cost-elec-after",!a.elec);
+    document.getElementById("fuelDiffRow").hidden=!(b.engine&&a.engine);
+    document.getElementById("elecDiffRow").hidden=!(b.elec&&a.elec);
+    document.getElementById("gasDiffRow").hidden=!(b.engine&&a.engine);
+    updCostDiffs();
+  }
+  document.getElementById("pw_before").addEventListener("change",applyCostLink);
+  pwSetup.addEventListener("change",applyCostLink);
+  ["cb_fuel","ca_fuel","cb_elec","ca_elec","cb_gas","ca_gas"].forEach(function(id){ document.getElementById(id).addEventListener("input",updCostDiffs); });
+
   /* ---------- conditional: farmer group / meeting -> reveal + frequency-driven month pickers ---------- */
   var GRP_MONTHS=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
   var GRP_FREQ_N={"1 ครั้ง/ปี":1,"2 ครั้ง/ปี":2,"3 ครั้ง/ปี":3,"4 ครั้ง/ปี":4};
@@ -1491,6 +1591,14 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     document.getElementById("groupWrap").classList.toggle("on", !!(r && r.value==="มี"));
   }
   form.querySelectorAll('input[name="mkt.group.has"]').forEach(function(r){ r.addEventListener("change",applyGroupHas); });
+
+  /* ---------- conditional: solar-cell interest ---------- */
+  function applySolarInterest(){
+    var r=form.querySelector('input[name="mkt.solar.interest"]:checked');
+    document.getElementById("solarYesWrap").classList.toggle("on", !!(r && r.value==="สนใจ"));
+    document.getElementById("solarNoWrap").classList.toggle("on", !!(r && r.value==="ไม่สนใจ"));
+  }
+  form.querySelectorAll('input[name="mkt.solar.interest"]').forEach(function(r){ r.addEventListener("change",applySolarInterest); });
   function rebuildGroupMonths(freqVal, keep){
     var monthsWrap=document.getElementById("grp_monthsWrap"), host=document.getElementById("grp_months"),
         otherWrap=document.getElementById("grp_freqOtherWrap");
@@ -1684,7 +1792,10 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       if(Array.isArray(m.photos)&&m.photos.length){ photos=m.photos.slice(); renderPhotos(); }
       if(m.videoBlob){ setVideo(m.videoBlob,m.videoName); }
     }); }
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applyFinance(); applyPwSetup();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink();
+    applyFuelRateUnit("fs_y_fuel","fs_y_rate","fs_y_rateUnit"); applyFuelRateUnit("fs_o_fuel","fs_o_rate","fs_o_rateUnit");
+    if(o["fuel.young.rate"]!==undefined) document.getElementById("fs_y_rate").value=o["fuel.young.rate"];
+    if(o["fuel.old.rate"]!==undefined) document.getElementById("fs_o_rate").value=o["fuel.old.rate"];
     fillEngines(o["engine.list"]);
     form.querySelectorAll('[data-reveal]').forEach(function(s){ s.dispatchEvent(new Event("change")); });
   }
@@ -1697,7 +1808,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     refreshRankOptions(chRank,3); refreshRankOptions(promoRank,3);
     rebuildGroupMonths("");
     updRatioEq(); updShaftRatio();
-    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applyFinance(); applyPwSetup();
+    applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink();
     form.querySelectorAll('[data-reveal]').forEach(function(s){ var t=document.querySelector(s.getAttribute("data-reveal")); if(t)t.classList.remove("on"); });
     if(!silent){ safeLS(function(){localStorage.removeItem(LS_DRAFT)}); toast("ล้างฟอร์มแล้ว"); }
   }
@@ -1949,7 +2060,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   (function initDate(){ var d=document.getElementById("m_date"); if(!d.value) d.value=new Date().toISOString().slice(0,10); })();
   renderPhotos();
   rebuildGroupMonths("");
-  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applyFinance(); applyPwSetup(); fillEngines(null);
+  applyFarm(); applyFuel(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink(); fillEngines(null);
   var draft=safeLS(function(){return JSON.parse(localStorage.getItem(LS_DRAFT)||"null")});
   if(draft){ try{ restore(draft); }catch(e){} }
   refreshCount();
