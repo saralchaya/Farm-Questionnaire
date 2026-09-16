@@ -1550,9 +1550,9 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   /* ---------- fuel-rate unit: linked to diesel/biogas choice — biogas has no usage cost, so show a dash ---------- */
   function applyFuelRateUnit(fuelId,rateId,unitId){
     var fuel=document.getElementById(fuelId).value, rate=document.getElementById(rateId), unit=document.getElementById(unitId);
-    if(fuel==="น้ำมันดีเซล"){ rate.readOnly=false; rate.placeholder="เช่น 15"; if(rate.value==="-") rate.value=""; unit.textContent="ลิตร/วัน"; }
-    else if(fuel==="แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)"){ rate.value="-"; rate.readOnly=true; unit.textContent="(ไม่มีค่าใช้จ่าย)"; }
-    else { rate.readOnly=false; rate.placeholder=""; if(rate.value==="-") rate.value=""; unit.textContent="—"; }
+    if(fuel==="น้ำมันดีเซล"){ rate.placeholder="เช่น 15"; if(rate.value==="-") rate.value=""; unit.textContent="ลิตร/วัน"; }
+    else if(fuel==="แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)"){ if(!rate.value) rate.value="-"; rate.placeholder="- (ไม่มีค่าใช้จ่าย ปรับแก้ได้)"; unit.textContent="(ไม่มีค่าใช้จ่าย — แก้ไขได้)"; }
+    else { rate.placeholder=""; if(rate.value==="-") rate.value=""; unit.textContent="—"; }
   }
   document.getElementById("fs_y_fuel").addEventListener("change",function(){ applyFuelRateUnit("fs_y_fuel","fs_y_rate","fs_y_rateUnit"); });
   document.getElementById("fs_o_fuel").addEventListener("change",function(){ applyFuelRateUnit("fs_o_fuel","fs_o_rate","fs_o_rateUnit"); });
