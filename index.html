@@ -168,6 +168,12 @@
   @media(min-width:640px){.cmp2.dual{grid-template-columns:1fr 1fr}}
   .cmp-head{font-family:"Noto Sans Thai",sans-serif;font-weight:700;font-size:13px;color:var(--ink);
     padding-bottom:5px;border-bottom:2px solid var(--accent)}
+  #costCmpGrid{position:relative;gap:8px 20px}
+  #costCmpGrid .cmp-head.cost-col-before{border-bottom-color:var(--accent);color:var(--accent-ink)}
+  #costCmpGrid .cmp-head.cost-col-after{border-bottom-color:var(--good);color:var(--good)}
+  #costCmpGrid .cost-col-before{background:rgba(201,84,15,.07);border-radius:8px;padding:7px 9px}
+  #costCmpGrid .cost-col-after{background:rgba(47,125,69,.08);border-radius:8px;padding:7px 9px}
+  @media(min-width:640px){#costCmpGrid::after{content:"";position:absolute;top:0;bottom:0;left:50%;border-left:1px dashed rgba(0,0,0,.15)}}
   .cmp-sub{grid-column:1/-1;font-family:"Noto Sans Thai",sans-serif;font-weight:700;font-size:12px;color:var(--ink-soft);margin-top:2px}
   .cmp-row{grid-column:1/-1;display:grid;gap:4px 32px;position:relative}
   @media(min-width:640px){.cmp-row{grid-template-columns:1fr 1fr}}
@@ -788,29 +794,29 @@
       <h3>มุมมองความประหยัด (เฉพาะด้านเชื้อเพลิง)</h3>
       <div class="sub">เทียบค่าใช้จ่ายก่อนหน้า (ซ้าย) กับปัจจุบัน (ขวา) — ช่องที่ขึ้นจะปรับตาม “ก่อนหน้านี้ใช้งานแบบใด / ปัจจุบันใช้งานแบบใด” ที่ตอบไว้ด้านบน</div>
       <div class="grid c2" id="costCmpGrid" style="margin-top:8px">
-        <div class="cmp-head">ก่อนหน้า</div>
-        <div class="cmp-head">ปัจจุบัน</div>
+        <div class="cmp-head cost-col-before">ก่อนหน้า</div>
+        <div class="cmp-head cost-col-after">ปัจจุบัน</div>
 
-        <div class="f cost-fuel-before"><label for="cb_fuel">ค่าเชื้อเพลิงเฉลี่ย</label>
+        <div class="f cost-fuel-before cost-col-before"><label for="cb_fuel">ค่าเชื้อเพลิงเฉลี่ย</label>
           <div class="unit-in"><input type="number" id="cb_fuel" name="cost.before.fuel" min="0"><span class="unit">บาท/รุ่น</span></div>
         </div>
-        <div class="f cost-fuel-after"><label for="ca_fuel">ค่าเชื้อเพลิงเฉลี่ย</label>
+        <div class="f cost-fuel-after cost-col-after"><label for="ca_fuel">ค่าเชื้อเพลิงเฉลี่ย</label>
           <div class="unit-in"><input type="number" id="ca_fuel" name="cost.after.fuel" min="0"><span class="unit">บาท/รุ่น</span></div>
         </div>
         <div class="hint" id="fuelDiffRow" style="grid-column:1/-1"></div>
 
-        <div class="f cost-elec-before"><label for="cb_elec">ค่าไฟเฉลี่ย</label>
+        <div class="f cost-elec-before cost-col-before"><label for="cb_elec">ค่าไฟเฉลี่ย</label>
           <div class="unit-in"><input type="number" id="cb_elec" name="cost.before.elec" min="0"><span class="unit">บาท/เดือน</span></div>
         </div>
-        <div class="f cost-elec-after"><label for="ca_elec">ค่าไฟเฉลี่ย</label>
+        <div class="f cost-elec-after cost-col-after"><label for="ca_elec">ค่าไฟเฉลี่ย</label>
           <div class="unit-in"><input type="number" id="ca_elec" name="cost.after.elec" min="0"><span class="unit">บาท/เดือน</span></div>
         </div>
         <div class="hint" id="elecDiffRow" style="grid-column:1/-1"></div>
 
-        <div class="f cost-gas-before"><label for="cb_gas">ค่าแก๊ส</label>
+        <div class="f cost-gas-before cost-col-before"><label for="cb_gas">ค่าแก๊ส</label>
           <div class="unit-in"><input type="number" id="cb_gas" name="cost.before.gas" min="0" value="0"><span class="unit">บาท</span></div>
         </div>
-        <div class="f cost-gas-after"><label for="ca_gas">ค่าแก๊ส</label>
+        <div class="f cost-gas-after cost-col-after"><label for="ca_gas">ค่าแก๊ส</label>
           <div class="unit-in"><input type="number" id="ca_gas" name="cost.after.gas" min="0" value="0"><span class="unit">บาท</span></div>
         </div>
         <div class="hint" id="gasDiffRow" style="grid-column:1/-1"></div>
