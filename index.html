@@ -517,6 +517,17 @@
             </select>
           </div>
           <div class="f"><label for="pw_oldproblem">ปัญหาที่เจอจากการใช้งานแบบเก่า</label><textarea id="pw_oldproblem" name="power.oldProblem"></textarea></div>
+          <div class="f" id="solarBeforeWrap" hidden>
+            <label>ช่วงนั้นใช้โซล่าร์เซลล์ร่วมด้วยหรือไม่</label>
+            <div class="opts" style="margin-top:6px">
+              <label class="chk opt-no"><input type="radio" name="power.before.solar" value="ไม่ใช้"> ไม่ใช้</label>
+              <label class="chk opt-yes"><input type="radio" name="power.before.solar" value="ใช้"> ใช้</label>
+            </div>
+          </div>
+          <div class="f" id="solarBeforeCostWrap" hidden>
+            <label for="solarBeforeCost">ค่าลงทุนติดตั้งโซล่าร์เซลล์ (ช่วงนั้น)</label>
+            <div class="unit-in"><input type="number" id="solarBeforeCost" name="power.before.solarCost" min="0"><span class="unit">บาท</span></div>
+          </div>
         </div>
         <div class="colstack">
           <div class="f hide-shrimp">
@@ -539,6 +550,17 @@
               <option>มอเตอร์ไฟฟ้า</option>
               <option>ใช้หลายอย่างร่วมกัน</option>
             </select>
+          </div>
+          <div class="f hide-shrimp" id="solarNowWrap" hidden>
+            <label>ปัจจุบันใช้โซล่าร์เซลล์ร่วมด้วยหรือไม่</label>
+            <div class="opts" style="margin-top:6px">
+              <label class="chk opt-no"><input type="radio" name="power.current.solar" value="ไม่ใช้"> ไม่ใช้</label>
+              <label class="chk opt-yes"><input type="radio" name="power.current.solar" value="ใช้"> ใช้</label>
+            </div>
+          </div>
+          <div class="f hide-shrimp" id="solarNowCostWrap" hidden>
+            <label for="solarNowCost">ค่าลงทุนติดตั้งโซล่าร์เซลล์</label>
+            <div class="unit-in"><input type="number" id="solarNowCost" name="power.current.solarCost" min="0"><span class="unit">บาท</span></div>
           </div>
         </div>
       </div>
@@ -605,6 +627,9 @@
 
       <div class="grid c3 only-pig" data-farm hidden style="margin-top:12px">
         <div class="f"><label for="pg_head">จำนวนหมูต่อ<span class="farm-noun">เล้า</span> (ตัว)</label><input type="number" id="pg_head" name="farm.pig.headPerHouse" min="0"></div>
+        <div class="f" id="pg_gaspitWrap" hidden><label for="pg_gaspit">ขนาดของบ่อแก๊ส</label>
+          <div class="unit-in"><input type="number" id="pg_gaspit" name="farm.pig.gasPitSize" min="0" placeholder="เติมเลข"><span class="unit">คิวบ์</span></div>
+        </div>
         <div class="f"><label for="pg_cycledays">ระยะเวลาต่อรอบการเลี้ยง</label>
           <div class="unit-in"><input type="number" id="pg_cycledays" name="farm.pig.cycleDays" min="0" placeholder="เช่น 150"><span class="unit">วัน</span></div>
         </div>
@@ -715,15 +740,19 @@
       </div>
 
       <div class="grid c2 only-pig only-chicken" data-farm hidden style="margin-top:12px">
+        <div class="f full"><label for="s_evapcost">ค่าใช้จ่ายในการลงทุนติดตั้งเบ็ดเสร็จ</label>
+          <div class="unit-in" style="max-width:220px"><input type="number" id="s_evapcost" name="farm.evapInstallCost" min="0" placeholder="เช่น 85000"><span class="unit">บาท</span></div>
+        </div>
+      </div>
+
+      <span class="legend only-pig only-chicken" data-farm hidden style="margin-top:10px;display:block">ผู้ติดตั้งระบบ EVAP — ถ้ามี (ไม่จำเป็นต้องตอบ บางฟาร์มดำเนินการผ่านกลุ่ม CP / Contract farming)</span>
+      <div class="grid c2 only-pig only-chicken" data-farm hidden style="margin-top:4px">
         <div class="f"><label for="s_evapco">บริษัทที่รับติดตั้งระบบ EVAP</label><input type="text" id="s_evapco" name="farm.evapInstaller"></div>
         <div class="f"><label for="s_evapprov">จังหวัดของผู้ติดตั้ง</label>
           <input type="text" id="s_evapprov" name="farm.evapInstallerProvince" list="provList" autocomplete="off" placeholder="พิมพ์หรือเลือกจังหวัด">
           <datalist id="provList"></datalist>
         </div>
-        <div class="f"><label for="s_evaptel">เบอร์โทรผู้ติดตั้ง (ถ้ามี)</label><input type="tel" id="s_evaptel" name="farm.evapInstallerTel"></div>
-        <div class="f"><label for="s_evapcost">ค่าใช้จ่ายในการลงทุนติดตั้งเบ็ดเสร็จ</label>
-          <div class="unit-in"><input type="number" id="s_evapcost" name="farm.evapInstallCost" min="0" placeholder="เช่น 85000"><span class="unit">บาท</span></div>
-        </div>
+        <div class="f"><label for="s_evaptel">เบอร์โทรผู้ติดตั้ง</label><input type="tel" id="s_evaptel" name="farm.evapInstallerTel"></div>
       </div>
 
       <div class="callout beta only-shrimp" data-farm hidden>
@@ -759,7 +788,7 @@
         <div class="f">
           <label for="fs_y_fuel">เชื้อเพลิงที่ใช้ (สัตว์เล็ก)</label>
           <select id="fs_y_fuel" name="fuel.young.type">
-            <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)</option>
+            <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)</option><option>แบบผสม (น้ำมันดีเซล และ แก๊สชีวภาพ)</option>
           </select>
         </div>
         <div class="f">
@@ -773,7 +802,7 @@
         <div class="f">
           <label for="fs_o_fuel">เชื้อเพลิงที่ใช้ (สัตว์โต)</label>
           <select id="fs_o_fuel" name="fuel.old.type">
-            <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)</option>
+            <option value="">— เลือก —</option><option>น้ำมันดีเซล</option><option>แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)</option><option>แบบผสม (น้ำมันดีเซล และ แก๊สชีวภาพ)</option>
           </select>
         </div>
         <div class="f">
@@ -1092,6 +1121,14 @@
       <div class="revealed" id="groupWrap" style="margin-top:10px">
         <div class="grid c2">
           <div class="f"><label for="grp_name">ชื่อกลุ่ม / งานประชุม</label><input type="text" id="grp_name" name="mkt.group.name" placeholder="เช่น ชมรมผู้เลี้ยงสุกร อ.บ้านโป่ง"></div>
+          <div class="f"><label for="grp_mode">รูปแบบการประชุม</label>
+            <select id="grp_mode" name="mkt.group.mode">
+              <option value="">— เลือก —</option>
+              <option>Online</option>
+              <option>Onsite (ในพื้นที่)</option>
+              <option>ผสม (ทั้ง Online และ Onsite)</option>
+            </select>
+          </div>
           <div class="f"><label for="grp_prov">จังหวัดที่จัด</label>
             <input type="text" id="grp_prov" name="mkt.group.province" list="provList" autocomplete="off" placeholder="พิมพ์หรือเลือกจังหวัด">
           </div>
@@ -1102,6 +1139,14 @@
               <option>มากกว่า 4 ครั้ง/ปี</option><option>ไม่แน่นอน</option>
             </select>
           </div>
+        </div>
+        <div class="f full" id="grp_platformWrap" style="margin-top:8px" hidden>
+          <label for="grp_platform">Platform ที่ใช้ประชุม</label>
+          <select id="grp_platform" name="mkt.group.platform">
+            <option value="">— เลือก —</option>
+            <option>LINE</option><option>Zoom</option><option>Google Meet</option><option>Facebook Live</option><option>อื่นๆ</option>
+          </select>
+          <input type="text" id="grp_platformOther" name="mkt.group.platformOther" placeholder="ระบุ" style="margin-top:6px;max-width:280px" hidden>
         </div>
         <div class="f full" id="grp_monthsWrap" style="margin-top:8px" hidden>
           <label>จัดในเดือนใดบ้าง</label>
@@ -1557,6 +1602,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     var fuel=document.getElementById(fuelId).value, rate=document.getElementById(rateId), unit=document.getElementById(unitId);
     if(fuel==="น้ำมันดีเซล"){ rate.placeholder="เช่น 15"; if(rate.value==="-") rate.value=""; unit.textContent="ลิตร/วัน"; }
     else if(fuel==="แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)"){ if(!rate.value) rate.value="-"; rate.placeholder="- (ไม่มีค่าใช้จ่าย ปรับแก้ได้)"; unit.textContent="(ไม่มีค่าใช้จ่าย — แก้ไขได้)"; }
+    else if(fuel==="แบบผสม (น้ำมันดีเซล และ แก๊สชีวภาพ)"){ if(rate.value==="-") rate.value=""; rate.placeholder="เช่น น้ำมัน 5 ลิตร/วัน + แก๊สชีวภาพ"; unit.textContent="ระบุสัดส่วนที่ใช้"; }
     else { rate.placeholder=""; if(rate.value==="-") rate.value=""; unit.textContent="—"; }
   }
   document.getElementById("fs_y_fuel").addEventListener("change",function(){ applyFuelRateUnit("fs_y_fuel","fs_y_rate","fs_y_rateUnit"); });
@@ -1595,6 +1641,33 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   pwSetup.addEventListener("change",applyCostLink);
   ["cb_fuel","ca_fuel","cb_elec","ca_elec","cb_gas","ca_gas"].forEach(function(id){ document.getElementById(id).addEventListener("input",updCostDiffs); });
 
+  /* ---------- solar add-on: ask only when ก่อนหน้า/ปัจจุบัน involves ไฟฟ้า ---------- */
+  function applySolarLink(){
+    var bElec=/ไฟฟ้า/.test(document.getElementById("pw_before").value);
+    var aElec=/ไฟฟ้า/.test(pwSetup.value);
+    document.getElementById("solarBeforeWrap").hidden=!bElec;
+    document.getElementById("solarNowWrap").hidden=!aElec;
+    if(!bElec){ document.getElementById("solarBeforeCostWrap").hidden=true; }
+    if(!aElec){ document.getElementById("solarNowCostWrap").hidden=true; }
+  }
+  function applySolarCostToggle(name,costWrapId){
+    var r=form.querySelector('input[name="'+name+'"]:checked');
+    document.getElementById(costWrapId).hidden=!(r&&r.value==="ใช้");
+  }
+  document.getElementById("pw_before").addEventListener("change",applySolarLink);
+  pwSetup.addEventListener("change",applySolarLink);
+  form.querySelectorAll('input[name="power.before.solar"]').forEach(function(r){ r.addEventListener("change",function(){ applySolarCostToggle("power.before.solar","solarBeforeCostWrap"); }); });
+  form.querySelectorAll('input[name="power.current.solar"]').forEach(function(r){ r.addEventListener("change",function(){ applySolarCostToggle("power.current.solar","solarNowCostWrap"); }); });
+  function applySolarAll(){ applySolarLink(); applySolarCostToggle("power.before.solar","solarBeforeCostWrap"); applySolarCostToggle("power.current.solar","solarNowCostWrap"); }
+
+  /* ---------- gas-pit size (2.1, pig only): shown when ปัจจุบันใช้งานแบบใด involves an engine ---------- */
+  function applyGasPitLink(){
+    var v=pwSetup.value;
+    var show=(v==="ใช้เครื่องยนต์อย่างเดียว"||v==="ใช้เครื่องยนต์เป็นหลักและมอเตอร์ไฟฟ้าสำรอง");
+    document.getElementById("pg_gaspitWrap").hidden=!show;
+  }
+  pwSetup.addEventListener("change",applyGasPitLink);
+
   /* ---------- conditional: farmer group / meeting -> reveal + frequency-driven month pickers ---------- */
   var GRP_MONTHS=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
   var GRP_FREQ_N={"1 ครั้ง/ปี":1,"2 ครั้ง/ปี":2,"3 ครั้ง/ปี":3,"4 ครั้ง/ปี":4};
@@ -1603,6 +1676,18 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     document.getElementById("groupWrap").classList.toggle("on", !!(r && r.value==="มี"));
   }
   form.querySelectorAll('input[name="mkt.group.has"]').forEach(function(r){ r.addEventListener("change",applyGroupHas); });
+
+  /* ---------- conditional: meeting format -> platform field (+ its own อื่นๆ) ---------- */
+  var grpMode=document.getElementById("grp_mode"), grpPlatform=document.getElementById("grp_platform");
+  function applyGroupMode(){
+    var v=grpMode.value;
+    document.getElementById("grp_platformWrap").hidden=!(v==="Online"||v==="ผสม (ทั้ง Online และ Onsite)");
+  }
+  function applyGroupPlatformOther(){
+    document.getElementById("grp_platformOther").hidden = grpPlatform.value!=="อื่นๆ";
+  }
+  grpMode.addEventListener("change",applyGroupMode);
+  grpPlatform.addEventListener("change",applyGroupPlatformOther);
 
   /* ---------- conditional: solar-cell interest ---------- */
   function applySolarInterest(){
@@ -1634,11 +1719,12 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   var fsOFuelForMaint=document.getElementById("fs_o_fuel");
   function applyFuel(){
     var raw=fsOFuelForMaint.value;
-    var v = raw==="น้ำมันดีเซล" ? "diesel" : (raw==="แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)" ? "gas" : "");
+    var showDiesel = (raw==="น้ำมันดีเซล"||raw==="แบบผสม (น้ำมันดีเซล และ แก๊สชีวภาพ)");
+    var showGas = (raw==="แก๊สชีวภาพ (ไบโอแก๊สจากขี้หมู)"||raw==="แบบผสม (น้ำมันดีเซล และ แก๊สชีวภาพ)");
     document.querySelectorAll('[data-fuel]').forEach(function(el){
-      el.classList.toggle("on", (v==="diesel"&&el.classList.contains("fuel-diesel"))||(v==="gas"&&el.classList.contains("fuel-gas")));
+      el.classList.toggle("on", (showDiesel&&el.classList.contains("fuel-diesel"))||(showGas&&el.classList.contains("fuel-gas")));
     });
-    document.querySelectorAll(".fuel-gate").forEach(function(g){ g.style.display=v?"none":""; });
+    document.querySelectorAll(".fuel-gate").forEach(function(g){ g.style.display=raw?"none":""; });
   }
   fsOFuelForMaint.addEventListener("change",applyFuel);
 
@@ -1815,7 +1901,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
       if(Array.isArray(m.photos)&&m.photos.length){ photos=m.photos.slice(); renderPhotos(); }
       if(m.videoBlob){ setVideo(m.videoBlob,m.videoName); }
     }); }
-    applyFarm(); applyFuel(); applyMaintOthers(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink();
+    applyFarm(); applyFuel(); applyMaintOthers(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applyGroupMode(); applyGroupPlatformOther(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink(); applySolarAll(); applyGasPitLink();
     applyFuelRateUnit("fs_y_fuel","fs_y_rate","fs_y_rateUnit"); applyFuelRateUnit("fs_o_fuel","fs_o_rate","fs_o_rateUnit");
     if(o["fuel.young.rate"]!==undefined) document.getElementById("fs_y_rate").value=o["fuel.young.rate"];
     if(o["fuel.old.rate"]!==undefined) document.getElementById("fs_o_rate").value=o["fuel.old.rate"];
@@ -1831,7 +1917,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
     refreshRankOptions(chRank,3); refreshRankOptions(promoRank,3);
     rebuildGroupMonths("");
     updRatioEq(); updShaftRatio();
-    applyFarm(); applyFuel(); applyMaintOthers(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink();
+    applyFarm(); applyFuel(); applyMaintOthers(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applyGroupMode(); applyGroupPlatformOther(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink(); applySolarAll(); applyGasPitLink();
     form.querySelectorAll('[data-reveal]').forEach(function(s){ var t=document.querySelector(s.getAttribute("data-reveal")); if(t)t.classList.remove("on"); });
     if(!silent){ safeLS(function(){localStorage.removeItem(LS_DRAFT)}); toast("ล้างฟอร์มแล้ว"); }
   }
@@ -2083,7 +2169,7 @@ window.__GEO=[["กระบี่",[["คลองท่อม",[["คลอง
   (function initDate(){ var d=document.getElementById("m_date"); if(!d.value) d.value=new Date().toISOString().slice(0,10); })();
   renderPhotos();
   rebuildGroupMonths("");
-  applyFarm(); applyFuel(); applyMaintOthers(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink(); fillEngines(null);
+  applyFarm(); applyFuel(); applyMaintOthers(); applyCompare(); applyHouseOther(); applyWhychangeOther(); applyBelt(); applyGroupHas(); applyGroupMode(); applyGroupPlatformOther(); applySolarInterest(); applyFinance(); applyPwSetup(); applyCostLink(); applySolarAll(); applyGasPitLink(); fillEngines(null);
   var draft=safeLS(function(){return JSON.parse(localStorage.getItem(LS_DRAFT)||"null")});
   if(draft){ try{ restore(draft); }catch(e){} }
   refreshCount();
