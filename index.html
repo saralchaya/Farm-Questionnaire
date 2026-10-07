@@ -293,6 +293,9 @@
   }
   .callout .dot{flex:none;width:5px;height:5px;border-radius:50%;background:var(--field);margin-top:6px}
   .callout.warn .dot{background:var(--warn)}
+  .callout.crit{background:rgba(178,59,46,.07);border-color:rgba(178,59,46,.28);color:var(--crit)}
+  .callout.crit .dot{background:var(--crit)}
+  .callout.crit b{color:var(--crit)}
 
   /* ---------- save bar ---------- */
   .savebar{
@@ -745,8 +748,11 @@
         </div>
       </div>
 
-      <span class="legend only-pig only-chicken" data-farm hidden style="margin-top:10px;display:block">ผู้ติดตั้งระบบ EVAP — ถ้ามี (ไม่จำเป็นต้องตอบ บางฟาร์มดำเนินการผ่านกลุ่ม CP / Contract farming)</span>
-      <div class="grid c2 only-pig only-chicken" data-farm hidden style="margin-top:4px">
+      <div class="callout crit only-pig only-chicken" data-farm hidden style="margin-top:10px">
+        <span class="dot"></span>
+        <div><b>ผู้ติดตั้งระบบ EVAP — ถ้ามี</b> (ไม่จำเป็นต้องตอบ บางฟาร์มดำเนินการผ่านกลุ่ม CP / Contract farming)</div>
+      </div>
+      <div class="grid c2 only-pig only-chicken" data-farm hidden style="margin-top:8px">
         <div class="f"><label for="s_evapco">บริษัทที่รับติดตั้งระบบ EVAP</label><input type="text" id="s_evapco" name="farm.evapInstaller"></div>
         <div class="f"><label for="s_evapprov">จังหวัดของผู้ติดตั้ง</label>
           <input type="text" id="s_evapprov" name="farm.evapInstallerProvince" list="provList" autocomplete="off" placeholder="พิมพ์หรือเลือกจังหวัด">
